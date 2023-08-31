@@ -16,7 +16,7 @@ data_name=stock_custom
 random_seed=2023
 
 break_resume=0 #1 means start from fresh, 0 means start from the resume file
-resume_file=stock_000555SZ.csv
+resume_file=stock_000559SZ.csv
 
 for full_path_n in $root_path_name*.csv
 do
