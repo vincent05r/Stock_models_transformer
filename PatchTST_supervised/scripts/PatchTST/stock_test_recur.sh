@@ -6,6 +6,7 @@ if [ ! -d "./logs/LongForecasting" ]; then
     mkdir ./logs/LongForecasting
 fi
 seq_len=336
+label_len=50 #reminder the label length is different to the predicted length, lead time(overlap) time between x(input) and y(label)
 model_name=PatchTST
 
 root_path_name=./PatchTST_supervised/stock_data/

@@ -32,7 +32,7 @@ if __name__ == '__main__':
 
     # forecasting task
     parser.add_argument('--seq_len', type=int, default=96, help='input sequence length')
-    parser.add_argument('--label_len', type=int, default=48, help='start token length')
+    parser.add_argument('--label_len', type=int, default=48, help='start token length, think about this like the lead time(overlap) time between x(input) and y(label)')
     parser.add_argument('--pred_len', type=int, default=96, help='prediction sequence length')
 
 
