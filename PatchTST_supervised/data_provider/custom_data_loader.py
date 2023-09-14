@@ -12,7 +12,7 @@ import warnings
 class Dataset_Custom_stock(Dataset):
     def __init__(self, root_path, flag='train', size=None,
                  features='MS', data_path='stock_000001.SZ.csv',
-                 target='close_pct_chg', scale=True, timeenc=1, freq='d'):
+                 target='close_pct_chg', scale=True, timeenc=1, freq='d'): #adjust data scaling here.
         
         # size [seq_len, label_len, pred_len]
         # info
@@ -51,8 +51,8 @@ class Dataset_Custom_stock(Dataset):
         num_train = int(len(df_raw) * 0.7)
         num_test = int(len(df_raw) * 0.2)
         num_vali = len(df_raw) - num_train - num_test
-        border1s = [0, num_train - self.seq_len, len(df_raw) - num_test - self.seq_len]
-        border2s = [num_train, num_train + num_vali, len(df_raw)]
+        border1s = [0, num_train - self.seq_len, len(df_raw) - num_test - self.seq_len] #[train_begin, val_begin, test_begin]
+        border2s = [num_train, num_train + num_vali, len(df_raw)]  #[train_end, val_end, test_end]
         border1 = border1s[self.set_type]
         border2 = border2s[self.set_type]
 

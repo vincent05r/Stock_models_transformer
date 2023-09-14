@@ -10,6 +10,9 @@ import numpy as np
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Autoformer & Transformer family for Time Series Forecasting')
 
+    #utility
+    parser.add_argument('--result_log_path', type=str, default='./result_log/result_spec1.txt')
+
     # random seed
     parser.add_argument('--random_seed', type=int, default=2021, help='random seed')
 

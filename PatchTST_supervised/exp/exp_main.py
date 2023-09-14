@@ -299,17 +299,17 @@ class Exp_Main(Exp_Basic):
 
         mae, mse, rmse, mape, mspe, rse, corr = metric(preds, trues)
         print('mse:{}, mae:{}, mape:{}, rse:{}'.format(mse, mae, mape, rse))
-        f = open("result_new1.txt", 'a')
+        f = open(self.args.result_log_path, 'a')
         f.write(setting + "  \n")
         f.write('mse:{}, mae:{}, mape:{}, rse:{}'.format(mse, mae, mape, rse))
         f.write('\n')
         f.write('\n')
         f.close()
 
-        # np.save(folder_path + 'metrics.npy', np.array([mae, mse, rmse, mape, mspe,rse, corr]))
+        np.save(folder_path + 'metrics.npy', np.array([mae, mse, rmse, mape, mspe,rse, corr]))
         np.save(folder_path + 'pred.npy', preds)
-        # np.save(folder_path + 'true.npy', trues)
-        # np.save(folder_path + 'x.npy', inputx)
+        np.save(folder_path + 'true.npy', trues)
+        np.save(folder_path + 'x.npy', inputx)
         return
 
     def predict(self, setting, load=False):
