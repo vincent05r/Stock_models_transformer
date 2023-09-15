@@ -32,10 +32,11 @@ if __name__ == '__main__':
     parser.add_argument('--freq', type=str, default='d',
                         help='freq for time features encoding, options:[s:secondly, t:minutely, h:hourly, d:daily, b:business days, w:weekly, m:monthly], you can also use more detailed freq like 15min or 3h')
     parser.add_argument('--checkpoints', type=str, default='./checkpoints/', help='location of model checkpoints')
+    parser.add_argument('--scale', type=bool, default=True, help='if use z-score scaler for dataset using std and mean of training set')
 
     # forecasting task
     parser.add_argument('--seq_len', type=int, default=96, help='input sequence length')
-    parser.add_argument('--label_len', type=int, default=48, help='start token length, think about this like the lead time(overlap) time between x(input) and y(label)')
+    parser.add_argument('--label_len', type=int, default=25, help='start token length, think about this like the lead time(overlap) time between x(input) and y(label)')
     parser.add_argument('--pred_len', type=int, default=96, help='prediction sequence length')
 
 

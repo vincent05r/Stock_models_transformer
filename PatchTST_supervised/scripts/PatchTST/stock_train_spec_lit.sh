@@ -5,8 +5,9 @@ fi
 if [ ! -d "./logs/LongForecasting" ]; then
     mkdir ./logs/LongForecasting
 fi
-seq_len=336
-label_len=50 #reminder the label length is different to the predicted length, lead time(overlap) time between x(input) and y(label)
+
+seq_len=100
+label_len=25 #reminder the label length is different to the predicted length, lead time(overlap) time between x(input) and y(label)
 model_name=PatchTST
 
 result_log_path=./result_log/result_spec1.txt
@@ -41,11 +42,12 @@ do
         --data $data_name \
         --features MS \
         --seq_len $seq_len \
+        --label_len $label_len \
         --pred_len $pred_len \
         --scale $scale\
-        --enc_in 321 \
+        --enc_in 10 \
         --e_layers 3 \
-        --n_heads 16 \
+        --n_heads 8 \
         --d_model 128 \
         --d_ff 256 \
         --dropout 0.2\

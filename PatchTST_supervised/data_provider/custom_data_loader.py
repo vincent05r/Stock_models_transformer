@@ -64,7 +64,7 @@ class Dataset_Custom_stock(Dataset):
 
         if self.scale: #if scalling
             train_data = df_data[border1s[0]:border2s[0]]
-            self.scaler.fit(train_data.values)
+            self.scaler.fit(train_data.values) #use std and mean from training set.
             # print(self.scaler.mean_)
             # exit()
             data = self.scaler.transform(df_data.values)
