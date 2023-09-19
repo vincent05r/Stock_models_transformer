@@ -33,6 +33,7 @@ if __name__ == '__main__':
                         help='freq for time features encoding, options:[s:secondly, t:minutely, h:hourly, d:daily, b:business days, w:weekly, m:monthly], you can also use more detailed freq like 15min or 3h')
     parser.add_argument('--checkpoints', type=str, default='./checkpoints/', help='location of model checkpoints')
     parser.add_argument('--scale', type=bool, default=True, help='if use z-score scaler for dataset using std and mean of training set')
+    parser.add_argument('--dt_format_str', type=int, default=0, help='the format string for pandas datetime, 0 means use default')
 
     # forecasting task
     parser.add_argument('--seq_len', type=int, default=96, help='input sequence length')

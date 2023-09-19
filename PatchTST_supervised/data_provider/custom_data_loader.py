@@ -7,12 +7,13 @@ from torch.utils.data import Dataset, DataLoader
 from sklearn.preprocessing import StandardScaler
 from utils.timefeatures import time_features
 import warnings
+import pickle
 
 
 class Dataset_Custom_stock(Dataset):
     def __init__(self, root_path, flag='train', size=None,
                  features='MS', data_path='stock_000001.SZ.csv',
-                 target='close_pct_chg', scale=True, timeenc=1, freq='d'): #adjust data scaling here.
+                 target='close_pct_chg', scale=True, timeenc=1, freq='d', dt_format_str=0): 
         
         # size [seq_len, label_len, pred_len]
         # info
@@ -31,6 +32,11 @@ class Dataset_Custom_stock(Dataset):
         self.scale = scale
         self.timeenc = timeenc
         self.freq = freq
+
+        dt_f_str_dict = {1 : '%Y%m%d'}
+        if dt_format_str != 0:
+            dt_format_str = dt_f_str_dict[dt_format_str]
+        self.dt_format_str = dt_format_str #the formatting string for pandas datetime function
 
         self.root_path = root_path
         self.data_path = data_path
@@ -72,7 +78,12 @@ class Dataset_Custom_stock(Dataset):
             data = df_data.values
 
         df_stamp = df_raw[[self.date_str]][border1:border2]
-        df_stamp[self.date_str] = pd.to_datetime(df_stamp.date)
+
+        if self.dt_format_str == 0:
+            df_stamp[self.date_str] = pd.to_datetime(df_stamp.date) #pandas will convert the column name directly into a self.column name for accessing (similar)
+        else:
+            df_stamp[self.date_str] = pd.to_datetime(df_stamp.date, format=self.dt_format_str)
+
         if self.timeenc == 0:
             # df_stamp['month'] = df_stamp.date.apply(lambda row: row.month, 1)
             # df_stamp['day'] = df_stamp.date.apply(lambda row: row.day, 1)
@@ -88,6 +99,16 @@ class Dataset_Custom_stock(Dataset):
         self.data_x = data[border1:border2]
         self.data_y = data[border1:border2]
         self.data_stamp = data_stamp
+
+        # scaler result save
+        folder_path = './scaler/' + self.data_path.replace('.csv', '') + '/'
+        if not os.path.exists(folder_path):
+            os.makedirs(folder_path)
+
+        with open( folder_path + self.data_path.replace('.csv', '') + '_' + str(self.seq_len) + '_' + str(self.pred_len) + '.pkl', 'wb') as f:
+            pickle.dump(self.scaler, f)
+
+        #np.save( folder_path + self.data_path.replace('.csv', '') + '_' + str(self.seq_len) + '_' + str(self.pred_len) , np.array([self.scaler.mean_, self.scaler.var_]) )
 
     def __getitem__(self, index):
         s_begin = index
