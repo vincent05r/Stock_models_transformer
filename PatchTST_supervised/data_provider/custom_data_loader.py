@@ -79,7 +79,7 @@ class Dataset_Custom_stock(Dataset):
 
         df_stamp = df_raw[[self.date_str]][border1:border2]
 
-        if self.dt_format_str == 0:
+        if self.dt_format_str == 0: #be aware all date column must be named date
             df_stamp[self.date_str] = pd.to_datetime(df_stamp.date) #pandas will convert the column name directly into a self.column name for accessing (similar)
         else:
             df_stamp[self.date_str] = pd.to_datetime(df_stamp.date, format=self.dt_format_str)
@@ -100,15 +100,16 @@ class Dataset_Custom_stock(Dataset):
         self.data_y = data[border1:border2]
         self.data_stamp = data_stamp
 
-        # scaler result save
-        folder_path = './scaler/' + self.data_path.replace('.csv', '') + '/'
-        if not os.path.exists(folder_path):
-            os.makedirs(folder_path)
+        if self.scale:
+            # scaler result save
+            folder_path = './scaler/' + self.data_path.replace('.csv', '') + '/'
+            if not os.path.exists(folder_path):
+                os.makedirs(folder_path)
 
-        with open( folder_path + self.data_path.replace('.csv', '') + '_' + str(self.seq_len) + '_' + str(self.pred_len) + '.pkl', 'wb') as f:
-            pickle.dump(self.scaler, f)
+            with open( folder_path + self.data_path.replace('.csv', '') + '_' + str(self.seq_len) + '_' + str(self.pred_len) + '.pkl', 'wb') as f:
+                pickle.dump(self.scaler, f)
 
-        #np.save( folder_path + self.data_path.replace('.csv', '') + '_' + str(self.seq_len) + '_' + str(self.pred_len) , np.array([self.scaler.mean_, self.scaler.var_]) )
+            #np.save( folder_path + self.data_path.replace('.csv', '') + '_' + str(self.seq_len) + '_' + str(self.pred_len) , np.array([self.scaler.mean_, self.scaler.var_]) )
 
     def __getitem__(self, index):
         s_begin = index

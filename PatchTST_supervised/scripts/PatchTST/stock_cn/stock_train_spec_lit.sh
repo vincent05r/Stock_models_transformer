@@ -45,6 +45,7 @@ do
         --label_len $label_len \
         --pred_len $pred_len \
         --scale $scale\
+        --dt_format_str 1\
         --enc_in 10 \
         --e_layers 3 \
         --n_heads 8 \

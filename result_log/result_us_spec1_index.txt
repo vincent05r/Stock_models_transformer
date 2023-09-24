@@ -1,0 +1,12 @@
+AAPL_pct_index_30_1_PatchTST_stock_custom_ftMS_sl30_ll25_pl1_dm128_nh8_el3_dl1_df256_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.361264705657959, mae:0.42371076345443726, mape:2.9970922470092773, rse:1.0226223468780518
+
+AAPL_pct_index_30_7_PatchTST_stock_custom_ftMS_sl30_ll25_pl7_dm128_nh8_el3_dl1_df256_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.3624204993247986, mae:0.4252583384513855, mape:3.068027973175049, rse:1.0237566232681274
+
+AAPL_pct_index_30_14_PatchTST_stock_custom_ftMS_sl30_ll25_pl14_dm128_nh8_el3_dl1_df256_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.3624057471752167, mae:0.425034761428833, mape:3.0481791496276855, rse:1.0218236446380615
+
+AAPL_pct_index_30_30_PatchTST_stock_custom_ftMS_sl30_ll25_pl30_dm128_nh8_el3_dl1_df256_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.3631307780742645, mae:0.424903929233551, mape:2.874500274658203, rse:1.0225778818130493
+
