@@ -13,7 +13,7 @@ import pickle
 class Dataset_Custom_stock(Dataset):
     def __init__(self, root_path, flag='train', size=None,
                  features='MS', data_path='stock_000001.SZ.csv',
-                 target='close_pct_chg', scale=True, timeenc=1, freq='d', dt_format_str=0): 
+                 target='close_pct_chg', scale=0, timeenc=1, freq='d', dt_format_str=0): 
         
         # size [seq_len, label_len, pred_len]
         # info
@@ -68,7 +68,7 @@ class Dataset_Custom_stock(Dataset):
         elif self.features == 'S':
             df_data = df_raw[[self.target]]
 
-        if self.scale: #if scalling
+        if self.scale == 1: #if scalling
             train_data = df_data[border1s[0]:border2s[0]]
             self.scaler.fit(train_data.values) #use std and mean from training set.
             # print(self.scaler.mean_)
