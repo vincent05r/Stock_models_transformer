@@ -1,5 +1,5 @@
 from data_provider.data_loader import Dataset_ETT_hour, Dataset_ETT_minute, Dataset_Custom, Dataset_Pred
-from data_provider.custom_data_loader import Dataset_Custom_stock
+from data_provider.custom_data_loader import Dataset_Custom_stock, Dataset_Custom_stock_pred
 from torch.utils.data import DataLoader
 
 data_dict = {
@@ -9,6 +9,7 @@ data_dict = {
     'ETTm2': Dataset_ETT_minute,
     'custom': Dataset_Custom,
     'stock_custom': Dataset_Custom_stock,
+    'stock_custom_pred': Dataset_Custom_stock_pred
 }
 
 
@@ -26,14 +27,17 @@ def data_provider(args, flag):
         drop_last = False
         batch_size = 1
         freq = args.freq
-        Data = Dataset_Pred
+        if args.data != 'stock_custom_pred':
+            Data = Dataset_Pred
     else:
         shuffle_flag = True
         drop_last = True
         batch_size = args.batch_size
         freq = args.freq
 
-    data_set = Data(
+    if args.data == 'stock_custom_pred':
+
+        data_set = Data(
         root_path=args.root_path,
         data_path=args.data_path,
         flag=flag,
@@ -41,8 +45,25 @@ def data_provider(args, flag):
         features=args.features,
         target=args.target,
         timeenc=timeenc,
-        freq=freq
+        freq=freq,
+        scale=args.scale,        #custom section dont worry about the 
+        prev_scaler=args.prev_scaler
     )
+        
+    else:
+        data_set = Data(
+            root_path=args.root_path,
+            data_path=args.data_path,
+            flag=flag,
+            size=[args.seq_len, args.label_len, args.pred_len],
+            features=args.features,
+            target=args.target,
+            timeenc=timeenc,
+            freq=freq,
+            scale=args.scale,        #custom section dont worry about the 
+            dt_format_str=args.dt_format_str
+        )
+
     print(flag, len(data_set))
     data_loader = DataLoader(
         data_set,

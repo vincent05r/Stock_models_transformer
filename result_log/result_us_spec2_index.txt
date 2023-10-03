@@ -1,0 +1,60 @@
+AAPL_pct_index_7_1_PatchTST_stock_custom_ftMS_sl7_ll3_pl1_dm64_nh8_el3_dl1_df128_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.37059640884399414, mae:0.4284425377845764, mape:4.476951599121094, rse:1.0677958726882935
+
+AAPL_pct_index_15_1_PatchTST_stock_custom_ftMS_sl15_ll3_pl1_dm64_nh8_el3_dl1_df128_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.35726848244667053, mae:0.4188714027404785, mape:2.8510913848876953, rse:1.0484192371368408
+
+AAPL_pct_index_30_1_PatchTST_stock_custom_ftMS_sl30_ll3_pl1_dm64_nh8_el3_dl1_df128_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.34123873710632324, mae:0.4108050465583801, mape:2.6706528663635254, rse:1.0246293544769287
+
+AAPL_pct_index_50_1_PatchTST_stock_custom_ftMS_sl50_ll3_pl1_dm64_nh8_el3_dl1_df128_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.34324049949645996, mae:0.41227903962135315, mape:2.2957162857055664, rse:1.0276302099227905
+
+AMZN_pct_index_7_1_PatchTST_stock_custom_ftMS_sl7_ll3_pl1_dm64_nh8_el3_dl1_df128_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.3371444344520569, mae:0.4090516269207001, mape:2.6948904991149902, rse:1.0769273042678833
+
+AMZN_pct_index_15_1_PatchTST_stock_custom_ftMS_sl15_ll3_pl1_dm64_nh8_el3_dl1_df128_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.3148162066936493, mae:0.3934669494628906, mape:2.0868029594421387, rse:1.0406553745269775
+
+AMZN_pct_index_30_1_PatchTST_stock_custom_ftMS_sl30_ll3_pl1_dm64_nh8_el3_dl1_df128_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.3051328957080841, mae:0.3882071375846863, mape:1.9356831312179565, rse:1.0245258808135986
+
+AMZN_pct_index_50_1_PatchTST_stock_custom_ftMS_sl50_ll3_pl1_dm64_nh8_el3_dl1_df128_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.31870603561401367, mae:0.3991589844226837, mape:2.6811349391937256, rse:1.0470647811889648
+
+ASML_pct_index_7_1_PatchTST_stock_custom_ftMS_sl7_ll3_pl1_dm64_nh8_el3_dl1_df128_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.5876848697662354, mae:0.5571978092193604, mape:3.1191158294677734, rse:1.0839481353759766
+
+ASML_pct_index_15_1_PatchTST_stock_custom_ftMS_sl15_ll3_pl1_dm64_nh8_el3_dl1_df128_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.5445125699043274, mae:0.5372191667556763, mape:2.5446879863739014, rse:1.0433745384216309
+
+ASML_pct_index_30_1_PatchTST_stock_custom_ftMS_sl30_ll3_pl1_dm64_nh8_el3_dl1_df128_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.5226765871047974, mae:0.5239416360855103, mape:2.344728946685791, rse:1.0222398042678833
+
+ASML_pct_index_50_1_PatchTST_stock_custom_ftMS_sl50_ll3_pl1_dm64_nh8_el3_dl1_df128_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.5310995578765869, mae:0.5249704122543335, mape:2.2498650550842285, rse:1.0304436683654785
+
+BA_pct_index_7_1_PatchTST_stock_custom_ftMS_sl7_ll3_pl1_dm64_nh8_el3_dl1_df128_fc1_ebtimeF_dtTrue_Exp_0  
+mse:1.444298505783081, mae:0.7723464965820312, mape:3.348170518875122, rse:1.1041038036346436
+
+BA_pct_index_15_1_PatchTST_stock_custom_ftMS_sl15_ll3_pl1_dm64_nh8_el3_dl1_df128_fc1_ebtimeF_dtTrue_Exp_0  
+mse:1.278624176979065, mae:0.7319217920303345, mape:2.276461124420166, rse:1.0388500690460205
+
+BA_pct_index_30_1_PatchTST_stock_custom_ftMS_sl30_ll3_pl1_dm64_nh8_el3_dl1_df128_fc1_ebtimeF_dtTrue_Exp_0  
+mse:1.235581874847412, mae:0.7191126346588135, mape:1.7926924228668213, rse:1.0212150812149048
+
+BA_pct_index_50_1_PatchTST_stock_custom_ftMS_sl50_ll3_pl1_dm64_nh8_el3_dl1_df128_fc1_ebtimeF_dtTrue_Exp_0  
+mse:1.228649377822876, mae:0.7135864496231079, mape:1.7568879127502441, rse:1.0183460712432861
+
+INTC_pct_index_7_1_PatchTST_stock_custom_ftMS_sl7_ll3_pl1_dm64_nh8_el3_dl1_df128_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.6331981420516968, mae:0.5365592837333679, mape:3.0483336448669434, rse:1.0842163562774658
+
+INTC_pct_index_15_1_PatchTST_stock_custom_ftMS_sl15_ll3_pl1_dm64_nh8_el3_dl1_df128_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.6044450402259827, mae:0.5207579135894775, mape:2.3504929542541504, rse:1.0593136548995972
+
+INTC_pct_index_30_1_PatchTST_stock_custom_ftMS_sl30_ll3_pl1_dm64_nh8_el3_dl1_df128_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.5695475935935974, mae:0.5063045024871826, mape:2.1814723014831543, rse:1.0282795429229736
+
+INTC_pct_index_50_1_PatchTST_stock_custom_ftMS_sl50_ll3_pl1_dm64_nh8_el3_dl1_df128_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.5725314021110535, mae:0.5050543546676636, mape:1.9134992361068726, rse:1.030969500541687
+

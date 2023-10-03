@@ -334,3 +334,48 @@ mse:968.914794921875, mae:21.547956466674805, mape:0.0072580971755087376, rse:0.
 sse_index_spec_s_7_1_PatchTST_stock_custom_ftMS_sl7_ll2_pl1_dm64_nh4_el2_dl1_df128_fc1_ebtimeF_dtTrue_Exp_0  
 mse:958.6193237304688, mae:21.422996520996094, mape:0.007207811810076237, rse:0.13620679080486298
 
+sse_index_spec_s_15_1_PatchTST_stock_custom_ftMS_sl15_ll2_pl1_dm64_nh4_el2_dl1_df128_fc1_ebtimeF_dtTrue_Exp_0  
+mse:962.787841796875, mae:21.471494674682617, mape:0.007226722314953804, rse:0.13650260865688324
+
+sse_index_spec_s_30_1_PatchTST_stock_custom_ftMS_sl30_ll2_pl1_dm64_nh4_el2_dl1_df128_fc1_ebtimeF_dtTrue_Exp_0  
+mse:1023.7623291015625, mae:22.39909553527832, mape:0.007538731209933758, rse:0.1407586932182312
+
+sse_index_spec_s_50_1_PatchTST_stock_custom_ftMS_sl50_ll2_pl1_dm64_nh4_el2_dl1_df128_fc1_ebtimeF_dtTrue_Exp_0  
+mse:1039.119384765625, mae:22.540159225463867, mape:0.007589985150843859, rse:0.14181049168109894
+
+sse_index_spec_s_100_1_PatchTST_stock_custom_ftMS_sl100_ll2_pl1_dm64_nh4_el2_dl1_df128_fc1_ebtimeF_dtTrue_Exp_0  
+mse:1031.396484375, mae:22.73147964477539, mape:0.007658924907445908, rse:0.14128254354000092
+
+sse_index_spec_s_200_1_PatchTST_stock_custom_ftMS_sl200_ll2_pl1_dm64_nh4_el2_dl1_df128_fc1_ebtimeF_dtTrue_Exp_0  
+mse:1364.0045166015625, mae:27.047292709350586, mape:0.009101892821490765, rse:0.1624738872051239
+
+sse_index_spec_s_7_1_PatchTST_stock_custom_ftMS_sl7_ll2_pl1_dm64_nh4_el2_dl1_df128_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.0010641495464369655, mae:0.02257627062499523, mape:0.04171979799866676, rse:0.13619884848594666
+
+sse_index_spec_s_15_1_PatchTST_stock_custom_ftMS_sl15_ll2_pl1_dm64_nh4_el2_dl1_df128_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.0010689375922083855, mae:0.022621823474764824, mape:0.042010217905044556, rse:0.1365049183368683
+
+sse_index_spec_s_30_1_PatchTST_stock_custom_ftMS_sl30_ll2_pl1_dm64_nh4_el2_dl1_df128_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.00113670842256397, mae:0.023601727560162544, mape:0.043625760823488235, rse:0.14076563715934753
+
+sse_index_spec_s_50_1_PatchTST_stock_custom_ftMS_sl50_ll2_pl1_dm64_nh4_el2_dl1_df128_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.0011537512764334679, mae:0.02375180833041668, mape:0.04380521550774574, rse:0.14181697368621826
+
+sse_index_spec_s_100_1_PatchTST_stock_custom_ftMS_sl100_ll2_pl1_dm64_nh4_el2_dl1_df128_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.0011451292084529996, mae:0.02395162731409073, mape:0.04429224878549576, rse:0.14128607511520386
+
+sse_index_spec_s_200_1_PatchTST_stock_custom_ftMS_sl200_ll2_pl1_dm64_nh4_el2_dl1_df128_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.0015142984921112657, mae:0.028497755527496338, mape:0.0525234155356884, rse:0.16247175633907318
+
+sse_index_spec_s_7_1_PatchTST_stock_custom_ftMS_sl7_ll2_pl1_dm64_nh4_el2_dl1_df128_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.0010641495464369655, mae:0.02257627062499523, mape:0.04171979799866676, rse:0.13619884848594666
+
+sse_index_spec_s_15_1_PatchTST_stock_custom_ftMS_sl15_ll2_pl1_dm64_nh4_el2_dl1_df128_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.0010689375922083855, mae:0.022621823474764824, mape:0.042010217905044556, rse:0.1365049183368683
+
+sse_index_spec_s_30_1_PatchTST_stock_custom_ftMS_sl30_ll2_pl1_dm64_nh4_el2_dl1_df128_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.00113670842256397, mae:0.023601727560162544, mape:0.043625760823488235, rse:0.14076563715934753
+
+sse_index_spec_s_50_1_PatchTST_stock_custom_ftMS_sl50_ll2_pl1_dm64_nh4_el2_dl1_df128_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.0011537512764334679, mae:0.02375180833041668, mape:0.04380521550774574, rse:0.14181697368621826
+

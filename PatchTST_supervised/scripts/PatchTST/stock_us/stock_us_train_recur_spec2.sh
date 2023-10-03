@@ -5,18 +5,18 @@ fi
 if [ ! -d "./logs/LongForecasting" ]; then
     mkdir ./logs/LongForecasting
 fi
-seq_len=100
-label_len=25 #reminder the label length is different to the predicted length, lead time(overlap) time between x(input) and y(label)
+
+label_len=3 #reminder the label length is different to the predicted length, lead time(overlap) time between x(input) and y(label)
 model_name=PatchTST
 
-root_path_name=./PatchTST_supervised/stock_data_us_pctindex/
+root_path_name=./data/stock_data_us_pctindex/
 data_name=stock_custom
 
-result_log_path=./result_log/result_us_spec1_index.txt
+result_log_path=./result_log/result_us_spec2_index.txt
 
 dt_format_str=0
 
-scale=True
+scale=False
 
 target=close_pct_change
 
@@ -38,9 +38,9 @@ do
         fi
         
 
-        for seq_len in 30 50 100 200
+        for seq_len in 7 15 30 50
         do
-            for pred_len in 1 7 14 30
+            for pred_len in 1
             do
                 python3.9 -u PatchTST_supervised/run_longExp.py \
                 --result_log_path $result_log_path\
@@ -61,13 +61,13 @@ do
                 --enc_in 10 \
                 --e_layers 3 \
                 --n_heads 8 \
-                --d_model 128 \
-                --d_ff 256 \
+                --d_model 64 \
+                --d_ff 128 \
                 --dropout 0.2\
                 --fc_dropout 0.2\
                 --head_dropout 0\
-                --patch_len 16\
-                --stride 8\
+                --patch_len 8\
+                --stride 4\
                 --des 'Exp' \
                 --train_epochs 100\
                 --patience 10\

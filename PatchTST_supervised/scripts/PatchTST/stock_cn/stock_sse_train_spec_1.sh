@@ -23,7 +23,7 @@ dt_format_str=0
 
 target=close
 
-scale=0
+scale=True
 
 full_path_n=./data/stock_benchmark/sse_index_spec_s.csv
 

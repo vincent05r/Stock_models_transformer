@@ -18,7 +18,7 @@ if __name__ == '__main__':
 
     # basic config
     parser.add_argument('--is_training', type=int, required=True, default=1, help='status')
-    parser.add_argument('--model_id', type=str, required=True, default='test', help='model id')
+    parser.add_argument('--model_id', type=str, default='test', help='model id')#required for training
     parser.add_argument('--model', type=str, required=True, default='PatchTST',
                         help='model name, options: [Autoformer, Informer, Transformer, PatchTST]')
 
@@ -32,8 +32,12 @@ if __name__ == '__main__':
     parser.add_argument('--freq', type=str, default='d',
                         help='freq for time features encoding, options:[s:secondly, t:minutely, h:hourly, d:daily, b:business days, w:weekly, m:monthly], you can also use more detailed freq like 15min or 3h')
     parser.add_argument('--checkpoints', type=str, default='./checkpoints/', help='location of model checkpoints')
-    parser.add_argument('--scale', type=int, default=1, help='if use z-score scaler for dataset using std and mean of training set, 1 is true, 0 is false')
+    parser.add_argument('--scale', type=bool, default=False, help='if use z-score scaler for dataset using std and mean of training set, 1 is true, 0 is false')
     parser.add_argument('--dt_format_str', type=int, default=0, help='the format string for pandas datetime, 0 means use default')
+
+    #prediction  
+    parser.add_argument('--prev_scaler', type=str, default='None', help='scaler path for prev_scaler')
+    parser.add_argument('--pred_model_load_path', type=str, default='None', help='Path for the model used for prediction')
 
     # forecasting task
     parser.add_argument('--seq_len', type=int, default=96, help='input sequence length')
@@ -77,7 +81,7 @@ if __name__ == '__main__':
                         help='time features encoding, options:[timeF, fixed, learned]')
     parser.add_argument('--activation', type=str, default='gelu', help='activation')
     parser.add_argument('--output_attention', action='store_true', help='whether to output attention in ecoder')
-    parser.add_argument('--do_predict', action='store_true', help='whether to predict unseen future data')
+    parser.add_argument('--do_predict', type=bool, default=False, help='whether to predict unseen future data')
 
     # optimization
     parser.add_argument('--num_workers', type=int, default=10, help='data loader num workers')
@@ -154,6 +158,34 @@ if __name__ == '__main__':
                 exp.predict(setting, True)
 
             torch.cuda.empty_cache()
+    
+    elif args.do_predict:
+
+        ii = 0
+        setting = '{}_{}_{}_ft{}_sl{}_ll{}_pl{}_dm{}_nh{}_el{}_dl{}_df{}_fc{}_eb{}_dt{}_{}_{}'.format(args.model_id,
+                                                                                                    args.model,
+                                                                                                    args.data,
+                                                                                                    args.features,
+                                                                                                    args.seq_len,
+                                                                                                    args.label_len,
+                                                                                                    args.pred_len,
+                                                                                                    args.d_model,
+                                                                                                    args.n_heads,
+                                                                                                    args.e_layers,
+                                                                                                    args.d_layers,
+                                                                                                    args.d_ff,
+                                                                                                    args.factor,
+                                                                                                    args.embed,
+                                                                                                    args.distil,
+                                                                                                    args.des, ii)
+
+        exp = Exp(args)  # set experiments
+        print('>>>>>>>predicting : {}<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<'.format(setting))
+        exp.predict(setting, True)
+        torch.cuda.empty_cache()
+
+
+
     else:
         ii = 0
         setting = '{}_{}_{}_ft{}_sl{}_ll{}_pl{}_dm{}_nh{}_el{}_dl{}_df{}_fc{}_eb{}_dt{}_{}_{}'.format(args.model_id,

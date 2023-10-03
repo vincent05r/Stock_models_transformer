@@ -21,7 +21,7 @@ dt_format_str=0
 
 target=close_pct_chg
 
-scale=0
+scale=False
 
 full_path_n=./data/stock_data/stock_000415SZ.csv
 

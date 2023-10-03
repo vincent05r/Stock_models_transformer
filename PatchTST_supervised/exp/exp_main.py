@@ -316,8 +316,9 @@ class Exp_Main(Exp_Basic):
         pred_data, pred_loader = self._get_data(flag='pred')
 
         if load:
-            path = os.path.join(self.args.checkpoints, setting)
-            best_model_path = path + '/' + 'checkpoint.pth'
+            # path = os.path.join(self.args.checkpoints, setting)
+            # best_model_path = path + '/' + 'checkpoint.pth'
+            best_model_path = self.args.pred_model_load_path
             self.model.load_state_dict(torch.load(best_model_path))
 
         preds = []
@@ -351,6 +352,10 @@ class Exp_Main(Exp_Basic):
                             outputs = self.model(batch_x, batch_x_mark, dec_inp, batch_y_mark)[0]
                         else:
                             outputs = self.model(batch_x, batch_x_mark, dec_inp, batch_y_mark)
+                #add this to trim down the output for MS time-series
+                f_dim = -1 if self.args.features == 'MS' else 0
+                # print(outputs.shape,batch_y.shape)
+                outputs = outputs[:, -self.args.pred_len:, f_dim:]
                 pred = outputs.detach().cpu().numpy()  # .squeeze()
                 preds.append(pred)
 
