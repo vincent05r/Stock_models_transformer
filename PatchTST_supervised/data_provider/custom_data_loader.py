@@ -55,7 +55,7 @@ class Dataset_Custom_stock(Dataset):
         df_raw = df_raw[[self.date_str] + cols + [self.target]]
         # print(cols)
         num_train = int(len(df_raw) * 0.7)
-        num_test = int(len(df_raw) * 0.2)
+        num_test = int(len(df_raw) * 0.2378)
         num_vali = len(df_raw) - num_train - num_test
         border1s = [0, num_train - self.seq_len, len(df_raw) - num_test - self.seq_len] #[train_begin, val_begin, test_begin]
         border2s = [num_train, num_train + num_vali, len(df_raw)]  #[train_end, val_end, test_end]

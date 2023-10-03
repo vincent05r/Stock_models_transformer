@@ -7,31 +7,29 @@ if [ ! -d "./logs/LongForecasting" ]; then
 fi
 
 seq_len=100
-label_len=2 #reminder the label length is different to the predicted length, lead time(overlap) time between x(input) and y(label)
+label_len=25 #reminder the label length is different to the predicted length, lead time(overlap) time between x(input) and y(label)
 model_name=PatchTST
 
-result_log_path=./result_log/result_sse.txt
+result_log_path=./result_log/result_low_mape.txt
 
-root_path_name=./data/stock_benchmark/
-#data_path_name=stock_000001.SZ.csv
-#model_id_name=stock_000001SZ
+root_path_name=./data/stock_data/
 data_name=stock_custom
 
 random_seed=2023
 
 dt_format_str=0
 
-target=close
+target=close_pct_chg
 
 scale=0
 
-full_path_n=./data/stock_benchmark/sse_index_spec_s.csv
+full_path_n=./data/stock_data/stock_000415SZ.csv
 
 data_path_name=$(basename $full_path_n)
 model_id_name="${data_path_name%.*}"
 
 
-for seq_len in 7 15 30 50 100 200
+for seq_len in 30 50 100 200
 do
     for pred_len in 1
     do
@@ -51,7 +49,7 @@ do
         --scale $scale\
         --target $target\
         --dt_format_str $dt_format_str\
-        --enc_in 9 \
+        --enc_in 10 \
         --e_layers 2 \
         --n_heads 4 \
         --d_model 64 \
