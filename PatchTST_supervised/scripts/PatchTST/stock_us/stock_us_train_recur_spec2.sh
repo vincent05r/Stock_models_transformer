@@ -9,14 +9,14 @@ fi
 label_len=3 #reminder the label length is different to the predicted length, lead time(overlap) time between x(input) and y(label)
 model_name=PatchTST
 
-root_path_name=./data/stock_data_us_pctindex/
+root_path_name=./data/stock_us_pctindex_v2/
 data_name=stock_custom
 
-result_log_path=./result_log/result_us_spec2_index.txt
+result_log_path=./result_log/result_us_spec2_trim_index.txt
 
 dt_format_str=0
 
-scale=False
+scale=1
 
 target=close_pct_change
 
@@ -38,12 +38,12 @@ do
         fi
         
 
-        for seq_len in 7 15 30 50
+        for seq_len in 7 15 30 50 80
         do
             for pred_len in 1
             do
                 python3.9 -u PatchTST_supervised/run_longExp.py \
-                --result_log_path $result_log_path\
+                --result_log_path $result_log_path \
                 --random_seed $random_seed \
                 --is_training 1 \
                 --root_path $root_path_name \
@@ -56,23 +56,23 @@ do
                 --label_len $label_len \
                 --pred_len $pred_len \
                 --target $target \
-                --scale $scale\
-                --dt_format_str $dt_format_str\
-                --enc_in 10 \
-                --e_layers 3 \
+                --scale $scale \
+                --dt_format_str $dt_format_str \
+                --enc_in 13 \
+                --e_layers 2 \
                 --n_heads 8 \
                 --d_model 64 \
                 --d_ff 128 \
-                --dropout 0.2\
-                --fc_dropout 0.2\
-                --head_dropout 0\
-                --patch_len 8\
-                --stride 4\
+                --dropout 0.2 \
+                --fc_dropout 0.2 \
+                --head_dropout 0 \
+                --patch_len 8 \
+                --stride 4 \
                 --des 'Exp' \
-                --train_epochs 100\
-                --patience 10\
-                --lradj 'TST'\
-                --pct_start 0.2\
+                --train_epochs 100 \
+                --patience 10 \
+                --lradj 'TST' \
+                --pct_start 0.2 \
                 --itr 1 --batch_size 32 --learning_rate 0.0001 >logs/LongForecasting/$model_name'_'$model_id_name'_'$seq_len'_'$pred_len.log 
             done
         done

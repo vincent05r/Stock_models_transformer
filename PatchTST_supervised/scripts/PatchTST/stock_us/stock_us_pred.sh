@@ -12,10 +12,11 @@ data_name=stock_custom_pred
 
 random_seed=2023
 
-scale=False
-pred_model_load_path=./checkpoints/BA_pct_index_50_1_PatchTST_stock_custom_ftMS_sl50_ll3_pl1_dm64_nh8_el3_dl1_df128_fc1_ebtimeF_dtTrue_Exp_0/checkpoint.pth
+scale=1
+prev_scaler=./scaler/AAPL_pct_index/AAPL_pct_index_50_1.pkl
+pred_model_load_path=./checkpoints/AAPL_pct_index_50_1_PatchTST_stock_custom_ftMS_sl50_ll3_pl1_dm64_nh8_el2_dl1_df128_fc1_ebtimeF_dtTrue_Exp_0/checkpoint.pth
 
-full_path_n=./data/stock_us_pred/test_1.csv
+full_path_n=./data/stock_us_pred/aapl_p.csv
 
 data_path_name=$(basename $full_path_n)
 model_id_name="${data_path_name%.*}"
@@ -28,6 +29,7 @@ python3.9 -u PatchTST_supervised/run_longExp.py \
 --is_training 0 \
 --root_path $root_path_name \
 --data_path $data_path_name \
+--model_id $model_id_name \
 --model $model_name \
 --data $data_name \
 --features MS \
@@ -36,9 +38,10 @@ python3.9 -u PatchTST_supervised/run_longExp.py \
 --pred_len $pred_len \
 --target $target \
 --scale $scale \
+--prev_scaler $prev_scaler \
 --pred_model_load_path $pred_model_load_path \
---enc_in 10 \
---e_layers 3 \
+--enc_in 13 \
+--e_layers 2 \
 --n_heads 8 \
 --d_model 64 \
 --d_ff 128 \

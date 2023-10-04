@@ -38,17 +38,17 @@ def data_provider(args, flag):
     if args.data == 'stock_custom_pred':
 
         data_set = Data(
-        root_path=args.root_path,
-        data_path=args.data_path,
-        flag=flag,
-        size=[args.seq_len, args.label_len, args.pred_len],
-        features=args.features,
-        target=args.target,
-        timeenc=timeenc,
-        freq=freq,
-        scale=args.scale,        #custom section dont worry about the 
-        prev_scaler=args.prev_scaler
-    )
+            root_path=args.root_path,
+            data_path=args.data_path,
+            flag=flag,
+            size=[args.seq_len, args.label_len, args.pred_len],
+            features=args.features,
+            target=args.target,
+            timeenc=timeenc,
+            freq=freq,
+            scale=args.scale,        #custom section dont worry about the 
+            prev_scaler=args.prev_scaler
+        )
         
     else:
         data_set = Data(

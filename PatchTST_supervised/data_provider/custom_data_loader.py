@@ -13,7 +13,7 @@ import pickle
 class Dataset_Custom_stock(Dataset):
     def __init__(self, root_path, flag='train', size=None,
                  features='MS', data_path='stock_000001.SZ.csv',
-                 target='close_pct_chg', scale=False, timeenc=1, freq='d', dt_format_str=0): 
+                 target='close_pct_chg', scale=0, timeenc=1, freq='d', dt_format_str=0): 
         
         # size [seq_len, label_len, pred_len]
         # info
@@ -139,7 +139,7 @@ class Dataset_Custom_stock_pred(Dataset):
 
     def __init__(self, root_path, flag='pred', size=None,
                 features='MS', data_path='stock_000001.SZ.csv',
-                target='close_pct_chg', scale=False, prev_scaler='None', inverse=False, timeenc=1, freq='d', dt_format_str=0, cols=None): 
+                target='close_pct_chg', scale=0, prev_scaler='None', inverse=False, timeenc=1, freq='d', dt_format_str=0, cols=None): 
 
 
         # size [seq_len, label_len, pred_len]
