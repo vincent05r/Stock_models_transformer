@@ -10,7 +10,7 @@ seq_len=100
 label_len=2 #reminder the label length is different to the predicted length, lead time(overlap) time between x(input) and y(label)
 model_name=PatchTST
 
-result_log_path=./result_log/result_sse.txt
+result_log_path=./result_log/result_sp500.txt
 
 root_path_name=./data/stock_benchmark/
 #data_path_name=stock_000001.SZ.csv
@@ -25,7 +25,7 @@ target=close
 
 scale=1
 
-full_path_n=./data/stock_benchmark/sse_index_spec_s.csv
+full_path_n=./data/stock_benchmark/sp500_index_pct_spec_s.csv
 
 data_path_name=$(basename $full_path_n)
 model_id_name="${data_path_name%.*}"
@@ -51,16 +51,16 @@ do
         --scale $scale\
         --target $target\
         --dt_format_str $dt_format_str\
-        --enc_in 9 \
+        --enc_in 12 \
         --e_layers 2 \
         --n_heads 4 \
-        --d_model 64 \
+        --d_model 128 \
         --d_ff 128 \
         --dropout 0.2\
         --fc_dropout 0.2\
         --head_dropout 0\
-        --patch_len 8\
-        --stride 4\
+        --patch_len 2\
+        --stride 1\
         --des 'Exp' \
         --train_epochs 100\
         --patience 10\

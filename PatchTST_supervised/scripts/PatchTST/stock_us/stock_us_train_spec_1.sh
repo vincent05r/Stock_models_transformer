@@ -19,7 +19,7 @@ data_name=stock_custom
 
 random_seed=2023
 
-scale=True
+scale=1
 
 full_path_n=./PatchTST_supervised/stock_data/stock_000001SZustd.csv
 
