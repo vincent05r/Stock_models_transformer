@@ -35,7 +35,7 @@ for seq_len in 7 15 30 50 100 200
 do
     for pred_len in 1
     do
-        python3.9 -u PatchTST_supervised/run_longExp.py \
+        python3 -u PatchTST_supervised/run_longExp.py \
         --result_log_path $result_log_path\
         --random_seed $random_seed \
         --is_training 1 \
