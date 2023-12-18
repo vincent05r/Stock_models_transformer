@@ -202,7 +202,7 @@ class Ecmp_encoder(nn.Module):
                         res_attention=False, n_layers=1, pre_norm=False, store_attn=False):
         super().__init__()
 
-        self.layers = nn.ModuleList([TSTEncoderLayer(q_len, d_model, n_heads=n_heads, d_k=d_k, d_v=d_v, d_ff=d_ff, norm=norm,
+        self.layers = nn.ModuleList([Ecmp_encoder_layer(q_len, d_model, n_heads=n_heads, d_k=d_k, d_v=d_v, d_ff=d_ff, norm=norm,
                                                       attn_dropout=attn_dropout, dropout=dropout,
                                                       activation=activation, res_attention=res_attention,
                                                       pre_norm=pre_norm, store_attn=store_attn) for i in range(n_layers)])
@@ -211,7 +211,7 @@ class Ecmp_encoder(nn.Module):
     def forward(self, src:Tensor, key_padding_mask:Optional[Tensor]=None, attn_mask:Optional[Tensor]=None):
         output = src
         scores = None
-        if self.res_attention:
+        if self.res_attention: # use residual connection for encoder block
             for mod in self.layers: output, scores = mod(output, prev=scores, key_padding_mask=key_padding_mask, attn_mask=attn_mask)
             return output
         else:
@@ -220,7 +220,7 @@ class Ecmp_encoder(nn.Module):
 
 
 
-class TSTEncoderLayer(nn.Module):
+class Ecmp_encoder_layer(nn.Module):  #TSTEncoderLayer
     def __init__(self, q_len, d_model, n_heads, d_k=None, d_v=None, d_ff=256, store_attn=False,
                  norm='BatchNorm', attn_dropout=0, dropout=0., bias=True, activation="gelu", res_attention=False, pre_norm=False):
         super().__init__()
