@@ -1,5 +1,23 @@
 __all__ = ['PatchTST_backbone']
 
+
+
+'''#todo 
+1. change Encoder_m_p, make sure it works ()
+    todo. check self.encoder(z) works, Ecmp_encoder ()
+1.5. check the forward procedures in the ecmp backbone
+2. change flatten head in the backbone
+3. change flatten head
+
+
+'''
+
+
+
+
+
+
+
 # Cell
 from typing import Callable, Optional
 import torch
@@ -9,12 +27,12 @@ import torch.nn.functional as F
 import numpy as np
 
 #from collections import OrderedDict
-from layers.PatchTST_layers import *
+from layers.EcmP_layers import *
 from layers.RevIN import RevIN
 
 # Cell
-class PatchTST_backbone(nn.Module):
-    def __init__(self, c_in:int, context_window:int, target_window:int, patch_len:int, stride:int, max_seq_len:Optional[int]=1024, 
+class EcmP_backbone(nn.Module): #PatchTST_backbone
+    def __init__(self, c_in:int, d_patch:int, context_window:int, target_window:int, patch_len:int, stride:int, max_seq_len:Optional[int]=1024, 
                  n_layers:int=3, d_model=128, n_heads=16, d_k:Optional[int]=None, d_v:Optional[int]=None,
                  d_ff:int=256, norm:str='BatchNorm', attn_dropout:float=0., dropout:float=0., act:str="gelu", key_padding_mask:bool='auto',
                  padding_var:Optional[int]=None, attn_mask:Optional[Tensor]=None, res_attention:bool=True, pre_norm:bool=False, store_attn:bool=False,
@@ -29,6 +47,11 @@ class PatchTST_backbone(nn.Module):
         if self.revin: self.revin_layer = RevIN(c_in, affine=affine, subtract_last=subtract_last)
         
         # Patching
+
+        #Ecmp
+        self.d_patch = d_patch
+        self.n_vars = c_in
+
         self.patch_len = patch_len
         self.stride = stride
         self.padding_patch = padding_patch
@@ -38,7 +61,7 @@ class PatchTST_backbone(nn.Module):
             patch_num += 1
         
         # Backbone #
-        self.backbone = TSTiEncoder(c_in, patch_num=patch_num, patch_len=patch_len, max_seq_len=max_seq_len,
+        self.backbone = Encoder_m_p(c_in, d_patch=self.d_patch, patch_num=patch_num, patch_len=patch_len, max_seq_len=max_seq_len,
                                 n_layers=n_layers, d_model=d_model, n_heads=n_heads, d_k=d_k, d_v=d_v, d_ff=d_ff,
                                 attn_dropout=attn_dropout, dropout=dropout, act=act, key_padding_mask=key_padding_mask, padding_var=padding_var,
                                 attn_mask=attn_mask, res_attention=res_attention, pre_norm=pre_norm, store_attn=store_attn,
@@ -46,7 +69,7 @@ class PatchTST_backbone(nn.Module):
 
         # Head
         self.head_nf = d_model * patch_num
-        self.n_vars = c_in
+
         self.pretrain_head = pretrain_head
         self.head_type = head_type
         self.individual = individual
@@ -149,7 +172,7 @@ class TSTiEncoder(nn.Module):  #i means channel-independent
         self.dropout = nn.Dropout(dropout)
 
         # Encoder
-        self.encoder = TSTEncoder(q_len, d_model, n_heads, d_k=d_k, d_v=d_v, d_ff=d_ff, norm=norm, attn_dropout=attn_dropout, dropout=dropout,
+        self.encoder = Ecmp_encoder(q_len, d_model, n_heads, d_k=d_k, d_v=d_v, d_ff=d_ff, norm=norm, attn_dropout=attn_dropout, dropout=dropout,
                                    pre_norm=pre_norm, activation=act, res_attention=res_attention, n_layers=n_layers, store_attn=store_attn)
 
         
@@ -173,7 +196,7 @@ class TSTiEncoder(nn.Module):  #i means channel-independent
             
     
 # Cell
-class TSTEncoder(nn.Module):
+class Ecmp_encoder(nn.Module):
     def __init__(self, q_len, d_model, n_heads, d_k=None, d_v=None, d_ff=None, 
                         norm='BatchNorm', attn_dropout=0., dropout=0., activation='gelu',
                         res_attention=False, n_layers=1, pre_norm=False, store_attn=False):
@@ -380,7 +403,7 @@ class _ScaledDotProductAttention(nn.Module):
 
 
 class Encoder_m_p(nn.Module):  # m means channel mixing, p means patching, using 2 stages patching techniques
-    def __init__(self, c_in, d_patch, n_vars,  patch_num, patch_len, max_seq_len=1024,
+    def __init__(self, c_in, d_patch, patch_num, patch_len, max_seq_len=1024,
                  n_layers=3, d_model=128, n_heads=16, d_k=None, d_v=None,
                  d_ff=256, norm='BatchNorm', attn_dropout=0., dropout=0., act="gelu", store_attn=False,
                  key_padding_mask='auto', padding_var=None, attn_mask=None, res_attention=True, pre_norm=False,
@@ -401,8 +424,8 @@ class Encoder_m_p(nn.Module):  # m means channel mixing, p means patching, using
         #todo  setup d_patch, n_vars
 
         self.d_patch = d_patch
-        self.n_vars = n_vars
-        self.flatten_len = n_vars * d_patch
+        self.n_vars = c_in
+        self.flatten_len = c_in * d_patch
 
         self.w_patch_indv = torch.nn.Linear(patch_len, d_patch)
 
@@ -419,7 +442,7 @@ class Encoder_m_p(nn.Module):  # m means channel mixing, p means patching, using
         self.dropout = nn.Dropout(dropout)
 
         # Encoder
-        self.encoder = TSTEncoder(q_len, d_model, n_heads, d_k=d_k, d_v=d_v, d_ff=d_ff, norm=norm, attn_dropout=attn_dropout, dropout=dropout,
+        self.encoder = Ecmp_encoder(q_len, d_model, n_heads, d_k=d_k, d_v=d_v, d_ff=d_ff, norm=norm, attn_dropout=attn_dropout, dropout=dropout,
                                    pre_norm=pre_norm, activation=act, res_attention=res_attention, n_layers=n_layers, store_attn=store_attn)
 
         
@@ -428,13 +451,19 @@ class Encoder_m_p(nn.Module):  # m means channel mixing, p means patching, using
         #n_vars = x.shape[1]
         # Input encoding
         x = x.permute(0,3,1,2)                                                   # x: [bs x patch_num x nvars x patch_len]
-        x = self.W_P(x)                                                          # x: [bs x nvars x patch_num x d_model]
+        x = self.w_patch_indv(x)                                                 # x: [bs x patch_num x nvars x d_patch]        #individual level patching
 
-        u = torch.reshape(x, (x.shape[0]*x.shape[1],x.shape[2],x.shape[3]))      # u: [bs * nvars x patch_num x d_model] channel independent here
-        u = self.dropout(u + self.W_pos)                                         # u: [bs * nvars x patch_num x d_model]
+        u = torch.reshape(x, (x.shape[0], x.shape[1], x.shape[2] * x.shape[3]))  # u: [bs x patch_num x nvars * d_patch]   flatten the individual patch and channel mixing.
+        u = self.w_channel_m(u)                                                  # u: [bs x patch_num x d_model]     #channel level patching,, 2 stages representation learning   
 
-        # Encoder
-        z = self.encoder(u)                                                      # z: [bs * nvars x patch_num x d_model]
+        # archive #u = torch.reshape(x, (x.shape[0]*x.shape[1],x.shape[2],x.shape[3]))      # u: [bs * nvars x patch_num x d_model] channel independent here
+
+        u = self.dropout(u + self.W_pos)                                         # u: [bs x patch_num x d_model]
+
+        # Encoder #todo, check encoder works
+        z = self.encoder(u)                                                      # cur: z: [bs x patch_num x d_model]           orig: z: [bs * nvars x patch_num x d_model]
+
+        #todo, edit this part so the loss calculation is compatible
         z = torch.reshape(z, (-1,self.n_vars ,z.shape[-2],z.shape[-1]))                # z: [bs x nvars x patch_num x d_model]
         z = z.permute(0,1,3,2)                                                   # z: [bs x nvars x d_model x patch_num]
         
