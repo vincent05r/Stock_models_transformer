@@ -5,10 +5,12 @@ __all__ = ['PatchTST_backbone']
 '''#todo 
 1. change Encoder_m_p, make sure it works ()
     todo. check self.encoder(z) works, Ecmp_encoder ()
+    change the permute
 1.5. check the forward procedures in the ecmp backbone
-2. change flatten head in the backbone
+2. change flatten head in the EcmP_backbone
 3. change flatten head
 
+4. solve the revin in Ecmp_backbone
 
 '''
 
@@ -77,7 +79,7 @@ class EcmP_backbone(nn.Module): #PatchTST_backbone
         if self.pretrain_head: 
             self.head = self.create_pretrain_head(self.head_nf, c_in, fc_dropout) # custom head passed as a partial func with all its kwargs
         elif head_type == 'flatten': 
-            self.head = Flatten_Head(self.individual, self.n_vars, self.head_nf, target_window, head_dropout=head_dropout)
+            self.head = Flatten_Head_EcmP(self.individual, self.n_vars, self.head_nf, target_window, head_dropout=head_dropout)
         
     
     def forward(self, z):                                                                   # z: [bs x nvars x seq_len]
@@ -94,8 +96,8 @@ class EcmP_backbone(nn.Module): #PatchTST_backbone
         z = z.permute(0,1,3,2)                                                              # z: [bs x nvars x patch_len x patch_num]
         
         # model
-        z = self.backbone(z)                                                                # z: [bs x nvars x d_model x patch_num]
-        z = self.head(z)                                                                    # z: [bs x nvars x target_window] 
+        z = self.backbone(z)                                                                # z: [bs x d_model x patch_num]
+        z = self.head(z)                                                                    # z: [bs x target_window] 
         
         # denorm
         if self.revin: 
@@ -110,40 +112,53 @@ class EcmP_backbone(nn.Module): #PatchTST_backbone
                     )
 
 
-class Flatten_Head(nn.Module):
+class Flatten_Head_EcmP(nn.Module):
     def __init__(self, individual, n_vars, nf, target_window, head_dropout=0):
         super().__init__()
         
         self.individual = individual
         self.n_vars = n_vars
+
+        self.Ecmp_flatten = nn.Flatten(start_dim=1, end_dim=-1)
+        self.linear = nn.Linear(nf, target_window)
+        self.dropout = nn.Dropout(head_dropout)
         
-        if self.individual:
-            self.linears = nn.ModuleList()
-            self.dropouts = nn.ModuleList()
-            self.flattens = nn.ModuleList()
-            for i in range(self.n_vars):
-                self.flattens.append(nn.Flatten(start_dim=-2))
-                self.linears.append(nn.Linear(nf, target_window))
-                self.dropouts.append(nn.Dropout(head_dropout))
-        else:
-            self.flatten = nn.Flatten(start_dim=-2)
-            self.linear = nn.Linear(nf, target_window)
-            self.dropout = nn.Dropout(head_dropout)
+        # if self.individual:
+        #     self.linears = nn.ModuleList()
+        #     self.dropouts = nn.ModuleList()
+        #     self.flattens = nn.ModuleList()
+        #     for i in range(self.n_vars):
+        #         self.flattens.append(nn.Flatten(start_dim=-2))
+        #         self.linears.append(nn.Linear(nf, target_window))
+        #         self.dropouts.append(nn.Dropout(head_dropout))
+        # else:
+        #     self.flatten = nn.Flatten(start_dim=-2)
+        #     self.linear = nn.Linear(nf, target_window)
+        #     self.dropout = nn.Dropout(head_dropout)
             
-    def forward(self, x):                                 # x: [bs x nvars x d_model x patch_num]
-        if self.individual:
-            x_out = []
-            for i in range(self.n_vars):
-                z = self.flattens[i](x[:,i,:,:])          # z: [bs x d_model * patch_num]
-                z = self.linears[i](z)                    # z: [bs x target_window]
-                z = self.dropouts[i](z)
-                x_out.append(z)
-            x = torch.stack(x_out, dim=1)                 # x: [bs x nvars x target_window]
-        else:
-            x = self.flatten(x)
-            x = self.linear(x)
-            x = self.dropout(x)
-        return x
+    def forward(self, x):                                 # x: [bs x d_model x patch_num]
+
+
+        # if self.individual:
+        #     x_out = []
+        #     for i in range(self.n_vars):
+        #         z = self.flattens[i](x[:,i,:,:])          # z: [bs x d_model * patch_num]
+        #         z = self.linears[i](z)                    # z: [bs x target_window]
+        #         z = self.dropouts[i](z)
+        #         x_out.append(z)
+        #     x = torch.stack(x_out, dim=1)                 # x: [bs x nvars x target_window]
+        # else:
+        #     x = self.flatten(x)
+        #     x = self.linear(x)
+        #     x = self.dropout(x)
+
+
+        x = self.Ecmp_flatten(x)
+        x = self.linear(x)
+        x = self.dropout(x)
+
+
+        return x          
         
         
     
@@ -464,7 +479,10 @@ class Encoder_m_p(nn.Module):  # m means channel mixing, p means patching, using
         z = self.encoder(u)                                                      # cur: z: [bs x patch_num x d_model]           orig: z: [bs * nvars x patch_num x d_model]
 
         #todo, edit this part so the loss calculation is compatible
-        z = torch.reshape(z, (-1,self.n_vars ,z.shape[-2],z.shape[-1]))                # z: [bs x nvars x patch_num x d_model]
-        z = z.permute(0,1,3,2)                                                   # z: [bs x nvars x d_model x patch_num]
+        # z = torch.reshape(z, (-1,self.n_vars ,z.shape[-2],z.shape[-1]))                # z: [bs x nvars x patch_num x d_model]
+
+
+        #todo, change this
+        z = z.permute(0,2,1)                                                   # current z: [bs x d_model x patch_num]                 orig z: [bs x nvars x d_model x patch_num]
         
         return z   
