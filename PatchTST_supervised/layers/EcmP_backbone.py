@@ -100,7 +100,7 @@ class EcmP_backbone(nn.Module): #PatchTST_backbone
         z = self.head(z)                                                                    # z: [bs x target_window] 
         
         #temp for denorm and others
-        z = z.reshape(z, (z.shape[0], z.shape[1], 1) )                                     # z: [bs x target_window x 1] 
+        z = torch.reshape(z, (z.shape[0], z.shape[1], 1) )                                     # z: [bs x target_window x 1] 
 
         # denorm
         if self.revin: 
