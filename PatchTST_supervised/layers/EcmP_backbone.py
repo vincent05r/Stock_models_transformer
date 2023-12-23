@@ -10,7 +10,7 @@ __all__ = ['PatchTST_backbone']
 2. change flatten head in the EcmP_backbone
 3. change flatten head
 
-4. solve the revin in Ecmp_backbone
+4. solve the revin in Ecmp_backbone 
 
 '''
 
@@ -85,9 +85,9 @@ class EcmP_backbone(nn.Module): #PatchTST_backbone
     def forward(self, z):                                                                   # z: [bs x nvars x seq_len]
         # norm
         if self.revin: 
-            z = z.permute(0,2,1)
+            z = z.permute(0,2,1)                                                            # z: [bs x seq_len x nvars]
             z = self.revin_layer(z, 'norm')
-            z = z.permute(0,2,1)
+            z = z.permute(0,2,1)                                                            # z: [bs x nvars x seq_len]
             
         # do patching
         if self.padding_patch == 'end':
@@ -99,6 +99,9 @@ class EcmP_backbone(nn.Module): #PatchTST_backbone
         z = self.backbone(z)                                                                # z: [bs x d_model x patch_num]
         z = self.head(z)                                                                    # z: [bs x target_window] 
         
+        #temp for denorm and others
+        z = z.reshape(z, (z.shape[0], z.shape[1], 1) )                                     # z: [bs x target_window x 1] 
+
         # denorm
         if self.revin: 
             z = z.permute(0,2,1)
