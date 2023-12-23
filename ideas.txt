@@ -1,0 +1,1 @@
+1. use different series decomposition techniques for representation learning in EcmP, instead of the linear layers.
