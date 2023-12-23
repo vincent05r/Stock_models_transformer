@@ -51,7 +51,7 @@ do
         --scale $scale\
         --target $target\
         --dt_format_str $dt_format_str\
-        --enc_in 12 \
+        --enc_in 9 \
         --e_layers 2 \
         --n_heads 4 \
         --d_model 256 \
@@ -59,7 +59,7 @@ do
         --dropout 0.1\
         --fc_dropout 0.1\
         --head_dropout 0\
-        --patch_len 6\
+        --patch_len 5\
         --stride 1\
         --des 'Exp' \
         --train_epochs 100\
