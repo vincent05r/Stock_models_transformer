@@ -34,8 +34,8 @@ from layers.RevIN import RevIN
 
 # Cell
 class EcmP_backbone(nn.Module): #PatchTST_backbone
-    def __init__(self, c_in:int, d_patch:int, context_window:int, target_window:int, patch_len:int, stride:int, max_seq_len:Optional[int]=1024, 
-                 n_layers:int=3, d_model=128, n_heads=16, d_k:Optional[int]=None, d_v:Optional[int]=None,
+    def __init__(self, c_in:int, context_window:int, target_window:int, patch_len:int, stride:int, max_seq_len:Optional[int]=1024, 
+                 n_layers:int=3, d_model=128, d_patch:int=64, n_heads=16, d_k:Optional[int]=None, d_v:Optional[int]=None,
                  d_ff:int=256, norm:str='BatchNorm', attn_dropout:float=0., dropout:float=0., act:str="gelu", key_padding_mask:bool='auto',
                  padding_var:Optional[int]=None, attn_mask:Optional[Tensor]=None, res_attention:bool=True, pre_norm:bool=False, store_attn:bool=False,
                  pe:str='zeros', learn_pe:bool=True, fc_dropout:float=0., head_dropout = 0, padding_patch = None,
@@ -63,8 +63,8 @@ class EcmP_backbone(nn.Module): #PatchTST_backbone
             patch_num += 1
         
         # Backbone #
-        self.backbone = Encoder_m_p(c_in, d_patch=self.d_patch, patch_num=patch_num, patch_len=patch_len, max_seq_len=max_seq_len,
-                                n_layers=n_layers, d_model=d_model, n_heads=n_heads, d_k=d_k, d_v=d_v, d_ff=d_ff,
+        self.backbone = Encoder_m_p(c_in, patch_num=patch_num, patch_len=patch_len, max_seq_len=max_seq_len,
+                                n_layers=n_layers, d_model=d_model, d_patch=self.d_patch, n_heads=n_heads, d_k=d_k, d_v=d_v, d_ff=d_ff,
                                 attn_dropout=attn_dropout, dropout=dropout, act=act, key_padding_mask=key_padding_mask, padding_var=padding_var,
                                 attn_mask=attn_mask, res_attention=res_attention, pre_norm=pre_norm, store_attn=store_attn,
                                 pe=pe, learn_pe=learn_pe, verbose=verbose, **kwargs)
@@ -104,9 +104,8 @@ class EcmP_backbone(nn.Module): #PatchTST_backbone
 
         # denorm
         if self.revin: 
-            z = z.permute(0,2,1)
             z = self.revin_layer(z, 'denorm')
-            z = z.permute(0,2,1)
+            z = z.permute(0,2,1)                                                               # z: [bs x 1 x target_window]  
         return z
     
     def create_pretrain_head(self, head_nf, vars, dropout):
@@ -421,8 +420,8 @@ class _ScaledDotProductAttention(nn.Module):
 
 
 class Encoder_m_p(nn.Module):  # m means channel mixing, p means patching, using 2 stages patching techniques
-    def __init__(self, c_in, d_patch, patch_num, patch_len, max_seq_len=1024,
-                 n_layers=3, d_model=128, n_heads=16, d_k=None, d_v=None,
+    def __init__(self, c_in, patch_num, patch_len, max_seq_len=1024,
+                 n_layers=3, d_model=128, d_patch=64, n_heads=16, d_k=None, d_v=None,
                  d_ff=256, norm='BatchNorm', attn_dropout=0., dropout=0., act="gelu", store_attn=False,
                  key_padding_mask='auto', padding_var=None, attn_mask=None, res_attention=True, pre_norm=False,
                  pe='zeros', learn_pe=True, verbose=False, **kwargs):
