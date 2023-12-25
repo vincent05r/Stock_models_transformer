@@ -1,0 +1,18 @@
+sp500_index_pct_spec_s_7_1_PatchTST_stock_custom_ftMS_sl7_ll2_pl1_dm256_nh4_el2_dl1_df256_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.01207377202808857, mae:0.07153332978487015, mape:0.025846822187304497, rse:0.15588580071926117
+
+sp500_index_pct_spec_s_15_1_PatchTST_stock_custom_ftMS_sl15_ll2_pl1_dm256_nh4_el2_dl1_df256_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.012596326880156994, mae:0.07103466987609863, mape:0.025741031393408775, rse:0.15922345221042633
+
+sp500_index_pct_spec_s_30_1_PatchTST_stock_custom_ftMS_sl30_ll2_pl1_dm256_nh4_el2_dl1_df256_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.012984747998416424, mae:0.0718342661857605, mape:0.026052013039588928, rse:0.16165973246097565
+
+sp500_index_pct_spec_s_50_1_PatchTST_stock_custom_ftMS_sl50_ll2_pl1_dm256_nh4_el2_dl1_df256_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.012553268112242222, mae:0.07218783348798752, mape:0.025853026658296585, rse:0.15895108878612518
+
+sp500_index_pct_spec_s_100_1_PatchTST_stock_custom_ftMS_sl100_ll2_pl1_dm256_nh4_el2_dl1_df256_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.014389579184353352, mae:0.08157053589820862, mape:0.02917875163257122, rse:0.17018023133277893
+
+sp500_index_pct_spec_s_200_1_PatchTST_stock_custom_ftMS_sl200_ll2_pl1_dm256_nh4_el2_dl1_df256_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.014678084291517735, mae:0.08237509429454803, mape:0.028768595308065414, rse:0.17187780141830444
+

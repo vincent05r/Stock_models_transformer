@@ -1,1 +1,10 @@
 1. use different series decomposition techniques for representation learning in EcmP, instead of the linear layers.
+
+
+
+
+
+observations
+1. the d_patch has to be suitable for the different sequence length. Due to the representation learning capability.
+2. so does the d_model
+3. in a suitable case it outperforms PatchTST

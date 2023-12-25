@@ -1,0 +1,57 @@
+sp500_index_pct_spec_s_7_1_EcmP_stock_custom_ftMS_sl7_ll2_pl1_dm256_nh4_el2_dl1_df256_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.013456454500555992, mae:0.07290728390216827, mape:0.026456288993358612, rse:0.1645698994398117
+
+sp500_index_pct_spec_s_15_1_EcmP_stock_custom_ftMS_sl15_ll2_pl1_dm256_nh4_el2_dl1_df256_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.01405114121735096, mae:0.0752130001783371, mape:0.027030518278479576, rse:0.16816702485084534
+
+sp500_index_pct_spec_s_30_1_EcmP_stock_custom_ftMS_sl30_ll2_pl1_dm256_nh4_el2_dl1_df256_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.015261733904480934, mae:0.07891800999641418, mape:0.02838168479502201, rse:0.1752616912126541
+
+sp500_index_pct_spec_s_50_1_EcmP_stock_custom_ftMS_sl50_ll2_pl1_dm256_nh4_el2_dl1_df256_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.015283562242984772, mae:0.08542241901159286, mape:0.030274853110313416, rse:0.17538699507713318
+
+sp500_index_pct_spec_s_100_1_EcmP_stock_custom_ftMS_sl100_ll2_pl1_dm256_nh4_el2_dl1_df256_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.023959727957844734, mae:0.10369159281253815, mape:0.036338821053504944, rse:0.21959681808948517
+
+sp500_index_pct_spec_s_200_1_EcmP_stock_custom_ftMS_sl200_ll2_pl1_dm256_nh4_el2_dl1_df256_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.02823586016893387, mae:0.11936324089765549, mape:0.04097534343600273, rse:0.23838865756988525
+
+sp500_index_pct_spec_s_7_1_EcmP_stock_custom_ftMS_sl7_ll2_pl1_dm256_nh4_el2_dl1_df256_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.014747612178325653, mae:0.07551174610853195, mape:0.02739301137626171, rse:0.17228439450263977
+
+sp500_index_pct_spec_s_15_1_EcmP_stock_custom_ftMS_sl15_ll2_pl1_dm256_nh4_el2_dl1_df256_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.01488342322409153, mae:0.07692621648311615, mape:0.027858590707182884, rse:0.1730758547782898
+
+sp500_index_pct_spec_s_30_1_EcmP_stock_custom_ftMS_sl30_ll2_pl1_dm256_nh4_el2_dl1_df256_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.014114553108811378, mae:0.0771317332983017, mape:0.02770945616066456, rse:0.16854608058929443
+
+sp500_index_pct_spec_s_50_1_EcmP_stock_custom_ftMS_sl50_ll2_pl1_dm256_nh4_el2_dl1_df256_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.01844027079641819, mae:0.08541328459978104, mape:0.03087305650115013, rse:0.19264987111091614
+
+sp500_index_pct_spec_s_100_1_EcmP_stock_custom_ftMS_sl100_ll2_pl1_dm256_nh4_el2_dl1_df256_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.018862074241042137, mae:0.0929073691368103, mape:0.032660529017448425, rse:0.19484074413776398
+
+sp500_index_pct_spec_s_200_1_EcmP_stock_custom_ftMS_sl200_ll2_pl1_dm256_nh4_el2_dl1_df256_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.023454736918210983, mae:0.11045251786708832, mape:0.037499818950891495, rse:0.21727029979228973
+
+sp500_index_pct_spec_s_7_1_EcmP_stock_custom_ftMS_sl7_ll2_pl1_dm256_nh4_el2_dl1_df256_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.013558560982346535, mae:0.07316777855157852, mape:0.02646210603415966, rse:0.1651930958032608
+
+sp500_index_pct_spec_s_7_1_EcmP_stock_custom_ftMS_sl7_ll2_pl1_dm128_nh4_el2_dl1_df256_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.013089437037706375, mae:0.07128512859344482, mape:0.025580717250704765, rse:0.16231010854244232
+
+sp500_index_pct_spec_s_15_1_EcmP_stock_custom_ftMS_sl15_ll2_pl1_dm128_nh4_el2_dl1_df256_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.014723881147801876, mae:0.07681030035018921, mape:0.02812964841723442, rse:0.17214572429656982
+
+sp500_index_pct_spec_s_30_1_EcmP_stock_custom_ftMS_sl30_ll2_pl1_dm128_nh4_el2_dl1_df256_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.016085036098957062, mae:0.07773490250110626, mape:0.02843375690281391, rse:0.17992688715457916
+
+sp500_index_pct_spec_s_50_1_EcmP_stock_custom_ftMS_sl50_ll2_pl1_dm128_nh4_el2_dl1_df256_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.017375774681568146, mae:0.08771379292011261, mape:0.031379759311676025, rse:0.18700669705867767
+
+sp500_index_pct_spec_s_100_1_EcmP_stock_custom_ftMS_sl100_ll2_pl1_dm128_nh4_el2_dl1_df256_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.02107011340558529, mae:0.09682909399271011, mape:0.0343421995639801, rse:0.2059294879436493
+
+sp500_index_pct_spec_s_200_1_EcmP_stock_custom_ftMS_sl200_ll2_pl1_dm128_nh4_el2_dl1_df256_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.021846208721399307, mae:0.10646618902683258, mape:0.03668311610817909, rse:0.20968776941299438
+
