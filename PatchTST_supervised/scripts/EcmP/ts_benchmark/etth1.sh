@@ -34,8 +34,8 @@ do
       --enc_in 7 \
       --e_layers 3 \
       --n_heads 4 \
-      --d_model 64 \
-      --d_patch 32 \
+      --d_model 16 \
+      --d_patch 16 \
       --d_ff 128 \
       --dropout 0.3\
       --fc_dropout 0.3\

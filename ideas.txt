@@ -9,3 +9,5 @@ observations
 2. so does the d_model
 3. in a suitable case it outperforms PatchTST
 4. Testing the trailing padding modes
+
+5. check positional encoding and if it works
