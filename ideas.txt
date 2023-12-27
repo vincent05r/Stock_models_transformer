@@ -11,3 +11,4 @@ observations
 4. Testing the trailing padding modes
 
 5. check positional encoding and if it works
+    both PatchTST and EcmP have performance gain without the positional encoding
