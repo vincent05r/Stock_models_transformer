@@ -50,7 +50,7 @@ def data_provider(args, flag):
             prev_scaler=args.prev_scaler
         )
         
-    else:
+    elif args.data == 'stock_custom': 
         data_set = Data(
             root_path=args.root_path,
             data_path=args.data_path,
@@ -63,6 +63,20 @@ def data_provider(args, flag):
             scale=args.scale,        #custom section dont worry about the 
             dt_format_str=args.dt_format_str
         )
+    
+    else: #default
+
+        data_set = Data(
+        root_path=args.root_path,
+        data_path=args.data_path,
+        flag=flag,
+        size=[args.seq_len, args.label_len, args.pred_len],
+        features=args.features,
+        target=args.target,
+        timeenc=timeenc,
+        freq=freq
+        )
+        
 
     print(flag, len(data_set))
     data_loader = DataLoader(

@@ -8,7 +8,10 @@ fi
 seq_len=336
 model_name=PatchTST
 
-root_path_name=./dataset/
+#extras
+result_log_path=./result_log/PatchTST/etth1.txt
+
+root_path_name=./data/Ett
 data_path_name=ETTh1.csv
 model_id_name=ETTh1
 data_name=ETTh1
@@ -16,7 +19,7 @@ data_name=ETTh1
 random_seed=2021
 for pred_len in 96 192 336 720
 do
-    python -u run_longExp.py \
+    python3 -u PatchTST_supervised/run_longExp.py \
       --random_seed $random_seed \
       --is_training 1 \
       --root_path $root_path_name \
