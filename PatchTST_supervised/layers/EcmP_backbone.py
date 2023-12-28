@@ -1,4 +1,4 @@
-__all__ = ['PatchTST_backbone']
+__all__ = ['EcmP_backbone']
 
 
 
