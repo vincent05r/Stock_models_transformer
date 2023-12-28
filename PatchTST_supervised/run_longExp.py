@@ -28,11 +28,11 @@ if __name__ == '__main__':
     parser.add_argument('--data_path', type=str, default='stock_000001.SZ.csv', help='data file')
     parser.add_argument('--features', type=str, default='MS',
                         help='forecasting task, options:[M, S, MS]; M:multivariate predict multivariate, S:univariate predict univariate, MS:multivariate predict univariate')
-    parser.add_argument('--target', type=str, default='close_pct_chg', help='target feature in S or MS task')
+    parser.add_argument('--target', type=str, default='OT', help='target feature in S or MS task')
     parser.add_argument('--freq', type=str, default='d',
                         help='freq for time features encoding, options:[s:secondly, t:minutely, h:hourly, d:daily, b:business days, w:weekly, m:monthly], you can also use more detailed freq like 15min or 3h')
     parser.add_argument('--checkpoints', type=str, default='./checkpoints/', help='location of model checkpoints')
-    parser.add_argument('--scale', type=int, default=0, help='if use z-score scaler for dataset using std and mean of training set, 1 is true, 0 is false')
+    parser.add_argument('--scale', type=int, default=1, help='if use z-score scaler for dataset using std and mean of training set, 1 is true, 0 is false')
     parser.add_argument('--dt_format_str', type=int, default=0, help='the format string for pandas datetime, 0 means use default')
 
     #prediction  

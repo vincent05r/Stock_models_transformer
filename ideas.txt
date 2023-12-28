@@ -12,3 +12,5 @@ observations
 
 5. check positional encoding and if it works
     both PatchTST and EcmP have performance gain without the positional encoding
+
+6. test scaling and check if it affects performance
