@@ -20,6 +20,7 @@ random_seed=2021
 for pred_len in 96 192 336 720
 do
     python3.9 -u PatchTST_supervised/run_longExp.py \
+      --decomposition 1\
       --result_log_path $result_log_path\
       --random_seed $random_seed \
       --is_training 1 \
@@ -34,8 +35,8 @@ do
       --enc_in 7 \
       --e_layers 3 \
       --n_heads 4 \
-      --d_model 16 \
-      --d_patch 16 \
+      --d_model 64 \
+      --d_patch 32 \
       --d_ff 128 \
       --dropout 0.3\
       --fc_dropout 0.3\
