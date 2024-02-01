@@ -36,6 +36,7 @@ do
     for pred_len in 1
     do
         python3 -u PatchTST_supervised/run_longExp.py \
+        --decomposition 1\
         --result_log_path $result_log_path\
         --random_seed $random_seed \
         --is_training 1 \
