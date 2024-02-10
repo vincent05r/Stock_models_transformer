@@ -6,10 +6,10 @@ if [ ! -d "./logs/LongForecasting" ]; then
     mkdir ./logs/LongForecasting
 fi
 seq_len=336
-model_name=PatchTST
+model_name=EcmP
 
 #extras
-result_log_path=./result_log/PatchTST/weather.txt
+result_log_path=./result_log/EcmP/weather.txt
 
 root_path_name=./data/ts_benchmark
 data_path_name=weather.csv
@@ -35,6 +35,7 @@ do
       --e_layers 3 \
       --n_heads 16 \
       --d_model 128 \
+      --d_patch 32 \
       --d_ff 256 \
       --dropout 0.2\
       --fc_dropout 0.2\

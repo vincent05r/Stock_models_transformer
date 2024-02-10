@@ -12,6 +12,10 @@ __all__ = ['EcmP_backbone']
 
 4. solve the revin in Ecmp_backbone 
 
+
+
+stage 1 conclusion: everything above should work, testing. Completion date: 2024/01/01, testing start date 2024/02/01
+
 '''
 
 
