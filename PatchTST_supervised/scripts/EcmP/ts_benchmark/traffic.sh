@@ -19,7 +19,7 @@ data_name=custom
 random_seed=2021
 for pred_len in 96 192 336 720
 do
-    python3.9 -u PatchTST_supervised/run_longExp.py \
+    python -u PatchTST_supervised/run_longExp.py \
       --result_log_path $result_log_path \
       --random_seed $random_seed \
       --is_training 1 \
@@ -32,10 +32,10 @@ do
       --seq_len $seq_len \
       --pred_len $pred_len \
       --enc_in 862 \
-      --e_layers 3 \
-      --n_heads 16 \
-      --d_model 128 \
-      --d_patch 32 \
+      --e_layers 2 \
+      --n_heads 4 \
+      --d_model 64 \
+      --d_patch 16 \
       --d_ff 256 \
       --dropout 0.2\
       --fc_dropout 0.2\

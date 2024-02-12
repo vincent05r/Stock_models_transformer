@@ -382,13 +382,18 @@ class Encoder_m_p(nn.Module):  # m means channel mixing, p means patching, using
                  n_layers=3, d_model=128, d_patch=64, n_heads=16, d_k=None, d_v=None,
                  d_ff=256, norm='BatchNorm', attn_dropout=0., dropout=0., act="gelu", store_attn=False,
                  key_padding_mask='auto', padding_var=None, attn_mask=None, res_attention=True, pre_norm=False,
-                 pe='zeros', learn_pe=True, verbose=False, **kwargs):
+                 pe='zeros', learn_pe=True, verbose=False, rfft=True, **kwargs):
         
         
         super().__init__()
         
         self.patch_num = patch_num
         self.patch_len = patch_len
+
+        #fast fourier transform implementation
+        self.rfft = rfft #torch rfft transform
+        if self.rfft:
+            self.rfft_w_patch_indv = torch.nn.Linear( 2 * ((patch_len//2)+1), d_patch)
         
         # Input encoding
         q_len = patch_num
@@ -426,7 +431,19 @@ class Encoder_m_p(nn.Module):  # m means channel mixing, p means patching, using
         #n_vars = x.shape[1]
         # Input encoding
         x = x.permute(0,3,1,2)                                                   # x: [bs x patch_num x nvars x patch_len]
-        x = self.w_patch_indv(x)                                                 # x: [bs x patch_num x nvars x d_patch]        #individual level patching
+
+        if self.rfft:
+            #do the rfft
+            x_rfft = torch.fft.rfft(x, dim=-1)
+            x_rfft_r = x_rfft.real
+            x_rfft_i = x_rfft.imag
+
+            x_rfft_c = torch.cat((x_rfft_r, x_rfft_i), dim=-1)
+
+            x = self.rfft_w_patch_indv(x_rfft_c)
+
+        else:
+            x = self.w_patch_indv(x)                                                 # x: [bs x patch_num x nvars x d_patch]        #individual level patching
 
         u = torch.reshape(x, (x.shape[0], x.shape[1], x.shape[2] * x.shape[3]))  # u: [bs x patch_num x nvars * d_patch]   flatten the individual patch and channel mixing.
         u = self.w_channel_m(u)                                                  # u: [bs x patch_num x d_model]     #channel level patching,, 2 stages representation learning   
