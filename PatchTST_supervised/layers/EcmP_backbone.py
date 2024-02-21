@@ -382,7 +382,7 @@ class Encoder_m_p(nn.Module):  # m means channel mixing, p means patching, using
                  n_layers=3, d_model=128, d_patch=64, n_heads=16, d_k=None, d_v=None,
                  d_ff=256, norm='BatchNorm', attn_dropout=0., dropout=0., act="gelu", store_attn=False,
                  key_padding_mask='auto', padding_var=None, attn_mask=None, res_attention=True, pre_norm=False,
-                 pe='zeros', learn_pe=True, verbose=False, rfft=True, **kwargs):
+                 pe='zeros', learn_pe=True, verbose=False, fft='fft', **kwargs):
         
         
         super().__init__()
@@ -391,9 +391,11 @@ class Encoder_m_p(nn.Module):  # m means channel mixing, p means patching, using
         self.patch_len = patch_len
 
         #fast fourier transform implementation
-        self.rfft = rfft #torch rfft transform
-        if self.rfft:
-            self.rfft_w_patch_indv = torch.nn.Linear( 2 * ((patch_len//2)+1), d_patch)
+        self.fft = fft #torch rfft/fft transform, parameters False, fft, rfft
+        if self.fft == 'rfft':
+            self.rfft_w_patch_indv = torch.nn.Linear( 2 * ((self.patch_len//2)+1), d_patch)
+        elif self.fft == 'fft':
+            self.fft_w_patch_indv = torch.nn.Linear( 2 * self.patch_len, d_patch)
         
         # Input encoding
         q_len = patch_num
@@ -432,7 +434,7 @@ class Encoder_m_p(nn.Module):  # m means channel mixing, p means patching, using
         # Input encoding
         x = x.permute(0,3,1,2)                                                   # x: [bs x patch_num x nvars x patch_len]
 
-        if self.rfft:
+        if self.fft == 'rfft':
             #do the rfft
             x_rfft = torch.fft.rfft(x, dim=-1)
             x_rfft_r = x_rfft.real
@@ -441,6 +443,15 @@ class Encoder_m_p(nn.Module):  # m means channel mixing, p means patching, using
             x_rfft_c = torch.cat((x_rfft_r, x_rfft_i), dim=-1)
 
             x = self.rfft_w_patch_indv(x_rfft_c)
+        
+        elif self.fft == 'fft':
+            x_fft = torch.fft.fft(x, dim=-1)
+            x_fft_r = x_fft.real
+            x_fft_i = x_fft.imag
+
+            x_fft_c = torch.cat((x_fft_r, x_fft_i), dim=-1)
+
+            x = self.fft_w_patch_indv(x_fft_c)
 
         else:
             x = self.w_patch_indv(x)                                                 # x: [bs x patch_num x nvars x d_patch]        #individual level patching
