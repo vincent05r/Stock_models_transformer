@@ -55,8 +55,8 @@ do
         --enc_in 9 \
         --e_layers 2 \
         --n_heads 4 \
-        --d_patch 64 \
-        --d_model 256 \
+        --d_patch 32 \
+        --d_model 128 \
         --d_ff 256 \
         --dropout 0.1\
         --fc_dropout 0.1\
