@@ -57,7 +57,7 @@ do
         --n_heads 4 \
         --d_patch 32 \
         --d_model 128 \
-        --d_ff 256 \
+        --d_ff 128 \
         --dropout 0.1\
         --fc_dropout 0.1\
         --head_dropout 0\
@@ -68,6 +68,6 @@ do
         --patience 10\
         --lradj 'TST'\
         --pct_start 0.2\
-        --itr 1 --batch_size 32 --learning_rate 0.0001 >logs/LongForecasting/$model_name'_'$model_id_name'_'$seq_len'_'$pred_len.log 
+        --itr 1 --batch_size 32 --learning_rate 0.00001 >logs/LongForecasting/$model_name'_'$model_id_name'_'$seq_len'_'$pred_len.log 
     done
 done
