@@ -19,7 +19,7 @@ data_name=custom
 random_seed=2021
 for pred_len in 96 192 336 720
 do
-    python3.9 -u PatchTST_supervised/run_longExp.py \
+    python3.9 -u EcmP_supervised/run_longExp.py \
       --decomposition 1\
       --result_log_path $result_log_path\
       --random_seed $random_seed \
