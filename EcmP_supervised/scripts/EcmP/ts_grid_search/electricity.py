@@ -1,7 +1,7 @@
 import os 
 import subprocess
 from pathlib import Path
-
+import sys
 
 import numpy as np
 import pandas as pd
@@ -9,7 +9,7 @@ import pandas as pd
 
 #result grid
 result_list = []
-
+result_grid_path = "./result_log/EcmP/electricity_result_grid.txt"
 
 
 #Directory 
@@ -64,7 +64,7 @@ e_layers_list = [2, 3, 4, 5]
 n_heads_list = [4, 8]
 
 
-model_size_multiplier = 3
+model_size_multiplier = 4
 
 model_var_preset = [
 
@@ -98,26 +98,27 @@ model_var_preset = [
 
 
 #
-for random_seed in np.random.choice(3000, 5):
+for random_seed in [2023]: #np.random.choice(3000, 5):
     for seq_len in seq_lens:
         for pred_len in pred_lens:
             for e_layers in e_layers_list:
                 for n_heads in n_heads_list:
-                    for msm_i in range(model_size_multiplier):
+                    for msm_i in range(1, model_size_multiplier):
                         for mvp in model_var_preset:
                             d_patch = msm_i * mvp["d_patch"]
                             d_model = msm_i * mvp["d_model"]
                             d_ff = msm_i * mvp["d_ff"]
+                            
 
 
 
                             log_file_path = f"{result_dir}/{model_name}_{model_id_name}_{seq_len}_{pred_len}_{learning_rate}_{batch_size}.log"
 
                             command = [
-                                "python", "-u", "EcmP_supervised/run_longExp.py",
+                                "python", "EcmP_supervised/run_longExp.py",
                                     "--decomposition", str(decomposition),
                                     "--result_log_path", str(result_log_path),
-                                    "--random_seed", random_seed,
+                                    "--random_seed", str(random_seed),
                                     "--is_training", str(1),
                                     "--root_path", root_path_name,
                                     "--data_path", data_path_name,
@@ -143,12 +144,35 @@ for random_seed in np.random.choice(3000, 5):
                                     "--patience", str(patience),
                                     "--lradj", lradj,
                                     "--pct_start", str(pct_start),
-                                    "--itr", itr, 
+                                    "--itr", str(itr), 
                                     "--batch_size", str(batch_size),
                                     "--learning_rate", str(learning_rate)
                             ]
 
                             result = subprocess.run(command, capture_output=True, text=True)
 
-                            
+                            print(result.stderr)
 
+                            last_line = result.stdout.strip().split('\n')[-1].split(', ')
+
+                            param_line = result.stdout.strip().split('\n')[1].split(', ')[1:]
+
+                            result_line = param_line + last_line
+
+                            with open(result_grid_path, 'a') as result_f:
+                                result_f.write(f"{result_line}\n")
+
+                            result_list.append(result_line)
+
+                            with open(log_file_path, "w") as log_f:
+                                log_f.write(result.stdout)
+
+
+
+
+print(result_list)
+
+
+# with open(result_grid_path, 'w') as result_f:
+#     for line in result_list:
+#         result_f.write(f"{line}\n")

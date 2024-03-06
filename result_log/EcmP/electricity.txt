@@ -40,3 +40,36 @@ mse:0.38505905866622925, mae:0.45066219568252563, mape:3.5173697471618652, rse:0
 336_720_EcmP_custom_ftM_sl336_ll25_pl720_dm256_dp16_pl16_nh8_el3_dl1_df512_fc1_ebtimeF_dtTrue_Exp_0_dcomp1  
 mse:0.4125211834907532, mae:0.46370384097099304, mape:3.3626930713653564, rse:0.6410111784934998
 
+Electricity_336_96_EcmP_custom_ftM_sl336_ll25_pl96_dm128_dp16_pl32_nh4_el2_dl1_df256_fc1_ebtimeF_dtTrue_Exp_0_dcomp1  
+mse:0.36472785472869873, mae:0.4357464015483856, mape:3.9950170516967773, rse:0.6003962159156799
+
+Electricity_336_96_EcmP_custom_ftM_sl336_ll25_pl96_dm256_dp32_pl32_nh4_el2_dl1_df256_fc1_ebtimeF_dtTrue_Exp_0_dcomp1  
+mse:0.3597361147403717, mae:0.4321049153804779, mape:4.010746479034424, rse:0.5962734818458557
+
+Electricity_336_96_EcmP_custom_ftM_sl336_ll25_pl96_dm128_dp16_pl32_nh4_el2_dl1_df256_fc1_ebtimeF_dtTrue_Exp_0_dcomp1  
+mse:0.3636326193809509, mae:0.43429404497146606, mape:3.9799394607543945, rse:0.5994940996170044
+
+Electricity_336_96_EcmP_custom_ftM_sl336_ll25_pl96_dm128_dp16_pl32_nh4_el2_dl1_df256_fc1_ebtimeF_dtTrue_Exp_0_dcomp1  
+mse:0.3653513491153717, mae:0.43622198700904846, mape:3.8034098148345947, rse:0.6009091734886169
+
+Electricity_336_96_EcmP_custom_ftM_sl336_ll25_pl96_dm128_dp16_pl32_nh4_el2_dl1_df256_fc1_ebtimeF_dtTrue_Exp_0_dcomp1  
+mse:0.3653198182582855, mae:0.4366167187690735, mape:3.7787840366363525, rse:0.6008832454681396
+
+Electricity_336_96_EcmP_custom_ftM_sl336_ll25_pl96_dm128_dp16_pl32_nh4_el2_dl1_df256_fc1_ebtimeF_dtTrue_Exp_0_dcomp1  
+mse:0.36589309573173523, mae:0.4367577135562897, mape:3.7846739292144775, rse:0.6013545393943787
+
+Electricity_336_96_EcmP_custom_ftM_sl336_ll25_pl96_dm128_dp16_pl32_nh4_el2_dl1_df256_fc1_ebtimeF_dtTrue_Exp_0_dcomp1  
+mse:0.3581225574016571, mae:0.43212249875068665, mape:4.016656398773193, rse:0.5949347615242004
+
+Electricity_336_96_EcmP_custom_ftM_sl336_ll25_pl96_dm256_dp32_pl32_nh4_el2_dl1_df256_fc1_ebtimeF_dtTrue_Exp_0_dcomp1  
+mse:0.3577632009983063, mae:0.4302024245262146, mape:4.059244632720947, rse:0.5946362018585205
+
+Electricity_336_96_EcmP_custom_ftM_sl336_ll25_pl96_dm256_dp32_pl32_nh4_el2_dl1_df512_fc1_ebtimeF_dtTrue_Exp_0_dcomp1  
+mse:0.35960692167282104, mae:0.431806355714798, mape:3.996546506881714, rse:0.5961664319038391
+
+Electricity_336_96_EcmP_custom_ftM_sl336_ll25_pl96_dm128_dp16_pl32_nh4_el2_dl1_df256_fc1_ebtimeF_dtTrue_Exp_0_dcomp1  
+mse:0.36589664220809937, mae:0.4373775124549866, mape:3.7243425846099854, rse:0.6013574600219727
+
+Electricity_336_96_EcmP_custom_ftM_sl336_ll25_pl96_dm256_dp32_pl32_nh4_el2_dl1_df256_fc1_ebtimeF_dtTrue_Exp_0_dcomp1  
+mse:0.3643220067024231, mae:0.43540626764297485, mape:3.9116768836975098, rse:0.6000620722770691
+
