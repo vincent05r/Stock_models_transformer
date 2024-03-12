@@ -382,7 +382,7 @@ class Encoder_m_p(nn.Module):  # m means channel mixing, p means patching, using
                  n_layers=3, d_model=128, d_patch=64, n_heads=16, d_k=None, d_v=None,
                  d_ff=256, norm='BatchNorm', attn_dropout=0., dropout=0., act="gelu", store_attn=False,
                  key_padding_mask='auto', padding_var=None, attn_mask=None, res_attention=True, pre_norm=False,
-                 pe='zeros', learn_pe=True, verbose=False, fft='fft', **kwargs):
+                 pe='zeros', learn_pe=True, verbose=False, fft='None', **kwargs):
         
         
         super().__init__()

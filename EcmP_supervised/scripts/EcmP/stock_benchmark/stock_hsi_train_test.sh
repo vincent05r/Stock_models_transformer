@@ -7,7 +7,7 @@ if [ ! -d "./logs/LongForecasting" ]; then
 fi
 
 seq_len=100
-label_len=2 #reminder the label length is different to the predicted length, lead time(overlap) time between x(input) and y(label)
+label_len=5 #reminder the label length is different to the predicted length, lead time(overlap) time between x(input) and y(label)
 model_name=EcmP
 
 result_log_path=./result_log/EcmP/result_hsi.txt
@@ -61,7 +61,7 @@ do
         --dropout 0.1\
         --fc_dropout 0.1\
         --head_dropout 0\
-        --patch_len 5\
+        --patch_len 1\
         --stride 1\
         --des 'Exp' \
         --train_epochs 100\
