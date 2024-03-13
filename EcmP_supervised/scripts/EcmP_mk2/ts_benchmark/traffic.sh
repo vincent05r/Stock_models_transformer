@@ -11,7 +11,7 @@ model_name=EcmP_mk2
 #extras
 result_log_path=./result_log/EcmP_mk2/traffic.txt
 #mk2 setting
-dcomp_individual=0
+dcomp_individual=1
 
 root_path_name=./data/ts_benchmark
 data_path_name=traffic.csv
@@ -42,7 +42,7 @@ do
       --dropout 0.2\
       --fc_dropout 0.2\
       --head_dropout 0\
-      --patch_len 16\
+      --patch_len 32\
       --stride 8\
       --des 'Exp' \
       --train_epochs 100\
