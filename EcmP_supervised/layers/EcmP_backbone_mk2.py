@@ -2,26 +2,6 @@ __all__ = ['EcmP_backbone']
 
 
 
-'''#todo 
-1. change Encoder_m_p, make sure it works ()
-    todo. check self.encoder(z) works, Ecmp_encoder ()
-    change the permute
-1.5. check the forward procedures in the ecmp backbone
-2. change flatten head in the EcmP_backbone
-3. change flatten head
-
-4. solve the revin in Ecmp_backbone 
-
-
-
-stage 1 conclusion: everything above should work, testing. Completion date: 2024/01/01, testing start date 2024/02/01
-
-'''
-
-
-
-
-
 
 
 # Cell
@@ -382,7 +362,7 @@ class Encoder_m_p(nn.Module):  # m means channel mixing, p means patching, using
                  n_layers=3, d_model=128, d_patch=64, n_heads=16, d_k=None, d_v=None,
                  d_ff=256, norm='BatchNorm', attn_dropout=0., dropout=0., act="gelu", store_attn=False,
                  key_padding_mask='auto', padding_var=None, attn_mask=None, res_attention=True, pre_norm=False,
-                 pe='zeros', learn_pe=True, verbose=False, fft='None', **kwargs):
+                 pe='zeros', learn_pe=True, verbose=False, **kwargs):
         
         
         super().__init__()
@@ -390,12 +370,40 @@ class Encoder_m_p(nn.Module):  # m means channel mixing, p means patching, using
         self.patch_num = patch_num
         self.patch_len = patch_len
 
-        #fast fourier transform implementation
-        self.fft = fft #torch rfft/fft transform, parameters False, fft, rfft
-        if self.fft == 'rfft':
-            self.rfft_w_patch_indv = torch.nn.Linear( 2 * ((self.patch_len//2)+1), d_patch)
-        elif self.fft == 'fft':
-            self.fft_w_patch_indv = torch.nn.Linear( 2 * self.patch_len, d_patch)
+
+        #dlinear decomp part
+        self.dcomp_patch_len = patch_len
+        self.dcomp_output_len = 1  #adjust kw
+        self.dcomp_kernel_size = 25  #adjust kw
+        self.decompsition = series_decomp(self.dcomp_kernel_size)
+        self.dcomp_individual = True   #kw  individual layer for each channel
+        self.dcomp_channels =  c_in  #same as nvars
+
+
+        if self.dcomp_individual:
+            self.Linear_Seasonal = nn.ModuleList()
+            self.Linear_Trend = nn.ModuleList()
+            
+            for i in range(self.dcomp_channels):
+                self.Linear_Seasonal.append(nn.Linear(self.dcomp_patch_len, self.dcomp_output_len))
+                self.Linear_Trend.append(nn.Linear(self.dcomp_patch_len, self.dcomp_output_len))
+
+                # Use this two lines if you want to visualize the weights
+                # self.Linear_Seasonal[i].weight = nn.Parameter((1/self.seq_len)*torch.ones([self.pred_len,self.seq_len]))
+                # self.Linear_Trend[i].weight = nn.Parameter((1/self.seq_len)*torch.ones([self.pred_len,self.seq_len]))
+        else:
+            self.Linear_Seasonal = nn.Linear(self.dcomp_patch_len, self.dcomp_output_len)
+            self.Linear_Trend = nn.Linear(self.dcomp_patch_len, self.dcomp_output_len)
+            
+            # Use this two lines if you want to visualize the weights
+            # self.Linear_Seasonal.weight = nn.Parameter((1/self.seq_len)*torch.ones([self.pred_len,self.seq_len]))
+            # self.Linear_Trend.weight = nn.Parameter((1/self.seq_len)*torch.ones([self.pred_len,self.seq_len]))
+
+
+
+
+
+
         
         # Input encoding
         q_len = patch_num
@@ -429,32 +437,39 @@ class Encoder_m_p(nn.Module):  # m means channel mixing, p means patching, using
 
         
     def forward(self, x) -> Tensor:                                              # x: [bs x nvars x patch_len x patch_num]
-        
-        #n_vars = x.shape[1]
-        # Input encoding
-        x = x.permute(0,3,1,2)                                                   # x: [bs x patch_num x nvars x patch_len]
 
-        if self.fft == 'rfft':
-            #do the rfft
-            x_rfft = torch.fft.rfft(x, dim=-1)
-            x_rfft_r = x_rfft.real
-            x_rfft_i = x_rfft.imag
+        # Input permute
+        x = x.permute(0,3,2,1)                                                   # x: [bs x patch_num x patch_len x  nvars]
 
-            x_rfft_c = torch.cat((x_rfft_r, x_rfft_i), dim=-1)
+        seasonal_init, trend_init = self.decompsition(x)
+        seasonal_init, trend_init = seasonal_init.permute(0, 1, 3, 2), trend_init.permute(0, 1, 3, 2)  # x: [bs x patch_num x nvars x  patch_len]
 
-            x = self.rfft_w_patch_indv(x_rfft_c)
-        
-        elif self.fft == 'fft':
-            x_fft = torch.fft.fft(x, dim=-1)
-            x_fft_r = x_fft.real
-            x_fft_i = x_fft.imag
-
-            x_fft_c = torch.cat((x_fft_r, x_fft_i), dim=-1)
-
-            x = self.fft_w_patch_indv(x_fft_c)
-
+        if self.dcomp_individual:
+            seasonal_output = torch.zeros([seasonal_init.size(0), seasonal_init.size(1), seasonal_init.size(2), self.dcomp_output_len], dtype=seasonal_init.dtype).to(seasonal_init.device)
+            trend_output = torch.zeros([trend_init.size(0), trend_init.size(1), trend_init.size(2), self.dcomp_output_len], dtype=trend_init.dtype).to(trend_init.device)
+            for i in range(self.dcomp_channels):
+                seasonal_output[:,:,i,:] = self.Linear_Seasonal[i](seasonal_init[:,:,i,:])
+                trend_output[:,:,i,:] = self.Linear_Trend[i](trend_init[:,:,i,:])
         else:
-            x = self.w_patch_indv(x)                                                 # x: [bs x patch_num x nvars x d_patch]        #individual level patching
+            seasonal_output = self.Linear_Seasonal(seasonal_init)
+            trend_output = self.Linear_Trend(trend_init)
+
+
+        x = seasonal_output + trend_output                  # x: [bs x patch_num x nvars x  dcomp_output_len]
+
+
+
+
+
+
+
+
+
+
+
+
+
+        x = self.w_patch_indv(x)                                                 # x: [bs x patch_num x nvars x d_patch]        #individual level patching
 
         u = torch.reshape(x, (x.shape[0], x.shape[1], x.shape[2] * x.shape[3]))  # u: [bs x patch_num x nvars * d_patch]   flatten the individual patch and channel mixing.
         u = self.w_channel_m(u)                                                  # u: [bs x patch_num x d_model]     #channel level patching,, 2 stages representation learning   
