@@ -1,4 +1,4 @@
-__all__ = ['Transpose', 'get_activation_fn', 'moving_avg', 'series_decomp', 'PositionalEncoding', 'SinCosPosEncoding', 'Coord2dPosEncoding', 'Coord1dPosEncoding', 'positional_encoding']           
+__all__ = ['Transpose', 'get_activation_fn', 'moving_avg', 'series_decomp', 'series_decomp_patching', 'PositionalEncoding', 'SinCosPosEncoding', 'Coord2dPosEncoding', 'Coord1dPosEncoding', 'positional_encoding']           
 
 import torch
 from torch import nn
@@ -56,6 +56,8 @@ class series_decomp(nn.Module):
 
 
 
+
+
 # decomposition_patching
 
 class moving_avg_patching(nn.Module):
@@ -63,17 +65,17 @@ class moving_avg_patching(nn.Module):
     Moving average block to highlight the trend of time series
     """
     def __init__(self, kernel_size, stride):
-        super(moving_avg, self).__init__()
+        super().__init__()
         self.kernel_size = kernel_size
         self.avg = nn.AvgPool1d(kernel_size=kernel_size, stride=stride, padding=0)
 
-    def forward(self, x):
+    def forward(self, x):                                                                   # x: [bs x patch_num x patch_len x  nvars]
         # padding on the both ends of time series
         front = x[:, :, 0:1, :].repeat(1, 1, (self.kernel_size - 1) // 2, 1)
         end = x[:, :, -1:, :].repeat(1, 1, (self.kernel_size - 1) // 2, 1)
-        x = torch.cat([front, x, end], dim=1)
-        x = self.avg(x.permute(0, 2, 1))
-        x = x.permute(0, 2, 1)
+        x = torch.cat([front, x, end], dim=2)  #should be dim=2
+        x = self.avg(x.permute(0, 1, 3, 2))
+        x = x.permute(0, 1, 3, 2)
         return x
 
 
@@ -82,11 +84,11 @@ class series_decomp_patching(nn.Module):
     Series decomposition block
     """
     def __init__(self, kernel_size):
-        super(series_decomp, self).__init__()
-        self.moving_avg = moving_avg(kernel_size, stride=1)
+        super().__init__()
+        self.moving_avg_patching = moving_avg_patching(kernel_size, stride=1)
 
     def forward(self, x):
-        moving_mean = self.moving_avg(x)
+        moving_mean = self.moving_avg_patching(x)
         res = x - moving_mean
         return res, moving_mean
 
