@@ -64,9 +64,10 @@ class moving_avg_patching(nn.Module):
     """
     Moving average block to highlight the trend of time series
     """
-    def __init__(self, kernel_size, stride):
+    def __init__(self, kernel_size, patch_num ,stride=1):
         super().__init__()
         self.kernel_size = kernel_size
+        self.patch_num = patch_num
         self.avg = nn.AvgPool1d(kernel_size=kernel_size, stride=stride, padding=0)
 
     def forward(self, x):                                                                   # x: [bs x patch_num x patch_len x  nvars]
@@ -74,8 +75,13 @@ class moving_avg_patching(nn.Module):
         front = x[:, :, 0:1, :].repeat(1, 1, (self.kernel_size - 1) // 2, 1)
         end = x[:, :, -1:, :].repeat(1, 1, (self.kernel_size - 1) // 2, 1)
         x = torch.cat([front, x, end], dim=2)  #should be dim=2
-        x = self.avg(x.permute(0, 1, 3, 2))
-        x = x.permute(0, 1, 3, 2)
+
+
+        #flatten bs x patch_num to bs*patch_num so that it can passthrough avgpool1d.
+        x = torch.reshape(x, (x.shape[0]*x.shape[1], x.shape[2], x.shape[3]))              # x: [bs * patch_num x patch_len x  nvars]
+        x = self.avg(x.permute(0, 2, 1))                                                   # x: [bs * patch_num x nvars  x  patch_len]
+        x = x.permute(0, 2, 1)                                                             # x: [bs * patch_num x patch_len x  nvars]
+        x = torch.reshape(x, (-1, self.patch_num, x.shape[-2], x.shape[-1]))               # x: [bs x patch_num x patch_len x  nvars]
         return x
 
 
@@ -83,9 +89,9 @@ class series_decomp_patching(nn.Module):
     """
     Series decomposition block
     """
-    def __init__(self, kernel_size):
+    def __init__(self, kernel_size, stride=1):
         super().__init__()
-        self.moving_avg_patching = moving_avg_patching(kernel_size, stride=1)
+        self.moving_avg_patching = moving_avg_patching(kernel_size, stride=stride)
 
     def forward(self, x):
         moving_mean = self.moving_avg_patching(x)

@@ -375,7 +375,7 @@ class Encoder_m_p_mk2(nn.Module):  # m means channel mixing, p means patching, u
         self.dcomp_output_len = 6  #adjust kw
         self.dcomp_kernel_size = 25  #adjust kw
         self.dcomp_stride = 1  #adjust kw
-        self.decompsition = series_decomp_patching(self.dcomp_kernel_size, self.dcomp_stride)
+        self.decompsition = series_decomp_patching(self.dcomp_kernel_size, self.patch_num, self.dcomp_stride)
         self.dcomp_individual = True   #kw  individual layer for each channel
         self.dcomp_channels =  c_in  #same as nvars
 
@@ -401,7 +401,7 @@ class Encoder_m_p_mk2(nn.Module):  # m means channel mixing, p means patching, u
         self.n_vars = c_in
 
 
-        self.seq_len = q_len
+        self.seq_len = q_len  #useless parameters
 
         # Positional encoding
         self.W_pos = positional_encoding(pe, learn_pe, q_len, d_model)
