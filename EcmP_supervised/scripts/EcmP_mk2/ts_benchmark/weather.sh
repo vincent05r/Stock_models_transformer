@@ -10,6 +10,8 @@ model_name=EcmP_mk2
 
 #extras
 result_log_path=./result_log/EcmP_mk2/weather.txt
+#mk2 setting
+dcomp_individual=0
 
 root_path_name=./data/ts_benchmark
 data_path_name=weather.csv
@@ -20,6 +22,7 @@ random_seed=2021
 for pred_len in 96 192 336 720
 do
     python -u EcmP_supervised/run_longExp.py \
+      --dcomp_individual $dcomp_individual \
       --result_log_path $result_log_path \
       --random_seed $random_seed \
       --is_training 1 \
@@ -35,7 +38,7 @@ do
       --e_layers 3 \
       --n_heads 12 \
       --d_model 168 \
-      --d_ff 168 \
+      --d_ff 256 \
       --dropout 0.2\
       --fc_dropout 0.2\
       --head_dropout 0\
