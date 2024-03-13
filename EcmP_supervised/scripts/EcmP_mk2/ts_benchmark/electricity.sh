@@ -2,28 +2,26 @@ if [ ! -d "./logs" ]; then
     mkdir ./logs
 fi
 
-if [ ! -d "./logs/EcmP_mk2" ]; then
-    mkdir ./logs/EcmP_mk2
+if [ ! -d "./logs/LongForecasting" ]; then
+    mkdir ./logs/LongForecasting
 fi
 seq_len=336
-model_name=EcmP_mk2
+model_name=EcmP
 
 #extras
-result_log_path=./result_log/EcmP_mk2/weather.txt
-#mk2 setting
-dcomp_individual=0
+result_log_path=./result_log/EcmP/electricity.txt
 
 root_path_name=./data/ts_benchmark
-data_path_name=weather.csv
-model_id_name=weather
+data_path_name=electricity.csv
+model_id_name=Electricity
 data_name=custom
 
 random_seed=2021
 for pred_len in 96 192 336 720
 do
-    python -u EcmP_supervised/run_longExp.py \
-      --dcomp_individual $dcomp_individual \
-      --result_log_path $result_log_path \
+    python3.9 -u EcmP_supervised/run_longExp.py \
+      --decomposition 1\
+      --result_log_path $result_log_path\
       --random_seed $random_seed \
       --is_training 1 \
       --root_path $root_path_name \
@@ -34,11 +32,12 @@ do
       --features M \
       --seq_len $seq_len \
       --pred_len $pred_len \
-      --enc_in 21 \
+      --enc_in 321 \
       --e_layers 3 \
-      --n_heads 12 \
-      --d_model 168 \
-      --d_ff 168 \
+      --n_heads 8 \
+      --d_patch 16 \
+      --d_model 256 \
+      --d_ff 512 \
       --dropout 0.2\
       --fc_dropout 0.2\
       --head_dropout 0\
@@ -46,6 +45,8 @@ do
       --stride 8\
       --des 'Exp' \
       --train_epochs 100\
-      --patience 20\
-      --itr 1 --batch_size 128 --learning_rate 0.0001 >logs/EcmP_mk2/$model_name'_'$model_id_name'_'$seq_len'_'$pred_len.log 
+      --patience 10\
+      --lradj 'TST'\
+      --pct_start 0.2\
+      --itr 1 --batch_size 32 --learning_rate 0.0001 >logs/LongForecasting/$model_name'_'$model_id_name'_'$seq_len'_'$pred_len.log 
 done

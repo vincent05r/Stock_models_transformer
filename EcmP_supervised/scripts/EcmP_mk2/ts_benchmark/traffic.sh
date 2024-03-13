@@ -9,13 +9,13 @@ seq_len=336
 model_name=EcmP_mk2
 
 #extras
-result_log_path=./result_log/EcmP_mk2/weather.txt
+result_log_path=./result_log/EcmP_mk2/traffic.txt
 #mk2 setting
 dcomp_individual=0
 
 root_path_name=./data/ts_benchmark
-data_path_name=weather.csv
-model_id_name=weather
+data_path_name=traffic.csv
+model_id_name=traffic
 data_name=custom
 
 random_seed=2021
@@ -34,11 +34,11 @@ do
       --features M \
       --seq_len $seq_len \
       --pred_len $pred_len \
-      --enc_in 21 \
-      --e_layers 3 \
-      --n_heads 12 \
-      --d_model 168 \
-      --d_ff 168 \
+      --enc_in 862 \
+      --e_layers 2 \
+      --n_heads 2 \
+      --d_model 862 \
+      --d_ff 862 \
       --dropout 0.2\
       --fc_dropout 0.2\
       --head_dropout 0\
@@ -46,6 +46,8 @@ do
       --stride 8\
       --des 'Exp' \
       --train_epochs 100\
-      --patience 20\
-      --itr 1 --batch_size 128 --learning_rate 0.0001 >logs/EcmP_mk2/$model_name'_'$model_id_name'_'$seq_len'_'$pred_len.log 
+      --patience 10\
+      --lradj 'TST'\
+      --pct_start 0.2\
+      --itr 1 --batch_size 24 --learning_rate 0.00001 >logs/EcmP_mk2/$model_name'_'$model_id_name'_'$seq_len'_'$pred_len.log 
 done
