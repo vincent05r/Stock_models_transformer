@@ -1,4 +1,4 @@
-__all__ = ['EcmP_backbone']
+__all__ = ['EcmP_backbone_mk2']
 
 
 
@@ -17,9 +17,9 @@ from layers.EcmP_layers import *
 from layers.RevIN import RevIN
 
 # Cell
-class EcmP_backbone(nn.Module): #PatchTST_backbone
+class EcmP_backbone_mk2(nn.Module): #
     def __init__(self, c_in:int, context_window:int, target_window:int, patch_len:int, stride:int, max_seq_len:Optional[int]=1024, 
-                 n_layers:int=3, d_model=128, d_patch:int=64, n_heads=16, d_k:Optional[int]=None, d_v:Optional[int]=None,
+                 n_layers:int=3, d_model=128, n_heads=16, d_k:Optional[int]=None, d_v:Optional[int]=None,
                  d_ff:int=256, norm:str='BatchNorm', attn_dropout:float=0., dropout:float=0., act:str="gelu", key_padding_mask:bool='auto',
                  padding_var:Optional[int]=None, attn_mask:Optional[Tensor]=None, res_attention:bool=True, pre_norm:bool=False, store_attn:bool=False,
                  pe:str='zeros', learn_pe:bool=True, fc_dropout:float=0., head_dropout = 0, padding_patch = None,
@@ -35,7 +35,6 @@ class EcmP_backbone(nn.Module): #PatchTST_backbone
         # Patching
 
         #Ecmp
-        self.d_patch = d_patch
         self.n_vars = c_in
 
         self.patch_len = patch_len
@@ -47,8 +46,8 @@ class EcmP_backbone(nn.Module): #PatchTST_backbone
             patch_num += 1
         
         # Backbone #
-        self.backbone = Encoder_m_p(c_in, patch_num=patch_num, patch_len=patch_len, max_seq_len=max_seq_len,
-                                n_layers=n_layers, d_model=d_model, d_patch=self.d_patch, n_heads=n_heads, d_k=d_k, d_v=d_v, d_ff=d_ff,
+        self.backbone = Encoder_m_p_mk2(c_in, patch_num=patch_num, patch_len=patch_len, max_seq_len=max_seq_len,
+                                n_layers=n_layers, d_model=d_model, n_heads=n_heads, d_k=d_k, d_v=d_v, d_ff=d_ff,
                                 attn_dropout=attn_dropout, dropout=dropout, act=act, key_padding_mask=key_padding_mask, padding_var=padding_var,
                                 attn_mask=attn_mask, res_attention=res_attention, pre_norm=pre_norm, store_attn=store_attn,
                                 pe=pe, learn_pe=learn_pe, verbose=verbose, **kwargs)
@@ -357,9 +356,9 @@ class _ScaledDotProductAttention(nn.Module):
 
 
 
-class Encoder_m_p(nn.Module):  # m means channel mixing, p means patching, using 2 stages patching techniques
+class Encoder_m_p_mk2(nn.Module):  # m means channel mixing, p means patching, using 2 stages patching techniques
     def __init__(self, c_in, patch_num, patch_len, max_seq_len=1024,
-                 n_layers=3, d_model=128, d_patch=64, n_heads=16, d_k=None, d_v=None,
+                 n_layers=3, d_model=128, n_heads=16, d_k=None, d_v=None,
                  d_ff=256, norm='BatchNorm', attn_dropout=0., dropout=0., act="gelu", store_attn=False,
                  key_padding_mask='auto', padding_var=None, attn_mask=None, res_attention=True, pre_norm=False,
                  pe='zeros', learn_pe=True, verbose=False, **kwargs):
@@ -388,19 +387,10 @@ class Encoder_m_p(nn.Module):  # m means channel mixing, p means patching, using
                 self.Linear_Seasonal.append(nn.Linear(self.dcomp_patch_len, self.dcomp_output_len))
                 self.Linear_Trend.append(nn.Linear(self.dcomp_patch_len, self.dcomp_output_len))
 
-                # Use this two lines if you want to visualize the weights
-                # self.Linear_Seasonal[i].weight = nn.Parameter((1/self.seq_len)*torch.ones([self.pred_len,self.seq_len]))
-                # self.Linear_Trend[i].weight = nn.Parameter((1/self.seq_len)*torch.ones([self.pred_len,self.seq_len]))
         else:
             self.Linear_Seasonal = nn.Linear(self.dcomp_patch_len, self.dcomp_output_len)
             self.Linear_Trend = nn.Linear(self.dcomp_patch_len, self.dcomp_output_len)
             
-            # Use this two lines if you want to visualize the weights
-            # self.Linear_Seasonal.weight = nn.Parameter((1/self.seq_len)*torch.ones([self.pred_len,self.seq_len]))
-            # self.Linear_Trend.weight = nn.Parameter((1/self.seq_len)*torch.ones([self.pred_len,self.seq_len]))
-
-
-
 
 
 
@@ -410,17 +400,7 @@ class Encoder_m_p(nn.Module):  # m means channel mixing, p means patching, using
         #self.W_P = nn.Linear(patch_len, d_model)        # Eq 1: projection of feature vectors onto a d-dim vector space
 
 
-        #set up 2 stages patching linear layers
-        #todo  setup d_patch, n_vars
-
-        self.d_patch = d_patch
         self.n_vars = c_in
-        self.flatten_len = c_in * d_patch
-
-        self.w_patch_indv = torch.nn.Linear(patch_len, d_patch)
-
-        self.w_channel_m = torch.nn.Linear(self.flatten_len, d_model)
-
 
 
         self.seq_len = q_len
@@ -458,23 +438,10 @@ class Encoder_m_p(nn.Module):  # m means channel mixing, p means patching, using
         x = seasonal_output + trend_output                  # x: [bs x patch_num x nvars x  dcomp_output_len]
 
 
+        u = torch.reshape(x, (x.shape[0], x.shape[1], x.shape[2] * x.shape[3]))  # u: [bs x patch_num x nvars * dcomp_output_len]   flatten the trend output.
 
+        #set d_model = nvars* dcomp_output
 
-
-
-
-
-
-
-
-
-
-        x = self.w_patch_indv(x)                                                 # x: [bs x patch_num x nvars x d_patch]        #individual level patching
-
-        u = torch.reshape(x, (x.shape[0], x.shape[1], x.shape[2] * x.shape[3]))  # u: [bs x patch_num x nvars * d_patch]   flatten the individual patch and channel mixing.
-        u = self.w_channel_m(u)                                                  # u: [bs x patch_num x d_model]     #channel level patching,, 2 stages representation learning   
-
-        # archive #u = torch.reshape(x, (x.shape[0]*x.shape[1],x.shape[2],x.shape[3]))      # u: [bs * nvars x patch_num x d_model] channel independent here
 
         u = self.dropout(u + self.W_pos)                                         # u: [bs x patch_num x d_model]
 

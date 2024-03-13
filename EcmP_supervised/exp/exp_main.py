@@ -1,6 +1,6 @@
 from data_provider.data_factory import data_provider
 from exp.exp_basic import Exp_Basic
-from models import Informer, Autoformer, Transformer, DLinear, Linear, NLinear, PatchTST, EcmP
+from models import Informer, Autoformer, Transformer, DLinear, Linear, NLinear, PatchTST, EcmP, EcmP_mk2
 from utils.tools import EarlyStopping, adjust_learning_rate, visual, test_params_flop
 from utils.metrics import metric
 
@@ -32,7 +32,8 @@ class Exp_Main(Exp_Basic):
             'NLinear': NLinear,
             'Linear': Linear,
             'PatchTST': PatchTST,
-            'EcmP' : EcmP
+            'EcmP' : EcmP,
+            'EcmP_mk2' : EcmP_mk2
         }
         model = model_dict[self.args.model].Model(self.args).float()
 
