@@ -89,9 +89,9 @@ class series_decomp_patching(nn.Module):
     """
     Series decomposition block
     """
-    def __init__(self, kernel_size, stride=1):
+    def __init__(self, kernel_size, patch_num, stride=1):
         super().__init__()
-        self.moving_avg_patching = moving_avg_patching(kernel_size, stride=stride)
+        self.moving_avg_patching = moving_avg_patching(kernel_size, patch_num=patch_num, stride=stride)
 
     def forward(self, x):
         moving_mean = self.moving_avg_patching(x)
