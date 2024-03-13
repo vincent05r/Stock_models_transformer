@@ -64,6 +64,9 @@ if __name__ == '__main__':
     #EcmP
     parser.add_argument('--d_patch', type=int, default=64, help='The dim size of the pathcing for each channel before mixing')
 
+    #EcmP_mk2
+    parser.add_argument('--dcomp_individual', type=int, default=0, help='use individual Decomp layer for each channel') 
+
     # Formers 
     parser.add_argument('--embed_type', type=int, default=0, help='0: default 1: value embedding + temporal embedding + positional embedding 2: value embedding + temporal embedding 3: value embedding + positional embedding 4: value embedding')
     parser.add_argument('--enc_in', type=int, default=7, help='encoder input size') # DLinear with --individual, use this hyperparameter as the number of channels
@@ -131,7 +134,7 @@ if __name__ == '__main__':
     if args.is_training:
         for ii in range(args.itr):
             # setting record of experiments, modified for EcmP
-            setting = '{}_{}_{}_ft{}_sl{}_ll{}_pl{}_dm{}_dp{}_pl{}_nh{}_el{}_dl{}_df{}_fc{}_eb{}_dt{}_{}_{}_dcomp{}'.format(
+            setting = '{}_{}_{}_ft{}_sl{}_ll{}_pl{}_dm{}_dp{}_pl{}_nh{}_el{}_dl{}_df{}_fc{}_eb{}_dt{}_{}_{}_dcomp{}_dcompidv{}'.format(
                 args.model_id,
                 args.model,
                 args.data,
@@ -151,7 +154,9 @@ if __name__ == '__main__':
                 args.distil,
                 args.des,
                 ii,
-                args.decomposition)
+                args.decomposition,
+                args.dcomp_individual
+                )
 
             exp = Exp(args)  # set experiments
             print('>>>>>>>start training : {}>>>>>>>>>>>>>>>>>>>>>>>>>>'.format(setting))

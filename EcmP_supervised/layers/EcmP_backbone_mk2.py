@@ -18,7 +18,8 @@ from layers.RevIN import RevIN
 
 # Cell
 class EcmP_backbone_mk2(nn.Module): #
-    def __init__(self, c_in:int, context_window:int, target_window:int, patch_len:int, stride:int, max_seq_len:Optional[int]=1024, 
+    def __init__(self, c_in:int, context_window:int, target_window:int, patch_len:int, stride:int, dcomp_individual:int,
+                 max_seq_len:Optional[int]=1024, 
                  n_layers:int=3, d_model=128, n_heads=16, d_k:Optional[int]=None, d_v:Optional[int]=None,
                  d_ff:int=256, norm:str='BatchNorm', attn_dropout:float=0., dropout:float=0., act:str="gelu", key_padding_mask:bool='auto',
                  padding_var:Optional[int]=None, attn_mask:Optional[Tensor]=None, res_attention:bool=True, pre_norm:bool=False, store_attn:bool=False,
@@ -46,7 +47,8 @@ class EcmP_backbone_mk2(nn.Module): #
             patch_num += 1
         
         # Backbone #
-        self.backbone = Encoder_m_p_mk2(c_in, patch_num=patch_num, patch_len=patch_len, max_seq_len=max_seq_len,
+        self.backbone = Encoder_m_p_mk2(c_in, patch_num=patch_num, patch_len=patch_len, dcomp_individual=dcomp_individual,
+                                max_seq_len=max_seq_len,
                                 n_layers=n_layers, d_model=d_model, n_heads=n_heads, d_k=d_k, d_v=d_v, d_ff=d_ff,
                                 attn_dropout=attn_dropout, dropout=dropout, act=act, key_padding_mask=key_padding_mask, padding_var=padding_var,
                                 attn_mask=attn_mask, res_attention=res_attention, pre_norm=pre_norm, store_attn=store_attn,
@@ -357,7 +359,8 @@ class _ScaledDotProductAttention(nn.Module):
 
 
 class Encoder_m_p_mk2(nn.Module):  # m means channel mixing, p means patching, using 2 stages patching techniques
-    def __init__(self, c_in, patch_num, patch_len, max_seq_len=1024,
+    def __init__(self, c_in, patch_num, patch_len, dcomp_individual,
+                 max_seq_len=1024,
                  n_layers=3, d_model=128, n_heads=16, d_k=None, d_v=None,
                  d_ff=256, norm='BatchNorm', attn_dropout=0., dropout=0., act="gelu", store_attn=False,
                  key_padding_mask='auto', padding_var=None, attn_mask=None, res_attention=True, pre_norm=False,
@@ -372,11 +375,11 @@ class Encoder_m_p_mk2(nn.Module):  # m means channel mixing, p means patching, u
 
         #dlinear decomp part
         self.dcomp_patch_len = patch_len
-        self.dcomp_output_len = 6  #adjust kw
+        self.dcomp_output_len = int(d_model/c_in)  #adjust kw, temp design, makesure it has no remainder
         self.dcomp_kernel_size = 25  #adjust kw
         self.dcomp_stride = 1  #adjust kw
         self.decompsition = series_decomp_patching(self.dcomp_kernel_size, self.patch_num, self.dcomp_stride)
-        self.dcomp_individual = True   #kw  individual layer for each channel
+        self.dcomp_individual = dcomp_individual   #kw  individual layer for each channel
         self.dcomp_channels =  c_in  #same as nvars
 
 

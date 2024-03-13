@@ -2,8 +2,8 @@ if [ ! -d "./logs" ]; then
     mkdir ./logs
 fi
 
-if [ ! -d "./logs/LongForecasting" ]; then
-    mkdir ./logs/LongForecasting
+if [ ! -d "./logs/EcmP_mk2" ]; then
+    mkdir ./logs/EcmP_mk2
 fi
 seq_len=336
 model_name=EcmP_mk2
@@ -33,9 +33,9 @@ do
       --pred_len $pred_len \
       --enc_in 21 \
       --e_layers 3 \
-      --n_heads 14 \
-      --d_model 126 \
-      --d_ff 252 \
+      --n_heads 12 \
+      --d_model 168 \
+      --d_ff 168 \
       --dropout 0.2\
       --fc_dropout 0.2\
       --head_dropout 0\
@@ -44,5 +44,5 @@ do
       --des 'Exp' \
       --train_epochs 100\
       --patience 20\
-      --itr 1 --batch_size 128 --learning_rate 0.0001 >logs/LongForecasting/$model_name'_'$model_id_name'_'$seq_len'_'$pred_len.log 
+      --itr 1 --batch_size 128 --learning_rate 0.0001 >logs/EcmP_mk2/$model_name'_'$model_id_name'_'$seq_len'_'$pred_len.log 
 done
