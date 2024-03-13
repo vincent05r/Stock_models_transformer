@@ -6,10 +6,10 @@ if [ ! -d "./logs/LongForecasting" ]; then
     mkdir ./logs/LongForecasting
 fi
 seq_len=336
-model_name=EcmP
+model_name=EcmP_mk2
 
 #extras
-result_log_path=./result_log/EcmP/weather.txt
+result_log_path=./result_log/EcmP_mk2/weather.txt
 
 root_path_name=./data/ts_benchmark
 data_path_name=weather.csv
@@ -19,7 +19,7 @@ data_name=custom
 random_seed=2021
 for pred_len in 96 192 336 720
 do
-    python -u PatchTST_supervised/run_longExp.py \
+    python -u EcmP_supervised/run_longExp.py \
       --result_log_path $result_log_path \
       --random_seed $random_seed \
       --is_training 1 \
@@ -33,10 +33,9 @@ do
       --pred_len $pred_len \
       --enc_in 21 \
       --e_layers 3 \
-      --n_heads 16 \
-      --d_model 128 \
-      --d_patch 32 \
-      --d_ff 256 \
+      --n_heads 14 \
+      --d_model 126 \
+      --d_ff 252 \
       --dropout 0.2\
       --fc_dropout 0.2\
       --head_dropout 0\
