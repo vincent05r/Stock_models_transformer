@@ -1,0 +1,30 @@
+336_24_EcmP_mk2_custom_ftM_sl336_ll25_pl24_dm28_dp64_pl24_nh4_el3_dl1_df128_fc1_ebtimeF_dtTrue_Exp_0_dcomp0_dcompidv0  
+mse:3.0369884967803955, mae:1.2087790966033936, mape:2.4699206352233887, rse:0.840995192527771
+
+336_24_EcmP_mk2_custom_ftM_sl336_ll25_pl24_dm28_dp64_pl24_nh4_el3_dl1_df64_fc1_ebtimeF_dtTrue_Exp_0_dcomp0_dcompidv0  
+mse:3.0626447200775146, mae:1.2464945316314697, mape:3.1236677169799805, rse:0.844539999961853
+
+336_24_EcmP_mk2_custom_ftM_sl336_ll25_pl24_dm14_dp64_pl24_nh2_el3_dl1_df128_fc1_ebtimeF_dtTrue_Exp_0_dcomp0_dcompidv0  
+mse:2.9782497882843018, mae:1.2113914489746094, mape:2.5126819610595703, rse:0.8328226208686829
+
+336_36_EcmP_mk2_custom_ftM_sl336_ll25_pl36_dm14_dp64_pl24_nh2_el3_dl1_df128_fc1_ebtimeF_dtTrue_Exp_0_dcomp0_dcompidv0  
+mse:3.040780544281006, mae:1.210864782333374, mape:2.3704833984375, rse:0.8363317251205444
+
+336_24_EcmP_mk2_custom_ftM_sl336_ll25_pl24_dm42_dp64_pl24_nh6_el3_dl1_df128_fc1_ebtimeF_dtTrue_Exp_0_dcomp0_dcompidv0  
+mse:2.55324649810791, mae:1.1154733896255493, mape:2.860272169113159, rse:0.7711135745048523
+
+336_24_EcmP_mk2_custom_ftM_sl336_ll25_pl24_dm84_dp64_pl24_nh6_el3_dl1_df128_fc1_ebtimeF_dtTrue_Exp_0_dcomp0_dcompidv0  
+mse:3.221651792526245, mae:1.2998273372650146, mape:3.493459939956665, rse:0.8661862015724182
+
+336_24_EcmP_mk2_custom_ftM_sl336_ll25_pl24_dm84_dp64_pl24_nh6_el3_dl1_df128_fc1_ebtimeF_dtTrue_Exp_0_dcomp0_dcompidv0  
+mse:3.3694143295288086, mae:1.2582141160964966, mape:2.5831055641174316, rse:0.8858274817466736
+
+336_36_EcmP_mk2_custom_ftM_sl336_ll25_pl36_dm84_dp64_pl24_nh6_el3_dl1_df128_fc1_ebtimeF_dtTrue_Exp_0_dcomp0_dcompidv0  
+mse:2.7235074043273926, mae:1.1279125213623047, mape:2.291787624359131, rse:0.7914987802505493
+
+336_48_EcmP_mk2_custom_ftM_sl336_ll25_pl48_dm84_dp64_pl24_nh6_el3_dl1_df128_fc1_ebtimeF_dtTrue_Exp_0_dcomp0_dcompidv0  
+mse:2.9470207691192627, mae:1.193606972694397, mape:2.8356223106384277, rse:0.8211936354637146
+
+336_24_EcmP_mk2_custom_ftM_sl336_ll25_pl24_dm42_dp64_pl24_nh6_el3_dl1_df84_fc1_ebtimeF_dtTrue_Exp_0_dcomp0_dcompidv0  
+mse:3.094089984893799, mae:1.2648046016693115, mape:3.4226436614990234, rse:0.8488645553588867
+
