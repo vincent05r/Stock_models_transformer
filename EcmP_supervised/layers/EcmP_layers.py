@@ -1,4 +1,4 @@
-__all__ = ['Transpose', 'get_activation_fn', 'moving_avg', 'series_decomp', 'series_decomp_patching', 'PositionalEncoding', 'SinCosPosEncoding', 'Coord2dPosEncoding', 'Coord1dPosEncoding', 'positional_encoding']           
+__all__ = ['Transpose', 'get_activation_fn', 'MLP_patching', 'moving_avg', 'series_decomp', 'series_decomp_patching', 'PositionalEncoding', 'SinCosPosEncoding', 'Coord2dPosEncoding', 'Coord1dPosEncoding', 'positional_encoding']           
 
 import torch
 from torch import nn
@@ -171,3 +171,40 @@ def positional_encoding(pe, learn_pe, q_len, d_model):
     else: raise ValueError(f"{pe} is not a valid pe (positional encoder. Available types: 'gauss'=='normal', \
         'zeros', 'zero', uniform', 'lin1d', 'exp1d', 'lin2d', 'exp2d', 'sincos', None.)")
     return nn.Parameter(W_pos, requires_grad=learn_pe)
+
+
+
+class MLP_patching(nn.Module):
+
+    def __init__(self, input_size, layer_sizes, output_size, activation=nn.functional.relu):
+        """
+        Initializes the MLP_patching MLP.
+        :param input_size: The size of the input features.
+        :param layer_sizes: A list containing the size of each hidden layer.
+        :param output_size: The size of the output layer.
+        :param activation: The activation function to use between layers.
+        """
+        super().__init__()
+        self.layers = nn.ModuleList()
+        self.activation = activation
+
+        # Create the first layer based on the input size
+        prev_size = input_size
+        for size in layer_sizes:
+            self.layers.append(nn.Linear(prev_size, size))
+            prev_size = size
+
+        # Add the final layer
+        self.layers.append(nn.Linear(prev_size, output_size))
+
+    def forward(self, x):
+        """
+        Forward pass through the network.
+        :param x: Input tensor.
+        :return: Output tensor.
+        """
+        for layer in self.layers[:-1]:
+            x = self.activation(layer(x))
+        # No activation after the last layer
+        x = self.layers[-1](x)
+        return x
