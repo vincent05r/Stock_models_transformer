@@ -5,13 +5,13 @@ fi
 if [ ! -d "./logs/EcmP_mk2" ]; then
     mkdir ./logs/EcmP_mk2
 fi
-seq_len=336
+seq_len=104  #104, 192
 model_name=EcmP_mk2
 
 #extras
 result_log_path=./result_log/EcmP_mk2/illness.txt
 #mk2 setting
-dcomp_individual=0
+dcomp_individual=1
 
 root_path_name=./data/ts_benchmark
 data_path_name=national_illness.csv
@@ -42,10 +42,10 @@ do
       --dropout 0.3\
       --fc_dropout 0.3\
       --head_dropout 0\
-      --patch_len 24\
-      --stride 2\
+      --patch_len 48\
+      --stride 24\
       --des 'Exp' \
       --train_epochs 100\
       --lradj 'constant'\
-      --itr 1 --batch_size 16 --learning_rate 0.0015 >logs/EcmP_mk2/$model_name'_'$model_id_name'_'$seq_len'_'$pred_len.log 
+      --itr 1 --batch_size 16 --learning_rate 0.0025 >logs/EcmP_mk2/$model_name'_'$model_id_name'_'$seq_len'_'$pred_len.log 
 done

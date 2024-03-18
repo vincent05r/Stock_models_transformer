@@ -2,14 +2,16 @@ if [ ! -d "./logs" ]; then
     mkdir ./logs
 fi
 
-if [ ! -d "./logs/LongForecasting" ]; then
-    mkdir ./logs/LongForecasting
+if [ ! -d "./logs/EcmP_mk2" ]; then
+    mkdir ./logs/EcmP_mk2
 fi
 seq_len=336
-model_name=EcmP
+model_name=EcmP_mk2
 
 #extras
-result_log_path=./result_log/EcmP/electricity.txt
+result_log_path=./result_log/EcmP_mk2/electricity.txt
+#mk2 setting
+dcomp_individual=1
 
 root_path_name=./data/ts_benchmark
 data_path_name=electricity.csv
@@ -19,8 +21,8 @@ data_name=custom
 random_seed=2021
 for pred_len in 96 192 336 720
 do
-    python3.9 -u EcmP_supervised/run_longExp.py \
-      --decomposition 1\
+    python -u EcmP_supervised/run_longExp.py \
+      --dcomp_individual $dcomp_individual \
       --result_log_path $result_log_path\
       --random_seed $random_seed \
       --is_training 1 \
@@ -48,5 +50,5 @@ do
       --patience 10\
       --lradj 'TST'\
       --pct_start 0.2\
-      --itr 1 --batch_size 32 --learning_rate 0.0001 >logs/LongForecasting/$model_name'_'$model_id_name'_'$seq_len'_'$pred_len.log 
+      --itr 1 --batch_size 32 --learning_rate 0.0001 >logs/EcmP_mk2/$model_name'_'$model_id_name'_'$seq_len'_'$pred_len.log 
 done
