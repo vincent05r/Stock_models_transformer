@@ -36,9 +36,8 @@ do
       --pred_len $pred_len \
       --enc_in 321 \
       --e_layers 3 \
-      --n_heads 8 \
-      --d_patch 16 \
-      --d_model 256 \
+      --n_heads 3 \
+      --d_model 321 \
       --d_ff 512 \
       --dropout 0.2\
       --fc_dropout 0.2\
