@@ -1,4 +1,4 @@
-__all__ = ['EcmP_backbone_mk2']
+__all__ = ['EcmP_backbone_mk3']
 
 
 
@@ -17,10 +17,9 @@ from layers.EcmP_layers import *
 from layers.RevIN import RevIN
 
 # Cell
-class EcmP_backbone_mk2(nn.Module): #
-    def __init__(self, c_in:int, context_window:int, target_window:int, patch_len:int, stride:int, dcomp_individual:int,
-                 max_seq_len:Optional[int]=1024, 
-                 n_layers:int=3, d_model=128, n_heads=16, d_k:Optional[int]=None, d_v:Optional[int]=None,
+class EcmP_backbone_mk3(nn.Module): #PatchTST_backbone
+    def __init__(self, c_in:int, context_window:int, target_window:int, patch_len:int, stride:int, max_seq_len:Optional[int]=1024, 
+                 n_layers:int=3, d_model=128, d_patch:int=64, n_heads=16, d_k:Optional[int]=None, d_v:Optional[int]=None,
                  d_ff:int=256, norm:str='BatchNorm', attn_dropout:float=0., dropout:float=0., act:str="gelu", key_padding_mask:bool='auto',
                  padding_var:Optional[int]=None, attn_mask:Optional[Tensor]=None, res_attention:bool=True, pre_norm:bool=False, store_attn:bool=False,
                  pe:str='zeros', learn_pe:bool=True, fc_dropout:float=0., head_dropout = 0, padding_patch = None,
@@ -36,6 +35,7 @@ class EcmP_backbone_mk2(nn.Module): #
         # Patching
 
         #Ecmp
+        self.d_patch = d_patch
         self.n_vars = c_in
 
         self.patch_len = patch_len
@@ -47,9 +47,8 @@ class EcmP_backbone_mk2(nn.Module): #
             patch_num += 1
         
         # Backbone #
-        self.backbone = Encoder_m_p_mk2(c_in, patch_num=patch_num, patch_len=patch_len, dcomp_individual=dcomp_individual,
-                                max_seq_len=max_seq_len,
-                                n_layers=n_layers, d_model=d_model, n_heads=n_heads, d_k=d_k, d_v=d_v, d_ff=d_ff,
+        self.backbone = Encoder_m_p_mk3(c_in, patch_num=patch_num, patch_len=patch_len, max_seq_len=max_seq_len,
+                                n_layers=n_layers, d_model=d_model, d_patch=self.d_patch, n_heads=n_heads, d_k=d_k, d_v=d_v, d_ff=d_ff,
                                 attn_dropout=attn_dropout, dropout=dropout, act=act, key_padding_mask=key_padding_mask, padding_var=padding_var,
                                 attn_mask=attn_mask, res_attention=res_attention, pre_norm=pre_norm, store_attn=store_attn,
                                 pe=pe, learn_pe=learn_pe, verbose=verbose, **kwargs)
@@ -358,13 +357,12 @@ class _ScaledDotProductAttention(nn.Module):
 
 
 
-class Encoder_m_p_mk2(nn.Module):  # m means channel mixing, p means patching, using 2 stages patching techniques
-    def __init__(self, c_in, patch_num, patch_len, dcomp_individual,
-                 max_seq_len=1024,
-                 n_layers=3, d_model=128, n_heads=16, d_k=None, d_v=None,
+class Encoder_m_p_mk3(nn.Module):  # m means channel mixing, p means patching, using 2 stages patching techniques
+    def __init__(self, c_in, patch_num, patch_len, max_seq_len=1024,
+                 n_layers=3, d_model=128, d_patch=64, n_heads=16, d_k=None, d_v=None,
                  d_ff=256, norm='BatchNorm', attn_dropout=0., dropout=0., act="gelu", store_attn=False,
                  key_padding_mask='auto', padding_var=None, attn_mask=None, res_attention=True, pre_norm=False,
-                 pe='zeros', learn_pe=True, verbose=False, linear_2=True, **kwargs):
+                 pe='zeros', learn_pe=True, verbose=False, **kwargs):
         
         
         super().__init__()
@@ -372,53 +370,33 @@ class Encoder_m_p_mk2(nn.Module):  # m means channel mixing, p means patching, u
         self.patch_num = patch_num
         self.patch_len = patch_len
 
-        self.linear_2 = linear_2 # for linear 2 testing
-
-
-        #dlinear decomp part
-        self.dcomp_patch_len = patch_len
-
-        if linear_2:
-            self.dcomp_output_len = 2  #adjust kw, temp design, makesure it has no remainder
-        else:
-            self.dcomp_output_len = int(d_model/c_in)  #adjust kw, temp design, makesure it has no remainder
-
-        self.dcomp_kernel_size = 9  #adjust kw, odd only
-        self.dcomp_stride = 1  #adjust kw
-        self.decompsition = series_decomp_patching(self.dcomp_kernel_size, self.patch_num, self.dcomp_stride)
-        self.dcomp_individual = dcomp_individual   #kw  individual layer for each channel
-        self.dcomp_channels =  c_in  #same as nvars
-
-
-        if self.dcomp_individual:
-            self.Linear_Seasonal = nn.ModuleList()
-            self.Linear_Trend = nn.ModuleList()
-            
-            for i in range(self.dcomp_channels):
-                self.Linear_Seasonal.append(nn.Linear(self.dcomp_patch_len, self.dcomp_output_len))
-                self.Linear_Trend.append(nn.Linear(self.dcomp_patch_len, self.dcomp_output_len))
-
-        else:
-            self.Linear_Seasonal = nn.Linear(self.dcomp_patch_len, self.dcomp_output_len)
-            self.Linear_Trend = nn.Linear(self.dcomp_patch_len, self.dcomp_output_len)
-            
 
         
         # Input encoding
         q_len = patch_num
 
 
+        #list of linear        method 1 use a list of linear
+        self.list_w_patch_indv = nn.ModuleList()
+        for c_i in range(c_in):
+            self.list_w_patch_indv.append(nn.Linear(patch_len, d_patch))
+        
+
+
+        #set up 2 stages patching linear layers
+        #todo  setup d_patch, n_vars
+
+        self.d_patch = d_patch
         self.n_vars = c_in
+        self.flatten_len = c_in * d_patch
+
+        self.w_patch_indv = torch.nn.Linear(patch_len, d_patch)   #original way
+
+        self.w_channel_m = torch.nn.Linear(self.flatten_len, d_model)
 
 
-        #testing linear_2 for d_model
-        self.d_model = d_model
 
-        if self.linear_2:
-            self.linear_w_cm = nn.Linear(self.dcomp_output_len * c_in, self.d_model)
-
-
-        self.seq_len = q_len  #useless parameters
+        self.seq_len = q_len
 
         # Positional encoding
         self.W_pos = positional_encoding(pe, learn_pe, q_len, d_model)
@@ -432,36 +410,27 @@ class Encoder_m_p_mk2(nn.Module):  # m means channel mixing, p means patching, u
 
         
     def forward(self, x) -> Tensor:                                              # x: [bs x nvars x patch_len x patch_num]
-
-        # Input permute
-        x = x.permute(0,3,2,1)                                                   # x: [bs x patch_num x patch_len x  nvars]
-
-        seasonal_init, trend_init = self.decompsition(x)
-        seasonal_init, trend_init = seasonal_init.permute(0, 1, 3, 2), trend_init.permute(0, 1, 3, 2)  # x: [bs x patch_num x nvars x  patch_len]
-
-        if self.dcomp_individual:
-            seasonal_output = torch.zeros([seasonal_init.size(0), seasonal_init.size(1), seasonal_init.size(2), self.dcomp_output_len], dtype=seasonal_init.dtype).to(seasonal_init.device)
-            trend_output = torch.zeros([trend_init.size(0), trend_init.size(1), trend_init.size(2), self.dcomp_output_len], dtype=trend_init.dtype).to(trend_init.device)
-            for i in range(self.dcomp_channels):
-                seasonal_output[:,:,i,:] = self.Linear_Seasonal[i](seasonal_init[:,:,i,:])
-                trend_output[:,:,i,:] = self.Linear_Trend[i](trend_init[:,:,i,:])
-        else:
-            seasonal_output = self.Linear_Seasonal(seasonal_init)
-            trend_output = self.Linear_Trend(trend_init)
-
-
-        x = seasonal_output + trend_output                  # x: [bs x patch_num x nvars x  dcomp_output_len]
-
-
-        u = torch.reshape(x, (x.shape[0], x.shape[1], x.shape[2] * x.shape[3]))  # u: [bs x patch_num x nvars * dcomp_output_len]   flatten the trend output.
-
-        #set d_model = nvars* dcomp_output   or do the following 
         
+        #n_vars = x.shape[1]
+        # Input encoding
+        x = x.permute(0,3,1,2)                                                   # x: [bs x patch_num x nvars x patch_len]
 
-        #todo add a linear layer
-        if self.linear_2:
-            u = self.linear_w_cm(u)                                                # u: [bs x patch_num x d_model]   flatten the trend output.
 
+        #x = self.w_patch_indv(x)                                                 # x: [bs x patch_num x nvars x d_patch]        #individual level patching
+
+        #use list of linears
+
+        x_temp = torch.zeros([x.size(0), x.size(1), x.size(2), self.d_patch], dtype=x.dtype).to(x.device)
+        for c_i in range(self.n_vars):
+            x_temp[:, :, c_i, :] = self.list_w_patch_indv[c_i](x[:, :, c_i, :])   # x: [bs x patch_num x nvars x d_patch]        #individual level patching
+        
+        x = x_temp
+
+
+        u = torch.reshape(x, (x.shape[0], x.shape[1], x.shape[2] * x.shape[3]))  # u: [bs x patch_num x nvars * d_patch]   flatten the individual patch and channel mixing.
+        u = self.w_channel_m(u)                                                  # u: [bs x patch_num x d_model]     #channel level patching,, 2 stages representation learning   
+
+        # archive #u = torch.reshape(x, (x.shape[0]*x.shape[1],x.shape[2],x.shape[3]))      # u: [bs * nvars x patch_num x d_model] channel independent here
 
         u = self.dropout(u + self.W_pos)                                         # u: [bs x patch_num x d_model]
 

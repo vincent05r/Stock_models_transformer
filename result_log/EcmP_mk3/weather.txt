@@ -1,0 +1,21 @@
+336_96_EcmP_mk3_custom_ftM_sl336_ll25_pl96_dm128_dp8_pl16_nh16_el3_dl1_df256_fc1_ebtimeF_dtTrue_Exp_0_dcomp0_dcompidv0  
+mse:0.2568572759628296, mae:0.2999328672885895, mape:19.100486755371094, rse:0.6676610112190247
+
+336_192_EcmP_mk3_custom_ftM_sl336_ll25_pl192_dm128_dp8_pl16_nh16_el3_dl1_df256_fc1_ebtimeF_dtTrue_Exp_0_dcomp0_dcompidv0  
+mse:0.28206220269203186, mae:0.319228857755661, mape:18.277484893798828, rse:0.698695957660675
+
+336_96_EcmP_mk3_custom_ftM_sl336_ll25_pl96_dm128_dp8_pl16_nh16_el3_dl1_df256_fc1_ebtimeF_dtTrue_Exp_0_dcomp0_dcompidv0  
+mse:0.25756263732910156, mae:0.30084288120269775, mape:18.81982421875, rse:0.6685770750045776
+
+336_96_EcmP_mk3_custom_ftM_sl336_ll25_pl96_dm128_dp8_pl16_nh16_el3_dl1_df256_fc1_ebtimeF_dtTrue_Exp_0_dcomp1_dcompidv0  
+mse:0.2548122704029083, mae:0.2987214922904968, mape:17.06641387939453, rse:0.6649978160858154
+
+336_96_EcmP_mk3_custom_ftM_sl336_ll25_pl96_dm128_dp8_pl16_nh16_el3_dl1_df256_fc1_ebtimeF_dtTrue_Exp_0_dcomp1_dcompidv0  
+mse:0.25264084339141846, mae:0.29778170585632324, mape:18.00815200805664, rse:0.6621583104133606
+
+336_96_EcmP_mk3_custom_ftM_sl336_ll25_pl96_dm128_dp8_pl32_nh16_el3_dl1_df256_fc1_ebtimeF_dtTrue_Exp_0_dcomp1_dcompidv0  
+mse:0.2537621557712555, mae:0.29764100909233093, mape:17.06917953491211, rse:0.6636261343955994
+
+336_192_EcmP_mk3_custom_ftM_sl336_ll25_pl192_dm128_dp8_pl32_nh16_el3_dl1_df256_fc1_ebtimeF_dtTrue_Exp_0_dcomp1_dcompidv0  
+mse:0.2786271572113037, mae:0.3138292133808136, mape:17.08522605895996, rse:0.6944284439086914
+
