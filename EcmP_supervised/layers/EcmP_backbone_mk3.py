@@ -416,18 +416,21 @@ class Encoder_m_p_mk3(nn.Module):  # m means channel mixing, p means patching, u
         x = x.permute(0,3,1,2)                                                   # x: [bs x patch_num x nvars x patch_len]
 
 
-        #x = self.w_patch_indv(x)                                                 # x: [bs x patch_num x nvars x d_patch]        #individual level patching
+        #x = self.w_patch_indv(x)                                                 # x: [bs x patch_num x nvars x d_patch]        #individual level patching mk1
 
         #use list of linears
 
         x_temp = torch.zeros([x.size(0), x.size(1), x.size(2), self.d_patch], dtype=x.dtype).to(x.device)
         for c_i in range(self.n_vars):
-            x_temp[:, :, c_i, :] = self.list_w_patch_indv[c_i](x[:, :, c_i, :])   # x: [bs x patch_num x nvars x d_patch]        #individual level patching
+            x_temp[:, :, c_i, :] = self.list_w_patch_indv[c_i](x[:, :, c_i, :])   # x: [bs x patch_num x nvars x d_patch]        #individual level patching mk3
         
         x = x_temp
 
 
         u = torch.reshape(x, (x.shape[0], x.shape[1], x.shape[2] * x.shape[3]))  # u: [bs x patch_num x nvars * d_patch]   flatten the individual patch and channel mixing.
+
+
+        #use a mlp instead of a linear
         u = self.w_channel_m(u)                                                  # u: [bs x patch_num x d_model]     #channel level patching,, 2 stages representation learning   
 
         # archive #u = torch.reshape(x, (x.shape[0]*x.shape[1],x.shape[2],x.shape[3]))      # u: [bs * nvars x patch_num x d_model] channel independent here

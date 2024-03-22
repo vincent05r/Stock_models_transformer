@@ -5,7 +5,7 @@ fi
 if [ ! -d "./logs/EcmP_mk3" ]; then
     mkdir ./logs/EcmP_mk3
 fi
-seq_len=336
+seq_len=192
 model_name=EcmP_mk3
 
 #extras
