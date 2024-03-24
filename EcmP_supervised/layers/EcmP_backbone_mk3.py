@@ -375,13 +375,17 @@ class Encoder_m_p_mk3(nn.Module):  # m means channel mixing, p means patching, u
         # Input encoding
         q_len = patch_num
 
+        #special toggle
+        self.use_mlp_cm = True
 
+        #mk3 special 1
         #list of linear        method 1 use a list of linear
         self.list_w_patch_indv = nn.ModuleList()
         for c_i in range(c_in):
             self.list_w_patch_indv.append(nn.Linear(patch_len, d_patch))
         
-
+        #mk3 special 2
+        self.mlp_cm = MLP_patching(d_patch*c_in, layer_sizes=[400], output_size=d_model, activation= F.relu)
 
         #set up 2 stages patching linear layers
         #todo  setup d_patch, n_vars
@@ -431,7 +435,10 @@ class Encoder_m_p_mk3(nn.Module):  # m means channel mixing, p means patching, u
 
 
         #use a mlp instead of a linear
-        u = self.w_channel_m(u)                                                  # u: [bs x patch_num x d_model]     #channel level patching,, 2 stages representation learning   
+        if self.use_mlp_cm:
+            u = self.mlp_cm(u)                                                   # u: [bs x patch_num x d_model]     #channel level patching,, 2 stages representation learning 
+        else:
+            u = self.w_channel_m(u)                                                  # u: [bs x patch_num x d_model]     #channel level patching,, 2 stages representation learning   
 
         # archive #u = torch.reshape(x, (x.shape[0]*x.shape[1],x.shape[2],x.shape[3]))      # u: [bs * nvars x patch_num x d_model] channel independent here
 

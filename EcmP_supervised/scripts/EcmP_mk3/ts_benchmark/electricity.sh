@@ -36,16 +36,16 @@ do
       --e_layers 3 \
       --n_heads 8 \
       --d_patch 2 \
-      --d_model 256 \
+      --d_model 128 \
       --d_ff 256 \
       --dropout 0.2\
       --fc_dropout 0.2\
       --head_dropout 0\
-      --patch_len 16\
-      --stride 8\
+      --patch_len 8\
+      --stride 4\
       --des 'Exp' \
       --train_epochs 100\
-      --patience 10\
+      --patience 30\
       --lradj 'TST'\
       --pct_start 0.2\
       --itr 1 --batch_size 32 --learning_rate 0.0001 >logs/EcmP_mk3/$model_name'_'$model_id_name'_'$seq_len'_'$pred_len.log 
