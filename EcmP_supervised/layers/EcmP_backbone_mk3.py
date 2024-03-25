@@ -24,7 +24,8 @@ class EcmP_backbone_mk3(nn.Module): #PatchTST_backbone
                  padding_var:Optional[int]=None, attn_mask:Optional[Tensor]=None, res_attention:bool=True, pre_norm:bool=False, store_attn:bool=False,
                  pe:str='zeros', learn_pe:bool=True, fc_dropout:float=0., head_dropout = 0, padding_patch = None,
                  pretrain_head:bool=False, head_type = 'flatten', individual = False, revin = True, affine = True, subtract_last = False,
-                 verbose:bool=False, **kwargs):
+                 verbose:bool=False, first_stage_patching="LOlinears", second_stage_patching='None',
+                 **kwargs):
         
         super().__init__()
         
@@ -51,7 +52,8 @@ class EcmP_backbone_mk3(nn.Module): #PatchTST_backbone
                                 n_layers=n_layers, d_model=d_model, d_patch=self.d_patch, n_heads=n_heads, d_k=d_k, d_v=d_v, d_ff=d_ff,
                                 attn_dropout=attn_dropout, dropout=dropout, act=act, key_padding_mask=key_padding_mask, padding_var=padding_var,
                                 attn_mask=attn_mask, res_attention=res_attention, pre_norm=pre_norm, store_attn=store_attn,
-                                pe=pe, learn_pe=learn_pe, verbose=verbose, **kwargs)
+                                pe=pe, learn_pe=learn_pe, verbose=verbose, first_stage_patching=first_stage_patching, second_stage_patching=second_stage_patching,
+                                **kwargs)
 
         # Head
         self.head_nf = d_model * patch_num
@@ -362,7 +364,8 @@ class Encoder_m_p_mk3(nn.Module):  # m means channel mixing, p means patching, u
                  n_layers=3, d_model=128, d_patch=64, n_heads=16, d_k=None, d_v=None,
                  d_ff=256, norm='BatchNorm', attn_dropout=0., dropout=0., act="gelu", store_attn=False,
                  key_padding_mask='auto', padding_var=None, attn_mask=None, res_attention=True, pre_norm=False,
-                 pe='zeros', learn_pe=True, verbose=False, **kwargs):
+                 pe='zeros', learn_pe=True, verbose=False, first_stage_patching="LOlinears", second_stage_patching="None",
+                    **kwargs):
         
         
         super().__init__()
@@ -371,14 +374,14 @@ class Encoder_m_p_mk3(nn.Module):  # m means channel mixing, p means patching, u
         self.patch_len = patch_len
 
         #patching setting
-        self.first_stage_patching = "LOlinears"  #individual channel patching,  linear, LOlinears
-        self.second_stage_patching = None        #second stage, channel mixing      3 settings, mlp, linear, and none(flatten the layer into d_model)
+        self.first_stage_patching = first_stage_patching  #individual channel patching,  linear, LOlinears
+        self.second_stage_patching = second_stage_patching   #second stage, channel mixing     3 settings, mlp, linear, and none(flatten the layer into d_model)
 
 
         # Input encoding
         q_len = patch_num
 
-        if self.second_stage_patching == None:
+        if self.second_stage_patching == "None":
             self.d_patch = int(d_model/c_in)
         else:
             self.d_patch = d_patch
@@ -445,7 +448,7 @@ class Encoder_m_p_mk3(nn.Module):  # m means channel mixing, p means patching, u
             u = self.mlp_cm(u)                                                   # u: [bs x patch_num x d_model]     #channel level patching,, 2 stages representation learning 
         elif self.second_stage_patching == 'linear':
             u = self.w_channel_m(u)                                                  # u: [bs x patch_num x d_model]     #channel level patching,, 2 stages representation learning  
-        elif self.second_stage_patching == None:
+        elif self.second_stage_patching == "None":
             pass    #feed in directly
 
 
