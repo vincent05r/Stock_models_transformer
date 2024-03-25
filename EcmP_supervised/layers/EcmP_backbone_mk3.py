@@ -370,37 +370,42 @@ class Encoder_m_p_mk3(nn.Module):  # m means channel mixing, p means patching, u
         self.patch_num = patch_num
         self.patch_len = patch_len
 
+        #patching setting
+        self.first_stage_patching = "LOlinears"  #individual channel patching,  linear, LOlinears
+        self.second_stage_patching = None        #second stage, channel mixing      3 settings, mlp, linear, and none(flatten the layer into d_model)
 
-        
+
         # Input encoding
         q_len = patch_num
 
-        #special toggle
-        self.use_mlp_cm = True
+        if self.second_stage_patching == None:
+            self.d_patch = int(d_model/c_in)
+        else:
+            self.d_patch = d_patch
 
-        #mk3 special 1
-        #list of linear        method 1 use a list of linear
-        self.list_w_patch_indv = nn.ModuleList()
-        for c_i in range(c_in):
-            self.list_w_patch_indv.append(nn.Linear(patch_len, d_patch))
-        
-        #mk3 special 2
-        self.mlp_cm = MLP_patching(d_patch*c_in, layer_sizes=[400], output_size=d_model, activation= F.relu)
-
-        #set up 2 stages patching linear layers
-        #todo  setup d_patch, n_vars
-
-        self.d_patch = d_patch
         self.n_vars = c_in
-        self.flatten_len = c_in * d_patch
-
-        self.w_patch_indv = torch.nn.Linear(patch_len, d_patch)   #original way
-
-        self.w_channel_m = torch.nn.Linear(self.flatten_len, d_model)
+        self.seq_len = q_len  #not used
 
 
 
-        self.seq_len = q_len
+        if self.first_stage_patching == "LOlinears":
+            self.list_w_patch_indv = nn.ModuleList()
+            for c_i in range(c_in):
+                self.list_w_patch_indv.append(nn.Linear(patch_len, d_patch))
+        
+        elif self.first_stage_patching == "linear":
+            self.w_patch_indv = torch.nn.Linear(patch_len, d_patch)
+
+
+
+        if self.second_stage_patching == 'mlp':
+            #mk3 mlp, todo : make the mlp flexible
+            self.mlp_cm = MLP_patching(d_patch*c_in, layer_sizes=[400], output_size=d_model, activation= F.relu)
+        
+        elif self.second_stage_patching == 'linear':
+            self.flatten_len = c_in * d_patch
+            self.w_channel_m = torch.nn.Linear(self.flatten_len, d_model)
+
 
         # Positional encoding
         self.W_pos = positional_encoding(pe, learn_pe, q_len, d_model)
@@ -415,43 +420,40 @@ class Encoder_m_p_mk3(nn.Module):  # m means channel mixing, p means patching, u
         
     def forward(self, x) -> Tensor:                                              # x: [bs x nvars x patch_len x patch_num]
         
-        #n_vars = x.shape[1]
         # Input encoding
         x = x.permute(0,3,1,2)                                                   # x: [bs x patch_num x nvars x patch_len]
 
 
-        #x = self.w_patch_indv(x)                                                 # x: [bs x patch_num x nvars x d_patch]        #individual level patching mk1
+        if self.first_stage_patching == "LOlinears":
+            x_temp = torch.zeros([x.size(0), x.size(1), x.size(2), self.d_patch], dtype=x.dtype).to(x.device)
+            for c_i in range(self.n_vars):
+                x_temp[:, :, c_i, :] = self.list_w_patch_indv[c_i](x[:, :, c_i, :])   # x: [bs x patch_num x nvars x d_patch]        #individual level patching mk3
+            
+            x = x_temp
 
-        #use list of linears
+        elif self.first_stage_patching == "linear":
 
-        x_temp = torch.zeros([x.size(0), x.size(1), x.size(2), self.d_patch], dtype=x.dtype).to(x.device)
-        for c_i in range(self.n_vars):
-            x_temp[:, :, c_i, :] = self.list_w_patch_indv[c_i](x[:, :, c_i, :])   # x: [bs x patch_num x nvars x d_patch]        #individual level patching mk3
-        
-        x = x_temp
+            x = self.w_patch_indv(x)                                                 # x: [bs x patch_num x nvars x d_patch]        #individual level patching mk1
+
 
 
         u = torch.reshape(x, (x.shape[0], x.shape[1], x.shape[2] * x.shape[3]))  # u: [bs x patch_num x nvars * d_patch]   flatten the individual patch and channel mixing.
 
 
-        #use a mlp instead of a linear
-        if self.use_mlp_cm:
+        #second stage, channel mixing
+        if self.second_stage_patching == 'mlp':
             u = self.mlp_cm(u)                                                   # u: [bs x patch_num x d_model]     #channel level patching,, 2 stages representation learning 
-        else:
-            u = self.w_channel_m(u)                                                  # u: [bs x patch_num x d_model]     #channel level patching,, 2 stages representation learning   
+        elif self.second_stage_patching == 'linear':
+            u = self.w_channel_m(u)                                                  # u: [bs x patch_num x d_model]     #channel level patching,, 2 stages representation learning  
+        elif self.second_stage_patching == None:
+            pass    #feed in directly
 
-        # archive #u = torch.reshape(x, (x.shape[0]*x.shape[1],x.shape[2],x.shape[3]))      # u: [bs * nvars x patch_num x d_model] channel independent here
 
+        #positional encoding
         u = self.dropout(u + self.W_pos)                                         # u: [bs x patch_num x d_model]
 
-        # Encoder #todo, check encoder works
         z = self.encoder(u)                                                      # cur: z: [bs x patch_num x d_model]           orig: z: [bs * nvars x patch_num x d_model]
 
-        #todo, edit this part so the loss calculation is compatible
-        # z = torch.reshape(z, (-1,self.n_vars ,z.shape[-2],z.shape[-1]))                # z: [bs x nvars x patch_num x d_model]
-
-
-        #todo, change this
         z = z.permute(0,2,1)                                                   # current z: [bs x d_model x patch_num]                 orig z: [bs x nvars x d_model x patch_num]
         
         return z   
