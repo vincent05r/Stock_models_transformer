@@ -9,7 +9,7 @@ seq_len=96
 model_name=EcmP_mk3
 
 #patching setting
-first_stage_patching=LOlinears
+first_stage_patching=linear
 second_stage_patching=None
 
 #extras
