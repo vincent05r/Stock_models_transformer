@@ -64,7 +64,7 @@ if __name__ == '__main__':
     #EcmP
     parser.add_argument('--d_patch', type=int, default=64, help='The dim size of the pathcing for each channel before mixing')
     parser.add_argument('--first_stage_patching', type=str, default='LOlinears', help='individual channel patching,  linear, LOlinears')
-    parser.add_argument('--second_stage_patching', type=str, default='None', help='channel mixing : mlp, linear, and none(flatten the layer into d_model)')
+    parser.add_argument('--second_stage_patching', type=str, default='None', help='channel mixing : mlp, linear, and None(flatten the layer into d_model)')
 
 
     #EcmP_mk2

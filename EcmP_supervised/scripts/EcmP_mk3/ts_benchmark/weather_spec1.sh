@@ -10,7 +10,7 @@ model_name=EcmP_mk3
 
 #patching setting
 first_stage_patching=LOlinears
-second_stage_patching=linear
+second_stage_patching=None
 
 #extras
 result_log_path=./result_log/EcmP_mk3/weather.txt
@@ -40,9 +40,9 @@ do
       --pred_len $pred_len \
       --enc_in 21 \
       --e_layers 3 \
-      --n_heads 16 \
-      --d_model 128 \
-      --d_patch 8 \
+      --n_heads 9 \
+      --d_model 126 \
+      --d_patch 0 \
       --d_ff 256 \
       --dropout 0.2\
       --fc_dropout 0.2\

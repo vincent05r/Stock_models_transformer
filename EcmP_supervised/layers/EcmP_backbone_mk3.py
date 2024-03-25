@@ -394,10 +394,10 @@ class Encoder_m_p_mk3(nn.Module):  # m means channel mixing, p means patching, u
         if self.first_stage_patching == "LOlinears":
             self.list_w_patch_indv = nn.ModuleList()
             for c_i in range(c_in):
-                self.list_w_patch_indv.append(nn.Linear(patch_len, d_patch))
+                self.list_w_patch_indv.append(nn.Linear(patch_len, self.d_patch))
         
         elif self.first_stage_patching == "linear":
-            self.w_patch_indv = torch.nn.Linear(patch_len, d_patch)
+            self.w_patch_indv = torch.nn.Linear(patch_len, self.d_patch)
 
 
 
