@@ -8,6 +8,10 @@ fi
 seq_len=336
 model_name=EcmP_mk3
 
+#patching setting
+first_stage_patching=LOlinears
+second_stage_patching=mlp
+
 #extras
 result_log_path=./result_log/EcmP_mk3/traffic.txt
 
@@ -21,6 +25,8 @@ for pred_len in 96 192 336 720
 do
     python -u EcmP_supervised/run_longExp.py \
       --decomposition 1\
+      --first_stage_patching $first_stage_patching\
+      --second_stage_patching $second_stage_patching\
       --result_log_path $result_log_path \
       --random_seed $random_seed \
       --is_training 1 \
@@ -35,9 +41,9 @@ do
       --enc_in 862 \
       --e_layers 3 \
       --n_heads 16 \
-      --d_model 128 \
-      --d_patch 1 \
-      --d_ff 256 \
+      --d_model 256 \
+      --d_patch 4 \
+      --d_ff 512 \
       --dropout 0.2\
       --fc_dropout 0.2\
       --head_dropout 0\

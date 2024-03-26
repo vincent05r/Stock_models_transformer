@@ -374,8 +374,11 @@ class Encoder_m_p_mk3(nn.Module):  # m means channel mixing, p means patching, u
         self.patch_len = patch_len
 
         #patching setting
+        if first_stage_patching not in ['linear', 'LOlinears']: raise ValueError('invalid first_stage_patching')
+        if second_stage_patching not in ['mlp', 'linear', 'None']: raise ValueError('invalid second_stage_patching')
+        
         self.first_stage_patching = first_stage_patching  #individual channel patching,  linear, LOlinears
-        self.second_stage_patching = second_stage_patching   #second stage, channel mixing     3 settings, mlp, linear, and none(flatten the layer into d_model)
+        self.second_stage_patching = second_stage_patching   #second stage, channel mixing     3 settings, mlp, linear, and None(flatten the layer into d_model)
 
 
         # Input encoding
@@ -403,7 +406,7 @@ class Encoder_m_p_mk3(nn.Module):  # m means channel mixing, p means patching, u
 
         if self.second_stage_patching == 'mlp':
             #mk3 mlp, todo : make the mlp flexible
-            self.mlp_cm = MLP_patching(d_patch*c_in, layer_sizes=[400], output_size=d_model, activation= F.relu)
+            self.mlp_cm = MLP_patching(d_patch*c_in, layer_sizes=[1024, 512], output_size=d_model, activation= F.relu)
         
         elif self.second_stage_patching == 'linear':
             self.flatten_len = c_in * d_patch
