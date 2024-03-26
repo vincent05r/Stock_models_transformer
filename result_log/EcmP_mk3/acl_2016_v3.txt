@@ -1,0 +1,24 @@
+AAPL_10_10_EcmP_mk3_stock_custom_ftMS_sl10_ll4_pl10_dm36_dp0_pl2_nh6_el2_dl1_df72_fc1_ebtimeF_dtTrue_Exp_0_dcomp1_linear_None  
+mse:0.717670202255249, mae:0.636497974395752, mape:3.1375961303710938, rse:1.0887748003005981
+
+AAPL_20_20_EcmP_mk3_stock_custom_ftMS_sl20_ll4_pl20_dm36_dp0_pl2_nh6_el2_dl1_df72_fc1_ebtimeF_dtTrue_Exp_0_dcomp1_linear_None  
+mse:0.7285454869270325, mae:0.6204502582550049, mape:2.5945963859558105, rse:1.0821253061294556
+
+AAPL_40_40_EcmP_mk3_stock_custom_ftMS_sl40_ll4_pl40_dm36_dp0_pl2_nh6_el2_dl1_df72_fc1_ebtimeF_dtTrue_Exp_0_dcomp1_linear_None  
+mse:0.7687431573867798, mae:0.6303169131278992, mape:2.8829803466796875, rse:1.0957887172698975
+
+AAPL_60_60_EcmP_mk3_stock_custom_ftMS_sl60_ll4_pl60_dm36_dp0_pl2_nh6_el2_dl1_df72_fc1_ebtimeF_dtTrue_Exp_0_dcomp1_linear_None  
+mse:0.7580147385597229, mae:0.6330704092979431, mape:3.129903793334961, rse:1.0899821519851685
+
+ABB_10_10_EcmP_mk3_stock_custom_ftMS_sl10_ll4_pl10_dm36_dp0_pl2_nh6_el2_dl1_df72_fc1_ebtimeF_dtTrue_Exp_0_dcomp1_linear_None  
+mse:1.4060558080673218, mae:0.7925761342048645, mape:2.57690691947937, rse:1.0792527198791504
+
+ABB_20_20_EcmP_mk3_stock_custom_ftMS_sl20_ll4_pl20_dm36_dp0_pl2_nh6_el2_dl1_df72_fc1_ebtimeF_dtTrue_Exp_0_dcomp1_linear_None  
+mse:1.3835490942001343, mae:0.7726014852523804, mape:2.2327866554260254, rse:1.0620959997177124
+
+AAPL_10_10_EcmP_mk3_stock_custom_ftMS_sl10_ll4_pl10_dm36_dp0_pl2_nh6_el2_dl1_df72_fc1_ebtimeF_dtTrue_Exp_0_dcomp0_linear_None  
+mse:0.7612340450286865, mae:0.6583396792411804, mape:3.4483842849731445, rse:1.1213332414627075
+
+AAPL_20_20_EcmP_mk3_stock_custom_ftMS_sl20_ll4_pl20_dm36_dp0_pl2_nh6_el2_dl1_df72_fc1_ebtimeF_dtTrue_Exp_0_dcomp0_linear_None  
+mse:0.7322664260864258, mae:0.6223710775375366, mape:2.7257044315338135, rse:1.0848852396011353
+

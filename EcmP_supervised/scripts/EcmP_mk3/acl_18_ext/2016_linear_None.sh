@@ -14,7 +14,7 @@ second_stage_patching=None
 label_len=4 #reminder the label length is different to the predicted length, lead time(overlap) time between x(input) and y(label)
 
 #extras
-result_log_path=./result_log/EcmP_mk3/acl_2016_v2.txt
+result_log_path=./result_log/EcmP_mk3/acl_2016_v3.txt
 
 root_path_name=./data/ACL_18_EXT/2016/
 #data_path_name=stock_000001.SZ.csv
@@ -50,7 +50,9 @@ do
         do
             pred_len=$seq_len
             python -u EcmP_supervised/run_longExp.py \
-            --decomposition 1\
+            --decomposition 0\
+            --first_stage_patching $first_stage_patching\
+            --second_stage_patching $second_stage_patching\
             --result_log_path $result_log_path\
             --random_seed $random_seed \
             --is_training 1 \
@@ -78,10 +80,10 @@ do
             --patch_len 2\
             --stride 1\
             --des 'Exp' \
-            --train_epochs 100\
-            --patience 10\
+            --train_epochs 50\
+            --patience 20\
             --lradj 'TST'\
-            --pct_start 0.2\
+            --pct_start 0.06\
             --itr 1 --batch_size 8 --learning_rate 0.00001 >logs/EcmP_mk3/ACL18_2016/$model_name'_'$model_id_name'_'$seq_len'_'$pred_len.log 
         done
 
