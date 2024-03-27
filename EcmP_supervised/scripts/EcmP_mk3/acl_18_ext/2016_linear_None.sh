@@ -5,7 +5,7 @@ fi
 if [ ! -d "./logs/EcmP_mk3/ACL18_2016" ]; then
     mkdir ./logs/EcmP_mk3/ACL18_2016
 fi
-seq_len=336
+
 model_name=EcmP_mk3
 
 #patching setting
@@ -18,7 +18,7 @@ decomposition=1
 kernel_size=9
 
 #extras
-result_log_path=./result_log/EcmP_mk3/acl_2016_v3.txt
+result_log_path=./result_log/EcmP_mk3/acl_2016_v4.txt
 
 root_path_name=./data/ACL_18_EXT/2016/
 #data_path_name=stock_000001.SZ.csv
@@ -50,9 +50,9 @@ do
         fi
 
 
-        for seq_len in 10 20 40 60
+        for pred_len in 10 20 40 60
         do
-            pred_len=$seq_len
+            seq_len=40
             python -u EcmP_supervised/run_longExp.py \
             --decomposition $decomposition\
             --kernel_size $kernel_size\
