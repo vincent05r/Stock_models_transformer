@@ -13,6 +13,10 @@ first_stage_patching=linear
 second_stage_patching=None
 label_len=4 #reminder the label length is different to the predicted length, lead time(overlap) time between x(input) and y(label)
 
+#decomposition
+decomposition=1
+kernel_size=9
+
 #extras
 result_log_path=./result_log/EcmP_mk3/acl_2016_v3.txt
 
@@ -50,7 +54,8 @@ do
         do
             pred_len=$seq_len
             python -u EcmP_supervised/run_longExp.py \
-            --decomposition 0\
+            --decomposition $decomposition\
+            --kernel_size $kernel_size\
             --first_stage_patching $first_stage_patching\
             --second_stage_patching $second_stage_patching\
             --result_log_path $result_log_path\
