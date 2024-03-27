@@ -1,0 +1,18 @@
+AAPL_40_10_EcmP_mk3_stock_custom_ftMS_sl40_ll4_pl10_dm36_dp0_pl2_nh6_el2_dl1_df72_fc1_ebtimeF_dtTrue_Exp_0_dcomp0_kn9_LOlinears_None  
+mse:0.7220379710197449, mae:0.6257889866828918, mape:2.859062910079956, rse:1.0920829772949219
+
+AAPL_40_20_EcmP_mk3_stock_custom_ftMS_sl40_ll4_pl20_dm36_dp0_pl2_nh6_el2_dl1_df72_fc1_ebtimeF_dtTrue_Exp_0_dcomp0_kn9_LOlinears_None  
+mse:0.7335473299026489, mae:0.6292247176170349, mape:2.9271817207336426, rse:1.0858336687088013
+
+AAPL_40_40_EcmP_mk3_stock_custom_ftMS_sl40_ll4_pl40_dm36_dp0_pl2_nh6_el2_dl1_df72_fc1_ebtimeF_dtTrue_Exp_0_dcomp0_kn9_LOlinears_None  
+mse:0.7507951259613037, mae:0.629878580570221, mape:2.982248306274414, rse:1.0829213857650757
+
+AAPL_40_60_EcmP_mk3_stock_custom_ftMS_sl40_ll4_pl60_dm36_dp0_pl2_nh6_el2_dl1_df72_fc1_ebtimeF_dtTrue_Exp_0_dcomp0_kn9_LOlinears_None  
+mse:0.7549839615821838, mae:0.6323042511940002, mape:3.193441390991211, rse:1.0878009796142578
+
+ABB_40_10_EcmP_mk3_stock_custom_ftMS_sl40_ll4_pl10_dm36_dp0_pl2_nh6_el2_dl1_df72_fc1_ebtimeF_dtTrue_Exp_0_dcomp0_kn9_LOlinears_None  
+mse:1.373802661895752, mae:0.777442216873169, mape:2.2814974784851074, rse:1.0668025016784668
+
+ABB_40_20_EcmP_mk3_stock_custom_ftMS_sl40_ll4_pl20_dm36_dp0_pl2_nh6_el2_dl1_df72_fc1_ebtimeF_dtTrue_Exp_0_dcomp0_kn9_LOlinears_None  
+mse:1.3895868062973022, mae:0.7745505571365356, mape:2.3696658611297607, rse:1.064410924911499
+
