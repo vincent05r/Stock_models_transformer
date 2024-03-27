@@ -402,6 +402,10 @@ class Encoder_m_p_mk3(nn.Module):  # m means channel mixing, p means patching, u
         elif self.first_stage_patching == "linear":
             self.w_patch_indv = torch.nn.Linear(patch_len, self.d_patch)
 
+        if self.first_stage_patching == "None": #channel mixing only
+            self.flatten_len = c_in * 1
+        else:
+            self.flatten_len = c_in * d_patch
 
 
         if self.second_stage_patching == 'mlp':
@@ -409,7 +413,6 @@ class Encoder_m_p_mk3(nn.Module):  # m means channel mixing, p means patching, u
             self.mlp_cm = MLP_patching(d_patch*c_in, layer_sizes=[1024, 512], output_size=d_model, activation= F.relu)
         
         elif self.second_stage_patching == 'linear':
-            self.flatten_len = c_in * d_patch
             self.w_channel_m = torch.nn.Linear(self.flatten_len, d_model)
 
 
