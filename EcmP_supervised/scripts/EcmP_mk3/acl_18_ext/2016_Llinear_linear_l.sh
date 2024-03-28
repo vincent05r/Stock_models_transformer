@@ -9,7 +9,7 @@ fi
 model_name=EcmP_mk3
 
 #patching setting
-first_stage_patching=LOlinears
+first_stage_patching=linear
 second_stage_patching=linear
 label_len=4 #reminder the label length is different to the predicted length, lead time(overlap) time between x(input) and y(label)
 
@@ -18,7 +18,7 @@ decomposition=0
 kernel_size=9
 
 #extras
-result_log_path=./result_log/EcmP_mk3/acl_18_ext/acl_2016_v7_l.txt
+result_log_path=./result_log/EcmP_mk3/acl_18_ext/acl_2016_v7_pc2.txt
 
 root_path_name=./data/ACL_18_EXT/2016/
 #data_path_name=stock_000001.SZ.csv
