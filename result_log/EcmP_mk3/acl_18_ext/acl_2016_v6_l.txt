@@ -112,3 +112,12 @@ mse:0.8653562664985657, mae:0.7236817479133606, mape:2.279465913772583, rse:1.09
 BCH_40_20_EcmP_mk3_stock_custom_ftMS_sl40_ll4_pl20_dm36_dp0_pl4_nh6_el2_dl1_df72_fc1_ebtimeF_dtTrue_Exp_0_dcomp0_kn9_LOlinears_None  
 mse:0.8512917757034302, mae:0.7148817181587219, mape:2.326632261276245, rse:1.0838817358016968
 
+BCH_40_40_EcmP_mk3_stock_custom_ftMS_sl40_ll4_pl40_dm36_dp0_pl4_nh6_el2_dl1_df72_fc1_ebtimeF_dtTrue_Exp_0_dcomp0_kn9_LOlinears_None  
+mse:0.8265597820281982, mae:0.7020654082298279, mape:2.4807932376861572, rse:1.089418649673462
+
+BCH_40_60_EcmP_mk3_stock_custom_ftMS_sl40_ll4_pl60_dm36_dp0_pl4_nh6_el2_dl1_df72_fc1_ebtimeF_dtTrue_Exp_0_dcomp0_kn9_LOlinears_None  
+mse:0.7829014658927917, mae:0.6825768947601318, mape:2.681446075439453, rse:1.0980501174926758
+
+BHP_40_10_EcmP_mk3_stock_custom_ftMS_sl40_ll4_pl10_dm36_dp0_pl4_nh6_el2_dl1_df72_fc1_ebtimeF_dtTrue_Exp_0_dcomp0_kn9_LOlinears_None  
+mse:1.3946994543075562, mae:0.9227759838104248, mape:3.919437885284424, rse:1.0775129795074463
+
