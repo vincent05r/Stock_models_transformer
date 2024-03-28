@@ -18,7 +18,7 @@ decomposition=0
 kernel_size=9
 
 #extras
-result_log_path=./result_log/EcmP_mk3/acl_18_ext/acl_2016_v6_l.txt
+result_log_path=./result_log/EcmP_mk3/acl_18_ext/acl_2016_v6_l_kn9.txt
 
 root_path_name=./data/ACL_18_EXT/2016/
 #data_path_name=stock_000001.SZ.csv
@@ -82,7 +82,7 @@ do
             --dropout 0.1\
             --fc_dropout 0.1\
             --head_dropout 0\
-            --patch_len 4\
+            --patch_len 8\
             --stride 1\
             --des 'Exp' \
             --train_epochs 50\
