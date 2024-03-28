@@ -271,3 +271,15 @@ mse:0.6922612190246582, mae:0.5951003432273865, mape:3.440905809402466, rse:1.05
 CSCO_40_40_EcmP_mk3_stock_custom_ftMS_sl40_ll4_pl40_dm36_dp0_pl2_nh6_el2_dl1_df72_fc1_ebtimeF_dtTrue_Exp_0_dcomp0_kn9_LOlinears_None  
 mse:0.6358433961868286, mae:0.5768182873725891, mape:3.5710465908050537, rse:1.0771269798278809
 
+CSCO_40_60_EcmP_mk3_stock_custom_ftMS_sl40_ll4_pl60_dm36_dp0_pl2_nh6_el2_dl1_df72_fc1_ebtimeF_dtTrue_Exp_0_dcomp0_kn9_LOlinears_None  
+mse:0.6054154634475708, mae:0.5735946893692017, mape:3.404614210128784, rse:1.0844238996505737
+
+CVX_40_10_EcmP_mk3_stock_custom_ftMS_sl40_ll4_pl10_dm36_dp0_pl2_nh6_el2_dl1_df72_fc1_ebtimeF_dtTrue_Exp_0_dcomp0_kn9_LOlinears_None  
+mse:0.6269863247871399, mae:0.6122660040855408, mape:3.5227932929992676, rse:1.1069111824035645
+
+CVX_40_20_EcmP_mk3_stock_custom_ftMS_sl40_ll4_pl20_dm36_dp0_pl2_nh6_el2_dl1_df72_fc1_ebtimeF_dtTrue_Exp_0_dcomp0_kn9_LOlinears_None  
+mse:0.63437819480896, mae:0.6145063042640686, mape:3.46293306350708, rse:1.0995688438415527
+
+CVX_40_40_EcmP_mk3_stock_custom_ftMS_sl40_ll4_pl40_dm36_dp0_pl2_nh6_el2_dl1_df72_fc1_ebtimeF_dtTrue_Exp_0_dcomp0_kn9_LOlinears_None  
+mse:0.6281160116195679, mae:0.6042119860649109, mape:3.4691720008850098, rse:1.0906904935836792
+

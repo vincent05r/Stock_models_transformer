@@ -18,7 +18,7 @@ decomposition=0
 kernel_size=9
 
 #extras
-result_log_path=./result_log/EcmP_mk3/acl_18_ext/acl_2016_v6.txt
+result_log_path=./result_log/EcmP_mk3/acl_18_ext/acl_2016_v6_pl8.txt
 
 root_path_name=./data/ACL_18_EXT/2016/
 #data_path_name=stock_000001.SZ.csv
@@ -52,7 +52,7 @@ do
 
         for pred_len in 10 20 40 60
         do
-            seq_len=40
+            seq_len=60
             python -u EcmP_supervised/run_longExp.py \
             --decomposition $decomposition\
             --kernel_size $kernel_size\
@@ -82,7 +82,7 @@ do
             --dropout 0.1\
             --fc_dropout 0.1\
             --head_dropout 0\
-            --patch_len 2\
+            --patch_len 8\
             --stride 1\
             --des 'Exp' \
             --train_epochs 50\
