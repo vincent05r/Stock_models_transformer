@@ -11,14 +11,14 @@ model_name=EcmP_mk3
 #patching setting
 first_stage_patching=linear
 second_stage_patching=None
-label_len=4 #reminder the label length is different to the predicted length, lead time(overlap) time between x(input) and y(label)
+label_len=0 #reminder the label length is different to the predicted length, lead time(overlap) time between x(input) and y(label)
 
 #decomposition
 decomposition=0
 kernel_size=9
 
 #extras
-result_log_path=./result_log/EcmP_mk3/acl_18_ext/acl_2016_v7_se.txt
+result_log_path=./result_log/EcmP_mk3/acl_18_ext/acl_2016_v9_mock.txt
 
 root_path_name=./data/ACL_18_EXT/2016/
 #data_path_name=stock_000001.SZ.csv
@@ -52,7 +52,7 @@ do
 
         for pred_len in 10 20 40 60
         do
-            seq_len=40
+            seq_len=$pred_len
             python -u EcmP_supervised/run_longExp.py \
             --decomposition $decomposition\
             --kernel_size $kernel_size\
@@ -85,11 +85,11 @@ do
             --patch_len 4\
             --stride 1\
             --des 'Exp' \
-            --train_epochs 50\
-            --patience 20\
+            --train_epochs 20\
+            --patience 19\
             --lradj 'TST'\
-            --pct_start 0.06\
-            --itr 1 --batch_size 8 --learning_rate 0.00001 >logs/EcmP_mk3/ACL18_2016/$model_name'_'$model_id_name'_'$seq_len'_'$pred_len.log 
+            --pct_start 0.1\
+            --itr 1 --batch_size 16 --learning_rate 0.0005 >logs/EcmP_mk3/ACL18_2016/$model_name'_'$model_id_name'_'$seq_len'_'$pred_len.log 
         done
 
     fi
