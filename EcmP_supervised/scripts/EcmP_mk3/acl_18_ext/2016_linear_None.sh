@@ -18,7 +18,7 @@ decomposition=0
 kernel_size=9
 
 #extras
-result_log_path=./result_log/EcmP_mk3/acl_18_ext/acl_2016_v9_mock.txt
+result_log_path=./result_log/EcmP_mk3/acl_18_ext/acl_2016_v9_mock_longseq.txt
 
 root_path_name=./data/ACL_18_EXT/2016/
 #data_path_name=stock_000001.SZ.csv
@@ -52,7 +52,7 @@ do
 
         for pred_len in 10 20 40 60
         do
-            seq_len=$pred_len
+            seq_len=100
             python -u EcmP_supervised/run_longExp.py \
             --decomposition $decomposition\
             --kernel_size $kernel_size\
