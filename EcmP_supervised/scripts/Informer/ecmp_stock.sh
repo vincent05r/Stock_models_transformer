@@ -67,6 +67,9 @@ do
             --c_out 1 \
             --e_layers 2 \
             --d_layers 1 \
+            --n_heads 4 \
+            --d_model 32 \
+            --d_ff 64 \
             --des 'Exp' \
             --train_epochs 50\
             --patience 19\

@@ -1,3 +1,0 @@
-AAPL_40_10_Informer_stock_custom_ftMS_sl40_ll4_pl10_dm512_dp64_pl16_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0_dcomp0_kn25_LOlinears_None  
-mse:0.28975212574005127, mae:0.42497342824935913, mape:0.1313198059797287, rse:1.000625491142273
-
