@@ -9,8 +9,8 @@ fi
 model_name=EcmP_mk3
 
 #patching setting
-first_stage_patching=LOlinears
-second_stage_patching=linear
+first_stage_patching=linear
+second_stage_patching=None
 label_len=0 #reminder the label length is different to the predicted length, lead time(overlap) time between x(input) and y(label)
 
 #decomposition
@@ -18,7 +18,7 @@ decomposition=0
 kernel_size=9
 
 #extras
-result_log_path=./result_log/EcmP_mk3/ecmp_stock/test_Ln_l.txt
+result_log_path=./result_log/EcmP_mk3/ecmp_stock/test_3_sp.txt
 
 root_path_name=./data/EcmP_stock_L_2016_24/
 #data_path_name=stock_000001.SZ.csv
@@ -75,14 +75,14 @@ do
             --dt_format_str $dt_format_str\
             --enc_in 5 \
             --e_layers 2 \
-            --n_heads 4 \
-            --d_patch 8 \
-            --d_model 32 \
-            --d_ff 64 \
+            --n_heads 5 \
+            --d_patch 0 \
+            --d_model 20 \
+            --d_ff 48 \
             --dropout 0.1\
             --fc_dropout 0.1\
             --head_dropout 0\
-            --patch_len 4\
+            --patch_len 2\
             --stride 1\
             --des 'Exp' \
             --train_epochs 50\

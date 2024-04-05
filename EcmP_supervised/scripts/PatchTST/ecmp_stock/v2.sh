@@ -2,27 +2,24 @@ if [ ! -d "./logs" ]; then
     mkdir ./logs
 fi
 
-if [ ! -d "./logs/EcmP_mk3/ecmp_stock" ]; then
-    mkdir ./logs/EcmP_mk3/ecmp_stock
+if [ ! -d "./logs/PatchTST/ecmp_stock" ]; then
+    mkdir ./logs/PatchTST/ecmp_stock
 fi
 
-model_name=EcmP_mk3
+model_name=PatchTST
 
 #patching setting
-first_stage_patching=LOlinears
-second_stage_patching=linear
-label_len=0 #reminder the label length is different to the predicted length, lead time(overlap) time between x(input) and y(label)
+label_len=5 #reminder the label length is different to the predicted length, lead time(overlap) time between x(input) and y(label)
 
 #decomposition
 decomposition=0
 kernel_size=9
 
 #extras
-result_log_path=./result_log/EcmP_mk3/ecmp_stock/test_Ln_l.txt
+result_log_path=./result_log/PatchTST/ecmp_stock/test_2.txt
 
 root_path_name=./data/EcmP_stock_L_2016_24/
-#data_path_name=stock_000001.SZ.csv
-#model_id_name=stock_000001SZ
+
 data_name=stock_custom
 
 random_seed=2023
@@ -52,12 +49,10 @@ do
 
         for pred_len in 10 20 40 60
         do
-            seq_len=40
+            seq_len=$pred_len
             python -u EcmP_supervised/run_longExp.py \
             --decomposition $decomposition\
             --kernel_size $kernel_size\
-            --first_stage_patching $first_stage_patching\
-            --second_stage_patching $second_stage_patching\
             --result_log_path $result_log_path\
             --random_seed $random_seed \
             --is_training 1 \
@@ -76,7 +71,6 @@ do
             --enc_in 5 \
             --e_layers 2 \
             --n_heads 4 \
-            --d_patch 8 \
             --d_model 32 \
             --d_ff 64 \
             --dropout 0.1\
@@ -89,7 +83,7 @@ do
             --patience 19\
             --lradj 'TST'\
             --pct_start 0.1\
-            --itr 1 --batch_size 16 --learning_rate 0.0005 >logs/EcmP_mk3/ecmp_stock/$model_name'_'$model_id_name'_'$seq_len'_'$pred_len.log 
+            --itr 1 --batch_size 16 --learning_rate 0.0005 >logs/PatchTST/ecmp_stock/$model_name'_'$model_id_name'_'$seq_len'_'$pred_len.log 
         done
 
     fi
