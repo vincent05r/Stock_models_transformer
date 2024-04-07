@@ -1,0 +1,9 @@
+AAPL_10_10_EcmP_mk3_stock_custom_ftMS_sl10_ll0_pl10_dm10_dp0_pl4_nh5_el2_dl1_df64_fc1_ebtimeF_dtTrue_Exp_0_dcomp0_kn9_linear_None  
+mse:0.0336340107023716, mae:0.14385052025318146, mape:0.05132632330060005, rse:0.34091615676879883
+
+AAPL_20_20_EcmP_mk3_stock_custom_ftMS_sl20_ll0_pl20_dm10_dp0_pl4_nh5_el2_dl1_df64_fc1_ebtimeF_dtTrue_Exp_0_dcomp0_kn9_linear_None  
+mse:0.07093137502670288, mae:0.21611592173576355, mape:0.07661041617393494, rse:0.5085218548774719
+
+AAPL_40_40_EcmP_mk3_stock_custom_ftMS_sl40_ll0_pl40_dm10_dp0_pl4_nh5_el2_dl1_df64_fc1_ebtimeF_dtTrue_Exp_0_dcomp0_kn9_linear_None  
+mse:0.13052810728549957, mae:0.274127721786499, mape:0.09865448623895645, rse:0.6976493000984192
+

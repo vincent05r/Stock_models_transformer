@@ -1,0 +1,3 @@
+AAPL_40_60_EcmP_mk3_stock_custom_ftMS_sl40_ll0_pl60_dm10_dp0_pl4_nh5_el2_dl1_df48_fc1_ebtimeF_dtTrue_Exp_0_dcomp0_kn9_linear_None  
+mse:0.16654084622859955, mae:0.32559528946876526, mape:0.11648084968328476, rse:0.7841222286224365
+
