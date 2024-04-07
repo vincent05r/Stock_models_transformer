@@ -1,0 +1,18 @@
+AAPL_40_60_EcmP_mk3_stock_custom_ftMS_sl40_ll0_pl60_dm10_dp0_pl4_nh5_el2_dl1_df32_fc1_ebtimeF_dtTrue_Exp_0_dcomp0_kn9_linear_None  
+mse:0.16506372392177582, mae:0.32849910855293274, mape:0.11680027842521667, rse:0.7806370854377747
+
+ABBV_40_60_EcmP_mk3_stock_custom_ftMS_sl40_ll0_pl60_dm10_dp0_pl4_nh5_el2_dl1_df32_fc1_ebtimeF_dtTrue_Exp_0_dcomp0_kn9_linear_None  
+mse:0.33021649718284607, mae:0.4584888815879822, mape:0.10935904085636139, rse:1.248650074005127
+
+AEP_40_60_EcmP_mk3_stock_custom_ftMS_sl40_ll0_pl60_dm10_dp0_pl4_nh5_el2_dl1_df32_fc1_ebtimeF_dtTrue_Exp_0_dcomp0_kn9_linear_None  
+mse:0.22915974259376526, mae:0.38399237394332886, mape:0.25361788272857666, rse:0.8586222529411316
+
+AMGN_40_60_EcmP_mk3_stock_custom_ftMS_sl40_ll0_pl60_dm10_dp0_pl4_nh5_el2_dl1_df32_fc1_ebtimeF_dtTrue_Exp_0_dcomp0_kn9_linear_None  
+mse:0.3773593306541443, mae:0.4875079095363617, mape:0.2307577282190323, rse:1.150553822517395
+
+AMZN_40_60_EcmP_mk3_stock_custom_ftMS_sl40_ll0_pl60_dm10_dp0_pl4_nh5_el2_dl1_df32_fc1_ebtimeF_dtTrue_Exp_0_dcomp0_kn9_linear_None  
+mse:0.13950997591018677, mae:0.2891513705253601, mape:1.8175076246261597, rse:0.9399389028549194
+
+BAC_40_60_EcmP_mk3_stock_custom_ftMS_sl40_ll0_pl60_dm10_dp0_pl4_nh5_el2_dl1_df32_fc1_ebtimeF_dtTrue_Exp_0_dcomp0_kn9_linear_None  
+mse:0.20109249651432037, mae:0.3499552309513092, mape:0.4489632844924927, rse:1.0342624187469482
+
