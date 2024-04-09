@@ -52,7 +52,7 @@ do
 
         for pred_len in 10 20 40
         do
-            seq_len=$pred_len
+            seq_len=40
             python -u EcmP_supervised/run_longExp.py \
             --decomposition $decomposition\
             --kernel_size $kernel_size\

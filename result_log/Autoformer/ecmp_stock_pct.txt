@@ -109,3 +109,9 @@ mse:0.8999265432357788, mae:0.738075315952301, mape:1.4637633562088013, rse:1.01
 BP_pct_40_10_Autoformer_stock_custom_ftMS_sl40_ll4_pl10_dm32_dp64_pl16_nh4_el2_dl1_df64_fc1_ebtimeF_dtTrue_Exp_0_dcomp0_kn25_LOlinears_None  
 mse:0.7681118249893188, mae:0.6434017419815063, mape:1.3149126768112183, rse:1.0316355228424072
 
+BP_pct_40_20_Autoformer_stock_custom_ftMS_sl40_ll4_pl20_dm32_dp64_pl16_nh4_el2_dl1_df64_fc1_ebtimeF_dtTrue_Exp_0_dcomp0_kn25_LOlinears_None  
+mse:0.7594001293182373, mae:0.6398751139640808, mape:1.2839171886444092, rse:1.0214041471481323
+
+BP_pct_40_40_Autoformer_stock_custom_ftMS_sl40_ll4_pl40_dm32_dp64_pl16_nh4_el2_dl1_df64_fc1_ebtimeF_dtTrue_Exp_0_dcomp0_kn25_LOlinears_None  
+mse:0.7299993634223938, mae:0.6263757348060608, mape:1.284619927406311, rse:1.020540475845337
+

@@ -121,3 +121,12 @@ mse:0.6975135803222656, mae:0.6065775752067566, mape:1.069069743156433, rse:1.00
 BRK-A_pct_40_10_Informer_stock_custom_ftMS_sl40_ll4_pl10_dm32_dp64_pl16_nh4_el2_dl1_df64_fc1_ebtimeF_dtTrue_Exp_0_dcomp0_kn25_LOlinears_None  
 mse:0.8783715963363647, mae:0.7086331844329834, mape:1.565161943435669, rse:1.0102535486221313
 
+BRK-A_pct_40_20_Informer_stock_custom_ftMS_sl40_ll4_pl20_dm32_dp64_pl16_nh4_el2_dl1_df64_fc1_ebtimeF_dtTrue_Exp_0_dcomp0_kn25_LOlinears_None  
+mse:0.8672242760658264, mae:0.7060776352882385, mape:1.4228379726409912, rse:1.0039643049240112
+
+BRK-A_pct_40_40_Informer_stock_custom_ftMS_sl40_ll4_pl40_dm32_dp64_pl16_nh4_el2_dl1_df64_fc1_ebtimeF_dtTrue_Exp_0_dcomp0_kn25_LOlinears_None  
+mse:0.8447552919387817, mae:0.6976006031036377, mape:1.197553038597107, rse:1.0013916492462158
+
+BRK-A_pct_40_60_Informer_stock_custom_ftMS_sl40_ll4_pl60_dm32_dp64_pl16_nh4_el2_dl1_df64_fc1_ebtimeF_dtTrue_Exp_0_dcomp0_kn25_LOlinears_None  
+mse:0.842788577079773, mae:0.6949001550674438, mape:1.17208993434906, rse:1.0014617443084717
+
