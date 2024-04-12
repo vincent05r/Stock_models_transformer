@@ -18,7 +18,7 @@ decomposition=1
 kernel_size=13
 
 #extras
-result_log_path=./result_log/EcmP_mk3/ecmp_stock/final_10_40_pct_dcomp.txt
+result_log_path=./result_log/EcmP_mk3/ecmp_stock_pct/final_10_40_pct_dcomp_revin.txt
 
 root_path_name=./data/EcmP_stock_L_2016_24_spec_official/
 #data_path_name=stock_000001.SZ.csv
@@ -54,6 +54,7 @@ do
         do
             seq_len=40
             python -u EcmP_supervised/run_longExp.py \
+            --revin 0\
             --decomposition $decomposition\
             --kernel_size $kernel_size\
             --first_stage_patching $first_stage_patching\

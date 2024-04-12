@@ -20,7 +20,7 @@ decomposition=0
 kernel_size=9
 
 #extras
-result_log_path=./result_log/EcmP_mk3/ecmp_stock/final_seq_60_pct_xl_revin.txt
+result_log_path=./result_log/EcmP_mk3/ecmp_stock_pct/final_seq_60_pct_xll_revin.txt
 
 root_path_name=./data/EcmP_stock_L_2016_24_spec_official/
 data_name=stock_custom
@@ -75,7 +75,7 @@ do
         --e_layers 2 \
         --n_heads 5 \
         --d_patch 0 \
-        --d_model 20 \
+        --d_model 40 \
         --d_ff 64 \
         --dropout 0.1\
         --fc_dropout 0.1\

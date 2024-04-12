@@ -13,7 +13,7 @@ label_len=4 #reminder the label length is different to the predicted length, lea
 
 
 #extras
-result_log_path=./result_log/Informer/ecmp_stock.txt
+result_log_path=./result_log/Informer/ecmp_stock_v2.txt
 
 root_path_name=./data/EcmP_stock_L_2016_24/
 data_name=stock_custom
@@ -68,12 +68,12 @@ do
             --e_layers 2 \
             --d_layers 1 \
             --n_heads 4 \
-            --d_model 32 \
-            --d_ff 64 \
+            --d_model 16 \
+            --d_ff 32 \
             --des 'Exp' \
             --train_epochs 50\
             --patience 19\
-            --itr 1 --batch_size 16 --learning_rate 0.0005 >logs/Informer/$model_name'_'$model_id_name'_'$seq_len'_'$pred_len.log 
+            --itr 1 --batch_size 16 --learning_rate 0.00005 >logs/Informer/$model_name'_'$model_id_name'_'$seq_len'_'$pred_len.log 
         done
 
     fi
