@@ -65,8 +65,8 @@ if __name__ == '__main__':
     parser.add_argument('--d_patch', type=int, default=64, help='The dim size of the pathcing for each channel before mixing')
     parser.add_argument('--first_stage_patching', type=str, default='LOlinears', help='individual channel patching:  linear, LOlinears')
     parser.add_argument('--second_stage_patching', type=str, default='None', help='channel mixing : mlp, linear, and None(flatten the layer into d_model)')
-
-
+    parser.add_argument('--pe', type=str, default='zeros', help='positional encoding, options : zero, zeros, normal, uniform, sincos')
+    parser.add_argument('--learn_pe', type=bool, default=True, help='learnable positional encoding')
     #EcmP_mk2
     parser.add_argument('--dcomp_individual', type=int, default=0, help='use individual Decomp layer for each channel') 
 
