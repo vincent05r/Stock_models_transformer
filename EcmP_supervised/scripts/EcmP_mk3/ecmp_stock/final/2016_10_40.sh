@@ -18,7 +18,7 @@ decomposition=0
 kernel_size=9
 
 #extras
-result_log_path=./result_log/EcmP_mk3/ecmp_stock/final_10_40_best_zeros.txt
+result_log_path=./result_log/EcmP_mk3/ecmp_stock/final_10_40_best.txt
 
 root_path_name=./data/EcmP_stock_L_2016_24/
 #data_path_name=stock_000001.SZ.csv
@@ -54,7 +54,7 @@ do
         do
             seq_len=$pred_len
             python -u EcmP_supervised/run_longExp.py \
-            --pe zeros\
+            --pe sincos\
             --learn_pe True\
             --decomposition $decomposition\
             --kernel_size $kernel_size\
