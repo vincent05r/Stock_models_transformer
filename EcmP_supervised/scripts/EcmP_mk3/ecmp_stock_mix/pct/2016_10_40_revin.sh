@@ -18,7 +18,7 @@ decomposition=0
 kernel_size=9
 
 #extras
-result_log_path=./result_log/EcmP_mk3/ecmp_stock_mix_pct/t1_10_40_revin.txt
+result_log_path=./result_log/EcmP_mk3/ecmp_stock_mix_pct/t1_10_40_revin_xl_best.txt
 
 root_path_name=./data/EcmP_stock_L_2016_24_mix/
 data_name=stock_custom
@@ -79,7 +79,7 @@ do
             --n_heads 3 \
             --d_patch 0 \
             --d_model 18 \
-            --d_ff 64 \
+            --d_ff 128 \
             --dropout 0.1\
             --fc_dropout 0.1\
             --head_dropout 0\

@@ -13,7 +13,7 @@ label_len=4 #reminder the label length is different to the predicted length, lea
 
 
 #extras
-result_log_path=./result_log/Autoformer/ecmp_stock_mix_pct.txt
+result_log_path=./result_log/Autoformer/ecmp_stock_mix_pct_d2.txt
 
 root_path_name=./data/EcmP_stock_L_2016_24_mix/
 data_name=stock_custom
@@ -68,11 +68,11 @@ do
             --e_layers 2 \
             --d_layers 1 \
             --n_heads 4 \
-            --d_model 32 \
-            --d_ff 64 \
+            --d_model 64 \
+            --d_ff 128 \
             --des 'Exp' \
             --train_epochs 50\
-            --patience 19\
+            --patience 5\
             --itr 1 --batch_size 16 --learning_rate 0.0005 >logs/Autoformer/$model_name'_'$model_id_name'_'$seq_len'_'$pred_len.log 
         done
 

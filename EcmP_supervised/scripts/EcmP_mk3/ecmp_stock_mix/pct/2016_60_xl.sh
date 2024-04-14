@@ -20,7 +20,7 @@ decomposition=0
 kernel_size=9
 
 #extras
-result_log_path=./result_log/EcmP_mk3/ecmp_stock_mix_pct/t1_seq_60_xl.txt
+result_log_path=./result_log/EcmP_mk3/ecmp_stock_mix_pct/t1_seq_60_xl_ec.txt
 
 root_path_name=./data/EcmP_stock_L_2016_24_mix/
 data_name=stock_custom
@@ -74,7 +74,7 @@ do
         --target $target\
         --dt_format_str $dt_format_str\
         --enc_in 9 \
-        --e_layers 2 \
+        --e_layers 3 \
         --n_heads 3 \
         --d_patch 0 \
         --d_model 18 \
