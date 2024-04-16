@@ -12,6 +12,7 @@ if __name__ == '__main__':
 
     #utility
     parser.add_argument('--result_log_path', type=str, default='./result_log/result_spec1.txt')
+    parser.add_argument('--save_results', type=int, default=0, help='save prediction results')
 
     # random seed
     parser.add_argument('--random_seed', type=int, default=2021, help='random seed')
@@ -54,7 +55,6 @@ if __name__ == '__main__':
     parser.add_argument('--patch_len', type=int, default=16, help='patch length')
     parser.add_argument('--stride', type=int, default=8, help='stride')
     parser.add_argument('--padding_patch', default='end', help='None: None; end: padding on the end')
-    parser.add_argument('--revin', type=int, default=1, help='RevIN; True 1 False 0')
     parser.add_argument('--affine', type=int, default=0, help='RevIN-affine; True 1 False 0')
     parser.add_argument('--subtract_last', type=int, default=0, help='0: subtract mean; 1: subtract last')
     parser.add_argument('--decomposition', type=int, default=0, help='decomposition; True 1 False 0')
@@ -62,6 +62,7 @@ if __name__ == '__main__':
     parser.add_argument('--individual', type=int, default=0, help='individual head; True 1 False 0')
 
     #EcmP
+    parser.add_argument('--revin', type=int, default=1, help='RevIN; True 1 False 0')
     parser.add_argument('--d_patch', type=int, default=64, help='The dim size of the pathcing for each channel before mixing')
     parser.add_argument('--first_stage_patching', type=str, default='LOlinears', help='individual channel patching:  linear, LOlinears')
     parser.add_argument('--second_stage_patching', type=str, default='None', help='channel mixing : mlp, linear, and None(flatten the layer into d_model)')
@@ -137,7 +138,7 @@ if __name__ == '__main__':
     if args.is_training:
         for ii in range(args.itr):
             # setting record of experiments, modified for EcmP
-            setting = '{}_{}_{}_ft{}_sl{}_ll{}_pl{}_dm{}_dp{}_pl{}_nh{}_el{}_dl{}_df{}_fc{}_eb{}_dt{}_{}_{}_dcomp{}_kn{}_{}_{}'.format(
+            setting = '{}_{}_{}_ft{}_sl{}_ll{}_pl{}_dm{}_dp{}_pl{}_nh{}_el{}_dl{}_df{}_fc{}_eb{}_dt{}_{}_{}_dcomp{}_kn{}_{}_{}_rv{}'.format(
                 args.model_id,
                 args.model,
                 args.data,
@@ -160,7 +161,8 @@ if __name__ == '__main__':
                 args.decomposition,
                 args.kernel_size,
                 args.first_stage_patching,
-                args.second_stage_patching
+                args.second_stage_patching,
+                args.revin
                 )
 
             exp = Exp(args)  # set experiments

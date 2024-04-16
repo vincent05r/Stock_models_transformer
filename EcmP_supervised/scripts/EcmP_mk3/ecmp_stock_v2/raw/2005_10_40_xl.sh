@@ -2,27 +2,32 @@ if [ ! -d "./logs" ]; then
     mkdir ./logs
 fi
 
-if [ ! -d "./logs/Autoformer" ]; then
-    mkdir ./logs/Autoformer
+if [ ! -d "./logs/EcmP_mk3/ecmp_stock_v2" ]; then
+    mkdir ./logs/EcmP_mk3/ecmp_stock_v2
 fi
 
-model_name=Autoformer
+model_name=EcmP_mk3
 
+#patching setting
+first_stage_patching=linear
+second_stage_patching=None
+label_len=0 #reminder the label length is different to the predicted length, lead time(overlap) time between x(input) and y(label)
 
-label_len=4 #reminder the label length is different to the predicted length, lead time(overlap) time between x(input) and y(label)
-
+#decomposition
+decomposition=0
+kernel_size=9
 
 #extras
-result_log_path=./result_log/Autoformer/ecmp_stock_mix_pct_d2_tr.txt
+result_log_path=./result_log/EcmP_mk3/ecmp_stock_v2/t1_10_40.txt
 
-root_path_name=./data/EcmP_stock_L_2016_24_mix/
+root_path_name=./data/EcmP_stock_L_2005_24/
 data_name=stock_custom
 
 random_seed=2023
 
 dt_format_str=0
 
-target=close_pct_change
+target=close
 
 scale=1
 
@@ -43,11 +48,16 @@ do
         fi
 
 
-        for pred_len in 10 20 40 60
+        for pred_len in 10 20 40
         do
-            seq_len=40
+            seq_len=$pred_len
             python -u EcmP_supervised/run_longExp.py \
-            --save_results 1\
+            --pe sincos\
+            --learn_pe True\
+            --decomposition $decomposition\
+            --kernel_size $kernel_size\
+            --first_stage_patching $first_stage_patching\
+            --second_stage_patching $second_stage_patching\
             --result_log_path $result_log_path\
             --random_seed $random_seed \
             --is_training 1 \
@@ -64,17 +74,22 @@ do
             --target $target\
             --dt_format_str $dt_format_str\
             --enc_in 9 \
-            --dec_in 9 \
-            --c_out 1 \
-            --e_layers 2 \
-            --d_layers 1 \
-            --n_heads 4 \
-            --d_model 64 \
+            --e_layers 3 \
+            --n_heads 3 \
+            --d_patch 0 \
+            --d_model 18 \
             --d_ff 128 \
+            --dropout 0.1\
+            --fc_dropout 0.1\
+            --head_dropout 0\
+            --patch_len 4\
+            --stride 1\
             --des 'Exp' \
             --train_epochs 50\
-            --patience 5\
-            --itr 1 --batch_size 16 --learning_rate 0.0005 >logs/Autoformer/$model_name'_'$model_id_name'_'$seq_len'_'$pred_len.log 
+            --patience 19\
+            --lradj 'TST'\
+            --pct_start 0.1\
+            --itr 1 --batch_size 16 --learning_rate 0.0001 >logs/EcmP_mk3/ecmp_stock_v2/$model_name'_'$model_id_name'_'$seq_len'_'$pred_len.log 
         done
 
     fi
