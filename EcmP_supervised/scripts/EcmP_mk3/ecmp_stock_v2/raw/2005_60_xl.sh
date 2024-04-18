@@ -20,7 +20,7 @@ decomposition=0
 kernel_size=9
 
 #extras
-result_log_path=./result_log/EcmP_mk3/ecmp_stock_v2/t1_seq_60_best_xl.txt
+result_log_path=./result_log/EcmP_mk3/ecmp_stock_v2/t1_60_xl.txt
 
 root_path_name=./data/EcmP_stock_L_2005_24/
 data_name=stock_custom
@@ -76,7 +76,7 @@ do
         --e_layers 3 \
         --n_heads 3 \
         --d_patch 0 \
-        --d_model 18 \
+        --d_model 36 \
         --d_ff 128 \
         --dropout 0.1\
         --fc_dropout 0.1\
