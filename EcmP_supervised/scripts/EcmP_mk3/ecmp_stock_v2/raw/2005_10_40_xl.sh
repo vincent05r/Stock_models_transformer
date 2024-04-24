@@ -18,7 +18,7 @@ decomposition=0
 kernel_size=9
 
 #extras
-result_log_path=./result_log/EcmP_mk3/ecmp_stock_v2/t1_10_40_xl_seq.txt
+result_log_path=./result_log/EcmP_mk3/ecmp_stock_v2/t1_10_40_xl.txt
 
 root_path_name=./data/EcmP_stock_L_2005_24/
 data_name=stock_custom
@@ -50,7 +50,7 @@ do
 
         for pred_len in 10 20 40
         do
-            seq_len=40
+            seq_len=$pred_len
             python -u EcmP_supervised/run_longExp.py \
             --pe sincos\
             --learn_pe True\
