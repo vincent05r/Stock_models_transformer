@@ -18,7 +18,7 @@ decomposition=0
 kernel_size=9
 
 #extras  
-result_log_path=./result_log/EcmP_mk3/ablation_v2/mix_pct_1060_NP.txt
+result_log_path=./result_log/EcmP_mk3/ablation_v2/mix_pct_60_NP.txt
 
 root_path_name=./data/EcmP_stock_L_2016_24_mix/
 data_name=stock_custom
@@ -48,7 +48,7 @@ do
         fi
 
 
-        for pred_len in 10 20 40 60
+        for pred_len in 60
         do
             seq_len=60
             python -u EcmP_supervised/run_longExp.py \
@@ -78,12 +78,12 @@ do
             --e_layers 2 \
             --n_heads 3 \
             --d_patch 0 \
-            --d_model 45 \
-            --d_ff 64 \
+            --d_model 18 \
+            --d_ff 32 \
             --dropout 0.1\
             --fc_dropout 0.1\
             --head_dropout 0\
-            --patch_len 5\
+            --patch_len 2\
             --stride 1\
             --des 'Exp' \
             --train_epochs 50\
