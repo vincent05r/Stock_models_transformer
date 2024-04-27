@@ -2,8 +2,8 @@ if [ ! -d "./logs" ]; then
     mkdir ./logs
 fi
 
-if [ ! -d "./logs/EcmP_mk3/ecmp_stock_v2" ]; then
-    mkdir ./logs/EcmP_mk3/ecmp_stock_v2
+if [ ! -d "./logs/EcmP_mk3/ecmp_stock" ]; then
+    mkdir ./logs/EcmP_mk3/ecmp_stock
 fi
 
 model_name=EcmP_mk3
@@ -18,16 +18,16 @@ decomposition=0
 kernel_size=9
 
 #extras
-result_log_path=./result_log/EcmP_mk3/ablation_v2/v2_pct_40_60.txt
+result_log_path=./result_log/EcmP_mk3/ablation_v2/mix_raw_1060_NP.txt
 
-root_path_name=./data/EcmP_stock_L_2005_24/
+root_path_name=./data/EcmP_stock_L_2016_24_mix/
 data_name=stock_custom
 
 random_seed=2023
 
 dt_format_str=0
 
-target=close_pct_change
+target=close
 
 scale=1
 
@@ -48,12 +48,11 @@ do
         fi
 
 
-        for pred_len in 40 60
+        for pred_len in 10 20 40 60
         do
-            seq_len=40
+            seq_len=60
             python -u EcmP_supervised/run_longExp.py \
-            --revin 1\
-            --pe sincos\
+            --pe zeros\
             --learn_pe True\
             --decomposition $decomposition\
             --kernel_size $kernel_size\
@@ -75,22 +74,22 @@ do
             --target $target\
             --dt_format_str $dt_format_str\
             --enc_in 9 \
-            --e_layers 1 \
+            --e_layers 2 \
             --n_heads 3 \
             --d_patch 0 \
-            --d_model 18 \
-            --d_ff 32 \
+            --d_model 45 \
+            --d_ff 64 \
             --dropout 0.1\
             --fc_dropout 0.1\
             --head_dropout 0\
-            --patch_len 2\
+            --patch_len 5\
             --stride 1\
             --des 'Exp' \
             --train_epochs 50\
             --patience 19\
             --lradj 'TST'\
             --pct_start 0.1\
-            --itr 1 --batch_size 16 --learning_rate 0.0001 >logs/EcmP_mk3/ecmp_stock_v2/$model_name'_'$model_id_name'_'$seq_len'_'$pred_len.log 
+            --itr 1 --batch_size 16 --learning_rate 0.0001 >logs/EcmP_mk3/ecmp_stock/$model_name'_'$model_id_name'_'$seq_len'_'$pred_len.log 
         done
 
     fi

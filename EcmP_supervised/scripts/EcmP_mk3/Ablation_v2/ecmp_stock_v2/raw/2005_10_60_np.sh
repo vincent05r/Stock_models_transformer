@@ -18,7 +18,7 @@ decomposition=0
 kernel_size=9
 
 #extras
-result_log_path=./result_log/EcmP_mk3/ablation_v2/v2_pct_10_20.txt
+result_log_path=./result_log/EcmP_mk3/ablation_v2/v2_raw_10_60.txt
 
 root_path_name=./data/EcmP_stock_L_2005_24/
 data_name=stock_custom
@@ -27,7 +27,7 @@ random_seed=2023
 
 dt_format_str=0
 
-target=close_pct_change
+target=close
 
 scale=1
 
@@ -48,13 +48,11 @@ do
         fi
 
 
-        for pred_len in 10 20
+        for pred_len in 10 20 40 60
         do
             seq_len=$pred_len
             python -u EcmP_supervised/run_longExp.py \
-            --save_results 1\
-            --revin 0\
-            --pe sincos\
+            --pe zeros\
             --learn_pe True\
             --decomposition $decomposition\
             --kernel_size $kernel_size\
@@ -76,15 +74,15 @@ do
             --target $target\
             --dt_format_str $dt_format_str\
             --enc_in 9 \
-            --e_layers 1 \
+            --e_layers 2 \
             --n_heads 3 \
             --d_patch 0 \
-            --d_model 18 \
-            --d_ff 32 \
+            --d_model 45 \
+            --d_ff 64 \
             --dropout 0.1\
             --fc_dropout 0.1\
             --head_dropout 0\
-            --patch_len 2\
+            --patch_len 5\
             --stride 1\
             --des 'Exp' \
             --train_epochs 50\

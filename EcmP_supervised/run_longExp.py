@@ -138,7 +138,7 @@ if __name__ == '__main__':
     if args.is_training:
         for ii in range(args.itr):
             # setting record of experiments, modified for EcmP
-            setting = '{}_{}_{}_ft{}_sl{}_ll{}_pl{}_dm{}_dp{}_pl{}_nh{}_el{}_dl{}_df{}_fc{}_eb{}_dt{}_{}_{}_dcomp{}_kn{}_{}_{}_rv{}'.format(
+            setting = '{}_{}_{}_ft{}_sl{}_ll{}_pl{}_dm{}_dp{}_pl{}_nh{}_el{}_dl{}_df{}_fc{}_eb{}_dt{}_{}_{}_dcomp{}_kn{}_{}_{}_rv{}_{}'.format(
                 args.model_id,
                 args.model,
                 args.data,
@@ -162,7 +162,8 @@ if __name__ == '__main__':
                 args.kernel_size,
                 args.first_stage_patching,
                 args.second_stage_patching,
-                args.revin
+                args.revin,
+                args.target
                 )
 
             exp = Exp(args)  # set experiments
