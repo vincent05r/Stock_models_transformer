@@ -9,7 +9,7 @@ fi
 model_name=EcmP_mk3
 
 #patching setting
-first_stage_patching=linear
+first_stage_patching=MLP
 second_stage_patching=None
 label_len=0 #reminder the label length is different to the predicted length, lead time(overlap) time between x(input) and y(label)
 
@@ -18,7 +18,7 @@ decomposition=0
 kernel_size=9
 
 #extras
-result_log_path=./result_log/EcmP_mk3/ecmp_stock_v2/t1_10_40_xl.txt
+result_log_path=./result_log/EcmP_mk3/ecmp_stock_v2_pct/t1_10_60_mlp.txt
 
 root_path_name=./data/EcmP_stock_L_2005_24/
 data_name=stock_custom
@@ -27,7 +27,7 @@ random_seed=2023
 
 dt_format_str=0
 
-target=close
+target=close_pct_change
 
 scale=1
 
@@ -48,11 +48,13 @@ do
         fi
 
 
-        for pred_len in 10 20 40
+        for pred_len in 10 20 40 60
         do
             seq_len=$pred_len
             python -u EcmP_supervised/run_longExp.py \
-            --pe sincos\
+            --save_results 1\
+            --revin 0\
+            --pe zeros\
             --learn_pe True\
             --decomposition $decomposition\
             --kernel_size $kernel_size\
@@ -77,7 +79,7 @@ do
             --e_layers 3 \
             --n_heads 3 \
             --d_patch 0 \
-            --d_model 36 \
+            --d_model 18 \
             --d_ff 128 \
             --dropout 0.1\
             --fc_dropout 0.1\

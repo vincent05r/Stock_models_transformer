@@ -374,7 +374,7 @@ class Encoder_m_p_mk3(nn.Module):  # m means channel mixing, p means patching, u
         self.patch_len = patch_len
 
         #patching setting
-        if first_stage_patching not in ['linear', 'LOlinears', 'None']: raise ValueError('invalid first_stage_patching')
+        if first_stage_patching not in ['linear', 'LOlinears', 'None', 'MLP']: raise ValueError('invalid first_stage_patching')
         if second_stage_patching not in ['mlp', 'linear', 'None']: raise ValueError('invalid second_stage_patching')
         
         self.first_stage_patching = first_stage_patching  #individual channel patching,  linear, LOlinears
@@ -401,6 +401,8 @@ class Encoder_m_p_mk3(nn.Module):  # m means channel mixing, p means patching, u
         
         elif self.first_stage_patching == "linear":
             self.w_patch_indv = torch.nn.Linear(patch_len, self.d_patch)
+        elif self.first_stage_patching == "MLP":
+            self.temporal_mlp = MLP_patching(patch_len, [patch_len*2, self.d_patch], self.d_patch)
 
         if self.first_stage_patching == "None": #channel mixing only
             self.flatten_len = c_in * 1
@@ -443,6 +445,9 @@ class Encoder_m_p_mk3(nn.Module):  # m means channel mixing, p means patching, u
         elif self.first_stage_patching == "linear":
 
             x = self.w_patch_indv(x)                                                 # x: [bs x patch_num x nvars x d_patch]        #individual level patching mk1
+        
+        elif self.first_stage_patching == 'MLP':
+            x = self.temporal_mlp(x)                                               # x: [bs x patch_num x nvars x d_patch]        #individual level patching mlp
 
         elif self.first_stage_patching == 'None':
             pass                                    # x: [bs x patch_num x nvars x 1] #typically use when only patch_len = 1, means no patching

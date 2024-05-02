@@ -9,7 +9,7 @@ fi
 model_name=EcmP_mk3
 
 #patching setting
-first_stage_patching=None
+first_stage_patching=MLP
 second_stage_patching=None
 label_len=0 #reminder the label length is different to the predicted length, lead time(overlap) time between x(input) and y(label)
 
@@ -18,7 +18,7 @@ decomposition=0
 kernel_size=9
 
 #extras
-result_log_path=./result_log/EcmP_mk3/ablation_v2/v2_raw_10_60.txt
+result_log_path=./result_log/EcmP_mk3/ecmp_stock_v2/t1_10_60_mlp.txt
 
 root_path_name=./data/EcmP_stock_L_2005_24/
 data_name=stock_custom
@@ -50,9 +50,9 @@ do
 
         for pred_len in 10 20 40 60
         do
-            seq_len=60
+            seq_len=$pred_len
             python -u EcmP_supervised/run_longExp.py \
-            --pe zeros\
+            --pe sincos\
             --learn_pe True\
             --decomposition $decomposition\
             --kernel_size $kernel_size\
@@ -74,15 +74,15 @@ do
             --target $target\
             --dt_format_str $dt_format_str\
             --enc_in 9 \
-            --e_layers 2 \
+            --e_layers 3 \
             --n_heads 3 \
             --d_patch 0 \
-            --d_model 45 \
-            --d_ff 64 \
+            --d_model 18 \
+            --d_ff 128 \
             --dropout 0.1\
             --fc_dropout 0.1\
             --head_dropout 0\
-            --patch_len 5\
+            --patch_len 4\
             --stride 1\
             --des 'Exp' \
             --train_epochs 50\
