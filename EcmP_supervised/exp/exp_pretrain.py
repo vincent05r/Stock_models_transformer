@@ -147,7 +147,9 @@ class Exp_Pretrain(Exp_Basic):
             else:
                 print('Updating learning rate to {}'.format(scheduler.get_last_lr()[0]))
 
-        best_model_path = path + '/' + 'checkpoint.pth'
-        self.model.load_state_dict(torch.load(best_model_path))
+
+            torch.save(self.model.state_dict(), model_path)
+            print("Saving pretrain model on Epoch {}".format(epoch))
+
 
         return self.model
