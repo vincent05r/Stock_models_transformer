@@ -256,7 +256,7 @@ class Dataset_Custom_stock_pred(Dataset):
 
 
 class Dataset_Custom_stock_pretrain(Dataset):
-    def __init__(self, root_path, flag='train', size=None,
+    def __init__(self, root_path, flag='pre_train', size=None,
                  features='MS', data_path='stock_000001.SZ.csv',
                  target='close_pct_chg', scale=0, timeenc=1, freq='d', dt_format_str=0): 
         
@@ -266,8 +266,8 @@ class Dataset_Custom_stock_pretrain(Dataset):
         self.label_len = size[1]
         self.pred_len = size[2]
         # init
-        assert flag in ['train', 'test', 'val']
-        type_map = {'train': 0, 'val': 1, 'test': 2}
+        assert flag in ['pre_train']
+        type_map = {'pre_train': 0}
         self.set_type = type_map[flag]
 
         self.date_str = 'date' #'trade_date'
@@ -284,13 +284,12 @@ class Dataset_Custom_stock_pretrain(Dataset):
             dt_format_str = dt_f_str_dict[dt_format_str]
         self.dt_format_str = dt_format_str #the formatting string for pandas datetime function
 
-        self.root_path = root_path
         self.data_path = data_path
         self.__read_data__()
 
     def __read_data__(self):
         self.scaler = StandardScaler()
-        df_raw = pd.read_csv(os.path.join(self.root_path, self.data_path))
+        df_raw = pd.read_csv(self.data_path)
 
         '''
         df_raw.columns: ['trade_date', ...(other features), target feature]
@@ -300,11 +299,11 @@ class Dataset_Custom_stock_pretrain(Dataset):
         cols.remove(self.date_str)
         df_raw = df_raw[[self.date_str] + cols + [self.target]]
         # print(cols)
-        num_train = int(len(df_raw) * 0.7)
-        num_test = int(len(df_raw) * 0.2)
-        num_vali = len(df_raw) - num_train - num_test
-        border1s = [0, num_train - self.seq_len, len(df_raw) - num_test - self.seq_len] #[train_begin, val_begin, test_begin]
-        border2s = [num_train, num_train + num_vali, len(df_raw)]  #[train_end, val_end, test_end]
+        num_train = int(len(df_raw))
+        num_test = int(0)
+        num_vali = int(0)
+        border1s = [0] #[train_begin]
+        border2s = [num_train]  #[train_end]
         border1 = border1s[self.set_type]
         border2 = border2s[self.set_type]
 
@@ -346,14 +345,14 @@ class Dataset_Custom_stock_pretrain(Dataset):
         self.data_y = data[border1:border2]
         self.data_stamp = data_stamp
 
-        if self.scale:
-            # scaler result save
-            folder_path = './scaler/' + self.data_path.replace('.csv', '') + '/'
-            if not os.path.exists(folder_path):
-                os.makedirs(folder_path)
+        # if self.scale:
+        #     # scaler result save
+        #     folder_path = './scaler/' + self.data_path.replace('.csv', '') + '/'
+        #     if not os.path.exists(folder_path):
+        #         os.makedirs(folder_path)
 
-            with open( folder_path + self.data_path.replace('.csv', '') + '_' + str(self.seq_len) + '_' + str(self.pred_len) + '.pkl', 'wb') as f:
-                pickle.dump(self.scaler, f)
+        #     with open( folder_path + self.data_path.replace('.csv', '') + '_' + str(self.seq_len) + '_' + str(self.pred_len) + '.pkl', 'wb') as f:
+        #         pickle.dump(self.scaler, f)
 
             #np.save( folder_path + self.data_path.replace('.csv', '') + '_' + str(self.seq_len) + '_' + str(self.pred_len) , np.array([self.scaler.mean_, self.scaler.var_]) )
 

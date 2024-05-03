@@ -23,7 +23,7 @@ class EcmP_backbone_mk3(nn.Module): #PatchTST_backbone
                  d_ff:int=256, norm:str='BatchNorm', attn_dropout:float=0., dropout:float=0., act:str="gelu", key_padding_mask:bool='auto',
                  padding_var:Optional[int]=None, attn_mask:Optional[Tensor]=None, res_attention:bool=True, pre_norm:bool=False, store_attn:bool=False,
                  pe:str='zeros', learn_pe:bool=True, fc_dropout:float=0., head_dropout = 0, padding_patch = None,
-                 pretrain_head:bool=False, head_type = 'flatten', flat_type = 'mlp', revin = True, affine = True, subtract_last = False,
+                 pretrain_head:bool=False, head_type = 'flatten', flat_type = 'linear', revin = True, affine = True, subtract_last = False,
                  verbose:bool=False, first_stage_patching="LOlinears", second_stage_patching='None',
                  **kwargs):
         

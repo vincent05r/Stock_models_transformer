@@ -3,7 +3,7 @@
 import argparse
 import os
 import torch
-from exp.exp_main import Exp_Main
+from exp.exp_pretrain import Exp_Pretrain
 import random
 import numpy as np
 
@@ -26,13 +26,13 @@ if __name__ == '__main__':
     # data loader
     parser.add_argument('--data', type=str, required=True, default='stock_custom', help='dataset type, try stock_custom for stock data')
     parser.add_argument('--root_path', type=str, default='./stock_data/', help='root path of the data file')
-    parser.add_argument('--data_path', type=str, default='stock_000001.SZ.csv', help='data file')
+    parser.add_argument('--data_path', type=str, default='None', help='data file, dont modify')
     parser.add_argument('--features', type=str, default='MS',
                         help='forecasting task, options:[M, S, MS]; M:multivariate predict multivariate, S:univariate predict univariate, MS:multivariate predict univariate')
     parser.add_argument('--target', type=str, default='OT', help='target feature in S or MS task')
     parser.add_argument('--freq', type=str, default='d',
                         help='freq for time features encoding, options:[s:secondly, t:minutely, h:hourly, d:daily, b:business days, w:weekly, m:monthly], you can also use more detailed freq like 15min or 3h')
-    parser.add_argument('--checkpoints', type=str, default='./checkpoints/', help='location of model checkpoints')
+    parser.add_argument('--checkpoints', type=str, default='./pretrain_cp/', help='location of model checkpoints')
     parser.add_argument('--scale', type=int, default=1, help='if use z-score scaler for dataset using std and mean of training set, 1 is true, 0 is false')
     parser.add_argument('--dt_format_str', type=int, default=0, help='the format string for pandas datetime, 0 means use default')
 
@@ -62,6 +62,7 @@ if __name__ == '__main__':
     parser.add_argument('--individual', type=int, default=0, help='individual head; True 1 False 0')
 
     #PCIE
+    parser.add_argument('--flat_type', type=str, default='linear', help='mlp, linear, for flatten head')
     parser.add_argument('--revin', type=int, default=1, help='RevIN; True 1 False 0')
     parser.add_argument('--d_patch', type=int, default=64, help='The dim size of the pathcing for each channel before mixing')
     parser.add_argument('--first_stage_patching', type=str, default='LOlinears', help='individual channel patching:  linear, LOlinears')
@@ -134,8 +135,44 @@ if __name__ == '__main__':
     print('pretraining Args in experiment:')
     print(args)
 
-    Exp = Exp_Main
+    Exp = Exp_Pretrain
 
     if args.is_pretrain:
+
+        setting = '{}_{}_{}_ft{}_sl{}_ll{}_pl{}_dm{}_dp{}_pl{}_nh{}_el{}_dl{}_df{}_fc{}_eb{}_dt{}_{}_dcomp{}_kn{}_{}_{}_rv{}_{}'.format(
+            args.model_id,
+            args.model,
+            args.data,
+            args.features,
+            args.seq_len,
+            args.label_len,
+            args.pred_len,
+            args.d_model,
+            args.d_patch,
+            args.patch_len,
+            args.n_heads,
+            args.e_layers,
+            args.d_layers,
+            args.d_ff,
+            args.factor,
+            args.embed,
+            args.distil,
+            args.des,
+            args.decomposition,
+            args.kernel_size,
+            args.first_stage_patching,
+            args.second_stage_patching,
+            args.revin,
+            args.target
+            )
+        
         for dataset_n in os.listdir(args.root_path):
-            path_dataset = os.path.join(args.root_path, dataset_n)
+            args.data_path = os.path.join(args.root_path, dataset_n)
+
+            pretrain = Exp(args)
+            print('>>>>>>>start pre-training on stock : {}>>>>>>>>>>>>>>>>>>>>>>>>>>'.format(dataset_n.split(".")[0]))
+
+            pretrain.train(setting)
+
+            torch.cuda.empty_cache()
+

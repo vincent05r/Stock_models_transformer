@@ -302,6 +302,9 @@ class Exp_Main(Exp_Basic):
 
         mae, mse, rmse, mape, mspe, rse, corr = metric(preds, trues)
         print('mse:{}, mae:{}, mape:{}, rse:{}'.format(mse, mae, mape, rse))
+
+        if not os.path.exists(os.path.dirname(self.args.result_log_path)):
+            os.makedirs(os.path.dirname(self.args.result_log_path))
         f = open(self.args.result_log_path, 'a')
         f.write(setting + "  \n")
         f.write('mse:{}, mae:{}, mape:{}, rse:{}'.format(mse, mae, mape, rse))

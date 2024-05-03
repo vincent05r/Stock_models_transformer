@@ -48,9 +48,8 @@ class Exp_Pretrain(Exp_Basic):
         return criterion
 
 
-    def pre_train(self, setting):
+    def train(self, setting):
         train_data, train_loader = self._get_data(flag='pre_train')
-
 
 
         path = os.path.join(self.args.checkpoints, setting)
