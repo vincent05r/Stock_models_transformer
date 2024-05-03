@@ -8,7 +8,7 @@ import random
 import numpy as np
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Autoformer & Transformer family for Time Series Forecasting')
+    parser = argparse.ArgumentParser(description='pretraining for PCIE encoder')
 
     #utility
     parser.add_argument('--result_log_path', type=str, default='./result_log/result_spec1.txt')
@@ -18,7 +18,7 @@ if __name__ == '__main__':
     parser.add_argument('--random_seed', type=int, default=2021, help='random seed')
 
     # basic config
-    parser.add_argument('--is_training', type=int, required=True, default=1, help='status')
+    parser.add_argument('--is_pretrain', type=int, required=True, default=1, help='status')
     parser.add_argument('--model_id', type=str, default='test', help='model id')#required for training
     parser.add_argument('--model', type=str, required=True, default='PatchTST',
                         help='model name, options: [Autoformer, Informer, Transformer, PatchTST]')
@@ -61,8 +61,7 @@ if __name__ == '__main__':
     parser.add_argument('--kernel_size', type=int, default=25, help='decomposition-kernel')
     parser.add_argument('--individual', type=int, default=0, help='individual head; True 1 False 0')
 
-    #EcmP
-    parser.add_argument('--flat_type', type=str, default='linear', help='mlp, linear, for flatten head')
+    #PCIE
     parser.add_argument('--revin', type=int, default=1, help='RevIN; True 1 False 0')
     parser.add_argument('--d_patch', type=int, default=64, help='The dim size of the pathcing for each channel before mixing')
     parser.add_argument('--first_stage_patching', type=str, default='LOlinears', help='individual channel patching:  linear, LOlinears')
@@ -84,9 +83,7 @@ if __name__ == '__main__':
     parser.add_argument('--d_ff', type=int, default=2048, help='dimension of fcn')
     parser.add_argument('--moving_avg', type=int, default=25, help='window size of moving average')
     parser.add_argument('--factor', type=int, default=1, help='attn factor')
-    parser.add_argument('--distil', action='store_false',
-                        help='whether to use distilling in encoder, using this argument means not using distilling',
-                        default=True)
+
     parser.add_argument('--dropout', type=float, default=0.05, help='dropout')
     parser.add_argument('--embed', type=str, default='timeF',
                         help='time features encoding, options:[timeF, fixed, learned]')
@@ -114,6 +111,10 @@ if __name__ == '__main__':
     parser.add_argument('--devices', type=str, default='0,1,2,3', help='device ids of multile gpus')
     parser.add_argument('--test_flop', action='store_true', default=False, help='See utils/tools for usage')
 
+
+    #pretrain
+    parser.add_argument('--model_load_path', type=str, default='None', help='None for starting fresh, else specify a path')
+
     args = parser.parse_args()
 
     # random seed
@@ -121,7 +122,6 @@ if __name__ == '__main__':
     random.seed(fix_seed)
     torch.manual_seed(fix_seed)
     np.random.seed(fix_seed)
-
 
     args.use_gpu = True if torch.cuda.is_available() and args.use_gpu else False
 
@@ -131,103 +131,11 @@ if __name__ == '__main__':
         args.device_ids = [int(id_) for id_ in device_ids]
         args.gpu = args.device_ids[0]
 
-    print('Args in experiment:')
+    print('pretraining Args in experiment:')
     print(args)
 
     Exp = Exp_Main
 
-    if args.is_training:
-        for ii in range(args.itr):
-            # setting record of experiments, modified for EcmP
-            setting = '{}_{}_{}_ft{}_sl{}_ll{}_pl{}_dm{}_dp{}_pl{}_nh{}_el{}_dl{}_df{}_fc{}_eb{}_dt{}_{}_{}_dcomp{}_kn{}_{}_{}_rv{}_{}'.format(
-                args.model_id,
-                args.model,
-                args.data,
-                args.features,
-                args.seq_len,
-                args.label_len,
-                args.pred_len,
-                args.d_model,
-                args.d_patch,
-                args.patch_len,
-                args.n_heads,
-                args.e_layers,
-                args.d_layers,
-                args.d_ff,
-                args.factor,
-                args.embed,
-                args.distil,
-                args.des,
-                ii,
-                args.decomposition,
-                args.kernel_size,
-                args.first_stage_patching,
-                args.second_stage_patching,
-                args.revin,
-                args.target
-                )
-
-            exp = Exp(args)  # set experiments
-            print('>>>>>>>start training : {}>>>>>>>>>>>>>>>>>>>>>>>>>>'.format(setting))
-            exp.train(setting)
-
-            print('>>>>>>>testing : {}<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<'.format(setting))
-            exp.test(setting)
-
-            if args.do_predict:
-                print('>>>>>>>predicting : {}<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<'.format(setting))
-                exp.predict(setting, True)
-
-            torch.cuda.empty_cache()
-    
-    elif args.do_predict:
-
-        ii = 0
-        setting = '{}_{}_{}_ft{}_sl{}_ll{}_pl{}_dm{}_nh{}_el{}_dl{}_df{}_fc{}_eb{}_dt{}_{}_{}'.format(args.model_id,
-                                                                                                    args.model,
-                                                                                                    args.data,
-                                                                                                    args.features,
-                                                                                                    args.seq_len,
-                                                                                                    args.label_len,
-                                                                                                    args.pred_len,
-                                                                                                    args.d_model,
-                                                                                                    args.n_heads,
-                                                                                                    args.e_layers,
-                                                                                                    args.d_layers,
-                                                                                                    args.d_ff,
-                                                                                                    args.factor,
-                                                                                                    args.embed,
-                                                                                                    args.distil,
-                                                                                                    args.des, ii)
-
-        exp = Exp(args)  # set experiments
-        print('>>>>>>>predicting : {}<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<'.format(setting))
-        exp.predict(setting, True)
-        torch.cuda.empty_cache()
-
-
-
-    else:
-        ii = 0
-        setting = '{}_{}_{}_ft{}_sl{}_ll{}_pl{}_dm{}_nh{}_el{}_dl{}_df{}_fc{}_eb{}_dt{}_{}_{}'.format(args.model_id,
-                                                                                                    args.model,
-                                                                                                    args.data,
-                                                                                                    args.features,
-                                                                                                    args.seq_len,
-                                                                                                    args.label_len,
-                                                                                                    args.pred_len,
-                                                                                                    args.d_model,
-                                                                                                    args.n_heads,
-                                                                                                    args.e_layers,
-                                                                                                    args.d_layers,
-                                                                                                    args.d_ff,
-                                                                                                    args.factor,
-                                                                                                    args.embed,
-                                                                                                    args.distil,
-                                                                                                    args.des, ii)
-
-        exp = Exp(args)  # set experiments
-        print('>>>>>>>testing : {}<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<'.format(setting))
-        exp.test(setting, test=1)
-        torch.cuda.empty_cache()
-        
+    if args.is_pretrain:
+        for dataset_n in os.listdir(args.root_path):
+            path_dataset = os.path.join(args.root_path, dataset_n)

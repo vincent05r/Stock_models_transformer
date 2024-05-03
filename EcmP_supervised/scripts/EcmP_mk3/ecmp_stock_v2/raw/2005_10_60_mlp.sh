@@ -18,7 +18,7 @@ decomposition=0
 kernel_size=9
 
 #extras
-result_log_path=./result_log/EcmP_mk3/ecmp_stock_v2/t1_10_60_mlp.txt
+result_log_path=./result_log/EcmP_mk3/ecmp_stock_v2/t1_10_60_mlp_2.txt
 
 root_path_name=./data/EcmP_stock_L_2005_24/
 data_name=stock_custom

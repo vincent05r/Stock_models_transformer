@@ -23,7 +23,7 @@ class EcmP_backbone_mk3(nn.Module): #PatchTST_backbone
                  d_ff:int=256, norm:str='BatchNorm', attn_dropout:float=0., dropout:float=0., act:str="gelu", key_padding_mask:bool='auto',
                  padding_var:Optional[int]=None, attn_mask:Optional[Tensor]=None, res_attention:bool=True, pre_norm:bool=False, store_attn:bool=False,
                  pe:str='zeros', learn_pe:bool=True, fc_dropout:float=0., head_dropout = 0, padding_patch = None,
-                 pretrain_head:bool=False, head_type = 'flatten', individual = False, revin = True, affine = True, subtract_last = False,
+                 pretrain_head:bool=False, head_type = 'flatten', flat_type = 'mlp', revin = True, affine = True, subtract_last = False,
                  verbose:bool=False, first_stage_patching="LOlinears", second_stage_patching='None',
                  **kwargs):
         
@@ -60,12 +60,12 @@ class EcmP_backbone_mk3(nn.Module): #PatchTST_backbone
 
         self.pretrain_head = pretrain_head
         self.head_type = head_type
-        self.individual = individual
+        self.flat_type = flat_type
 
         if self.pretrain_head: 
             self.head = self.create_pretrain_head(self.head_nf, c_in, fc_dropout) # custom head passed as a partial func with all its kwargs
         elif head_type == 'flatten': 
-            self.head = Flatten_Head_EcmP(self.individual, self.n_vars, self.head_nf, target_window, head_dropout=head_dropout)
+            self.head = Flatten_Head_EcmP(self.flat_type, self.n_vars, self.head_nf, target_window, head_dropout=head_dropout)
         
     
     def forward(self, z):                                                                   # z: [bs x nvars x seq_len]
@@ -101,48 +101,33 @@ class EcmP_backbone_mk3(nn.Module): #PatchTST_backbone
 
 
 class Flatten_Head_EcmP(nn.Module):
-    def __init__(self, individual, n_vars, nf, target_window, head_dropout=0):
+    def __init__(self, flat_type, n_vars, nf, target_window, head_dropout=0):
         super().__init__()
         
-        self.individual = individual
+        self.flat_type = flat_type
+        if self.flat_type not in ['linear', 'mlp']: raise ValueError("Incorrect type of flatten head")
         self.n_vars = n_vars
 
         self.Ecmp_flatten = nn.Flatten(start_dim=1, end_dim=-1)
-        self.linear = nn.Linear(nf, target_window)
+
         self.dropout = nn.Dropout(head_dropout)
+
+        if self.flat_type == 'linear':
+            self.linear = nn.Linear(nf, target_window)
+        elif self.flat_type == 'mlp':
+            self.mlp = MLP_patching(nf, [nf, target_window], target_window)
         
-        # if self.individual:
-        #     self.linears = nn.ModuleList()
-        #     self.dropouts = nn.ModuleList()
-        #     self.Ecmp_flattens = nn.ModuleList()
-        #     for i in range(self.n_vars):
-        #         self.Ecmp_flattens.append(nn.Flatten(start_dim=-2))
-        #         self.linears.append(nn.Linear(nf, target_window))
-        #         self.dropouts.append(nn.Dropout(head_dropout))
-        # else:
-        #     self.Ecmp_flatten = nn.Flatten(start_dim=-2)
-        #     self.linear = nn.Linear(nf, target_window)
-        #     self.dropout = nn.Dropout(head_dropout)
             
     def forward(self, x):                                 # x: [bs x d_model x patch_num]
 
 
-        # if self.individual:
-        #     x_out = []
-        #     for i in range(self.n_vars):
-        #         z = self.Ecmp_flattens[i](x[:,i,:,:])          # z: [bs x d_model * patch_num]
-        #         z = self.linears[i](z)                    # z: [bs x target_window]
-        #         z = self.dropouts[i](z)
-        #         x_out.append(z)
-        #     x = torch.stack(x_out, dim=1)                 # x: [bs x nvars x target_window]
-        # else:
-        #     x = self.Ecmp_flatten(x)
-        #     x = self.linear(x)
-        #     x = self.dropout(x)
-
-
         x = self.Ecmp_flatten(x)
-        x = self.linear(x)
+
+        if self.flat_type == 'linear':
+            x = self.linear(x)
+        elif self.flat_type == 'mlp':
+            x = self.mlp(x)
+
         x = self.dropout(x)
 
 
