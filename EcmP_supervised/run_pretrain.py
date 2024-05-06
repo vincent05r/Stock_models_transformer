@@ -139,7 +139,7 @@ if __name__ == '__main__':
 
     if args.is_pretrain:
 
-        setting = '{}_{}_{}_ft{}_sl{}_ll{}_pl{}_dm{}_dp{}_pl{}_nh{}_el{}_dl{}_df{}_fc{}_eb{}_dt{}_{}_dcomp{}_kn{}_{}_{}_rv{}_{}'.format(
+        setting = '{}_{}_{}_ft{}_sl{}_ll{}_pl{}_dm{}_dp{}_pl{}_nh{}_el{}_dl{}_df{}_fc{}_eb{}_{}_dcomp{}_kn{}_{}_{}_rv{}_{}'.format(
             args.model_id,
             args.model,
             args.data,
@@ -156,7 +156,6 @@ if __name__ == '__main__':
             args.d_ff,
             args.factor,
             args.embed,
-            args.distil,
             args.des,
             args.decomposition,
             args.kernel_size,

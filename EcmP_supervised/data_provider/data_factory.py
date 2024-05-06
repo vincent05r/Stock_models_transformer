@@ -75,8 +75,7 @@ def data_provider(args, flag):
             target=args.target,
             timeenc=timeenc,
             freq=freq,
-            scale=args.scale,        #custom section dont worry about the 
-            prev_scaler=args.prev_scaler
+            scale=args.scale        
         )
     
     else: #default
