@@ -23,8 +23,9 @@ decomposition=0
 kernel_size=9
 
 
-root_path_name=./data/EcmP_stock_L_2005_24/
 data_name=stock_custom
+root_path_name=./data/EcmP_stock_L_2005_24/
+data_path_name=AAPL_pct.csv
 
 random_seed=2023
 
@@ -48,6 +49,7 @@ do
     --second_stage_patching $second_stage_patching\
     --random_seed $random_seed \
     --root_path $root_path_name \
+    --data_path $data_path_name \
     --model_id 'PT2005V2PCIE_'$seq_len'_'$pred_len \
     --model $model_name \
     --data $data_name \
