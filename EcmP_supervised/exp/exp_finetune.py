@@ -219,7 +219,8 @@ class Exp_Finetune(Exp_Basic):
         
         if test:
             print('loading model')
-            self.model.load_state_dict(torch.load(os.path.join('./checkpoints/' + setting, 'checkpoint.pth')))
+            path = os.path.join(self.args.checkpoints, setting)
+            self.model.load_state_dict(torch.load(os.path.join(path, 'checkpoint.pth')))
 
         preds = []
         trues = []

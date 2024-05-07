@@ -3,12 +3,16 @@
 import argparse
 import os
 import torch
-from exp.exp_pretrain import Exp_Pretrain
+from exp.exp_finetune import Exp_Finetune
 import random
 import numpy as np
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='pretraining for PCIE encoder')
+
+
+    #finetune
+    parser.add_argument('--pretrained_model_path', type=str, required=True, help="The path to the pretrained model")
 
     #utility
     parser.add_argument('--result_log_path', type=str, default='./result_log/result_spec1.txt')
@@ -32,7 +36,7 @@ if __name__ == '__main__':
     parser.add_argument('--target', type=str, default='OT', help='target feature in S or MS task')
     parser.add_argument('--freq', type=str, default='d',
                         help='freq for time features encoding, options:[s:secondly, t:minutely, h:hourly, d:daily, b:business days, w:weekly, m:monthly], you can also use more detailed freq like 15min or 3h')
-    parser.add_argument('--checkpoints', type=str, default='./pretrain_cp/', help='location of model checkpoints')
+    parser.add_argument('--checkpoints', type=str, default='./finetune_cp/', help='location of model checkpoints')
     parser.add_argument('--scale', type=int, default=1, help='if use z-score scaler for dataset using std and mean of training set, 1 is true, 0 is false')
     parser.add_argument('--dt_format_str', type=int, default=0, help='the format string for pandas datetime, 0 means use default')
 
@@ -46,8 +50,6 @@ if __name__ == '__main__':
     parser.add_argument('--pred_len', type=int, default=96, help='prediction sequence length')
 
 
-    # DLinear
-    #parser.add_argument('--individual', action='store_true', default=False, help='DLinear: a linear layer for each variate(channel) individually')
 
     # PatchTST
     parser.add_argument('--fc_dropout', type=float, default=0.05, help='fully connected dropout')
@@ -135,9 +137,9 @@ if __name__ == '__main__':
     print('pretraining Args in experiment:')
     print(args)
 
-    Exp = Exp_Pretrain
+    Exp = Exp_Finetune
 
-    if args.is_pretrain:
+    if args.is_finetune:
 
         setting = '{}_{}_{}_ft{}_sl{}_ll{}_pl{}_dm{}_dp{}_pl{}_nh{}_el{}_dl{}_df{}_fc{}_eb{}_{}_dcomp{}_kn{}_{}_{}_rv{}_{}'.format(
             args.model_id,
@@ -165,13 +167,14 @@ if __name__ == '__main__':
             args.target
             )
         
-        for dataset_n in os.listdir(args.root_path):
-            args.data_path = os.path.join(args.root_path, dataset_n)
+        Tuna = Exp_Finetune(args)
 
-            pretrain = Exp(args)
-            print('>>>>>>>start pre-training on stock : {}>>>>>>>>>>>>>>>>>>>>>>>>>>'.format(dataset_n.split(".")[0]))
+        print('>>>>>>>start finetuning : {}>>>>>>>>>>>>>>>>>>>>>>>>>>'.format(setting))
+        Tuna.train(setting)
 
-            pretrain.train(setting)
+        print('>>>>>>>testing : {}<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<'.format(setting))
+        Tuna.test(setting)
 
-            torch.cuda.empty_cache()
+
+        torch.cuda.empty_cache()
 
