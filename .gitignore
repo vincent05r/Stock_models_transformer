@@ -5,6 +5,8 @@
 checkpoints/
 results/
 test_results/
+pretrain_cp/
+finetune_cp/
 
 ### Emacs ###
 # -*- mode: gitignore; -*-

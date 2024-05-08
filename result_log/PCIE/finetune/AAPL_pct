@@ -7,3 +7,12 @@ mse:0.30344274640083313, mae:0.41982248425483704, mape:0.038309428840875626, rse
 PT2005V2PCIE_AAPL_pct_60_10_EcmP_mk3_stock_custom_ftMS_sl60_ll0_pl10_dm45_dp0_pl4_nh3_el3_dl1_df128_fc1_ebtimeF_Exp_dcomp0_kn9_MLP_None_rv1_close  
 mse:0.30240413546562195, mae:0.4202825725078583, mape:0.038224536925554276, rse:0.20328927040100098
 
+PT2005V2PCIE_AAPL_pct_10_10_EcmP_mk3_stock_custom_ftMS_sl10_ll0_pl10_dm45_dp0_pl4_nh3_el3_dl1_df128_fc1_ebtimeF_Exp_dcomp0_kn9_MLP_None_rv1_close  
+mse:0.2871952950954437, mae:0.4059842526912689, mape:0.036890801042318344, rse:0.19811129570007324
+
+PT2005V2PCIE_AAPL_pct_10_10_EcmP_mk3_stock_custom_ftMS_sl10_ll0_pl10_dm45_dp0_pl4_nh3_el3_dl1_df128_fc1_ebtimeF_Exp_dcomp0_kn9_MLP_None_rv1_close  
+mse:0.28821861743927, mae:0.4092932343482971, mape:0.037191860377788544, rse:0.19846393167972565
+
+PT2005V2PCIE_AAPL_pct_10_10_EcmP_mk3_stock_custom_ftMS_sl10_ll0_pl10_dm18_dp0_pl4_nh3_el3_dl1_df128_fc1_ebtimeF_Exp_dcomp0_kn9_MLP_None_rv1_close  
+mse:0.28921636939048767, mae:0.4105020761489868, mape:0.03724033012986183, rse:0.19880715012550354
+
