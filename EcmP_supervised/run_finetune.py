@@ -115,8 +115,6 @@ if __name__ == '__main__':
     parser.add_argument('--test_flop', action='store_true', default=False, help='See utils/tools for usage')
 
 
-    #pretrain
-    parser.add_argument('--model_load_path', type=str, default='None', help='None for starting fresh, else specify a path')
 
     args = parser.parse_args()
 

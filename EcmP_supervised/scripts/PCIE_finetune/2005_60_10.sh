@@ -35,12 +35,18 @@ target=close
 
 scale=1
 
+#utils
+result_log_path=./result_log/PCIE/finetune/${data_path_name%.csv}
+pretrained_model_path=./pretrain_cp/PT2005V2PCIE_60_10_EcmP_mk3_stock_custom_pretrain_ftMS_sl60_ll0_pl10_dm45_dp0_pl4_nh3_el3_dl1_df128_fc1_ebtimeF_Exp_dcomp0_kn9_MLP_None_rv1_close/checkpoint.pth
+
 
 for pred_len in 10
 do
     seq_len=60
-    python -u EcmP_supervised/run_pretrain.py \
-    --is_pretrain 1\
+    python -u EcmP_supervised/run_finetune.py \
+    --pretrained_model_path $pretrained_model_path\
+    --result_log_path $result_log_path\
+    --is_finetune 1\
     --pe zeros\
     --learn_pe True\
     --decomposition $decomposition\
@@ -50,7 +56,7 @@ do
     --random_seed $random_seed \
     --root_path $root_path_name \
     --data_path $data_path_name \
-    --model_id 'PT2005V2PCIE_'$seq_len'_'$pred_len \
+    --model_id 'PT2005V2PCIE_'${data_path_name%.csv}'_'$seq_len'_'$pred_len \
     --model $model_name \
     --data $data_name \
     --features MS \
@@ -72,8 +78,8 @@ do
     --patch_len 4\
     --stride 1\
     --des 'Exp' \
-    --train_epochs 10\
+    --train_epochs 50\
     --lradj 'TST'\
     --pct_start 0.1\
-    --itr 1 --batch_size 16 --learning_rate 0.0001 >logs/PCIE/pretrain/$model_name'_'$model_id_name'_'$seq_len'_'$pred_len.log 
+    --itr 1 --batch_size 16 --learning_rate 0.0001 >logs/PCIE/finetune/$model_name'_'$model_id_name'_'$seq_len'_'$pred_len.log 
 done
