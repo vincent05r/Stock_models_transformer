@@ -37,12 +37,12 @@ scale=1
 
 #utils
 result_log_path=./result_log/PCIE/finetune/${data_path_name%.csv}
-pretrained_model_path=./pretrain_cp/PT2005V2PCIE_10_10_EcmP_mk3_stock_custom_pretrain_ftMS_sl10_ll0_pl10_dm18_dp0_pl4_nh3_el3_dl1_df128_fc1_ebtimeF_Exp_dcomp0_kn9_MLP_None_rv1_close/checkpoint.pth
+pretrained_model_path=./pretrain_cp/PT2005V2PCIE_40_10_EcmP_mk3_stock_custom_pretrain_ftMS_sl40_ll0_pl10_dm63_dp0_pl8_nh7_el3_dl1_df128_fc1_ebtimeF_Exp_dcomp0_kn9_MLP_None_rv1_close/checkpoint.pth
 
 
 for pred_len in 10
 do
-    seq_len=10
+    seq_len=40
     python -u EcmP_supervised/run_finetune.py \
     --pretrained_model_path $pretrained_model_path\
     --result_log_path $result_log_path\
@@ -68,14 +68,14 @@ do
     --dt_format_str $dt_format_str\
     --enc_in 9 \
     --e_layers 3 \
-    --n_heads 3 \
+    --n_heads 7 \
     --d_patch 0 \
-    --d_model 18 \
+    --d_model 63 \
     --d_ff 128 \
     --dropout 0.1\
     --fc_dropout 0.1\
     --head_dropout 0\
-    --patch_len 4\
+    --patch_len 8\
     --stride 1\
     --des 'Exp' \
     --train_epochs 50\
