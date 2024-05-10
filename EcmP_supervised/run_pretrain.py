@@ -165,13 +165,26 @@ if __name__ == '__main__':
             args.target
             )
         
+        total_loss_l = []
+
         for dataset_n in os.listdir(args.root_path):
             args.data_path = os.path.join(args.root_path, dataset_n)
 
             pretrain = Exp(args)
             print('>>>>>>>start pre-training on stock : {}>>>>>>>>>>>>>>>>>>>>>>>>>>'.format(dataset_n.split(".")[0]))
 
-            pretrain.train(setting)
+            current_loss = pretrain.train(setting)
+            total_loss_l.append(current_loss)
 
             torch.cuda.empty_cache()
 
+
+        avg_loss = np.average(total_loss_l)
+
+        if not os.path.exists(os.path.dirname(args.result_log_path)):
+            os.makedirs(os.path.dirname(args.result_log_path))
+        with open(args.result_log_path, 'a') as f:
+            f.write(setting + '\n')
+            f.write(str(total_loss_l) + '\n')
+            f.write("Average loss : {}\n".format(avg_loss))
+            f.write('\n')

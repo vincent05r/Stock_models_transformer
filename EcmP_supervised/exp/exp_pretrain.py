@@ -151,4 +151,4 @@ class Exp_Pretrain(Exp_Basic):
             print("Saving pretrain model on Epoch {}".format(epoch))
 
 
-        return self.model
+        return train_loss

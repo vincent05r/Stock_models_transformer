@@ -33,12 +33,13 @@ dt_format_str=0
 target=close
 
 scale=1
-
+result_log_path=./result_log/PCIE/pretrain/v1.txt
 
 for pred_len in 10
 do
-    seq_len=40
+    seq_len=10
     python -u EcmP_supervised/run_pretrain.py \
+    --result_log_path $result_log_path \
     --is_pretrain 1\
     --pe zeros\
     --learn_pe True\
@@ -60,9 +61,9 @@ do
     --dt_format_str $dt_format_str\
     --enc_in 9 \
     --e_layers 3 \
-    --n_heads 7 \
+    --n_heads 3 \
     --d_patch 0 \
-    --d_model 63 \
+    --d_model 18 \
     --d_ff 128 \
     --dropout 0\
     --fc_dropout 0\
