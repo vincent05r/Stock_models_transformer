@@ -14,7 +14,7 @@ fi
 model_name=EcmP_mk3
 
 #patching setting
-first_stage_patching=MLP
+first_stage_patching=LOlinears
 second_stage_patching=None
 label_len=0 #reminder the label length is different to the predicted length, lead time(overlap) time between x(input) and y(label)
 
@@ -67,10 +67,10 @@ do
     --dropout 0\
     --fc_dropout 0\
     --head_dropout 0\
-    --patch_len 8\
+    --patch_len 1\
     --stride 1\
     --des 'Exp' \
-    --train_epochs 20\
+    --train_epochs 10\
     --lradj 'TST'\
     --pct_start 0.1\
     --itr 1 --batch_size 16 --learning_rate 0.0001 >logs/PCIE/pretrain/$model_name'_'$model_id_name'_'$seq_len'_'$pred_len.log 

@@ -14,7 +14,7 @@ fi
 model_name=EcmP_mk3
 
 #patching setting
-first_stage_patching=MLP
+first_stage_patching=LOlinears
 second_stage_patching=None
 label_len=0 #reminder the label length is different to the predicted length, lead time(overlap) time between x(input) and y(label)
 
@@ -75,7 +75,7 @@ do
     --dropout 0.1\
     --fc_dropout 0.1\
     --head_dropout 0\
-    --patch_len 8\
+    --patch_len 1\
     --stride 1\
     --des 'Exp' \
     --train_epochs 50\
