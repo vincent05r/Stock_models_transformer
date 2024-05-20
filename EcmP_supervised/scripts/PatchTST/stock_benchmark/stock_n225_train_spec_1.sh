@@ -31,12 +31,12 @@ data_path_name=$(basename $full_path_n)
 model_id_name="${data_path_name%.*}"
 
 
-for seq_len in 7 15 30 50 100 200
+for seq_len in 30
 do
     for pred_len in 1
     do
-        python3 -u PatchTST_supervised/run_longExp.py \
-        --decomposition 1\
+        python -u EcmP_supervised/run_longExp.py \
+        --save_results 1\
         --result_log_path $result_log_path\
         --random_seed $random_seed \
         --is_training 1 \

@@ -64,3 +64,6 @@ mse:0.01394825242459774, mae:0.07381671667098999, mape:0.026999399065971375, rse
 sp500_index_pct_spec_s_50_1_PatchTST_stock_custom_ftMS_sl50_ll2_pl1_dm128_dp64_pl5_nh4_el2_dl1_df128_fc1_ebtimeF_dtTrue_Exp_0_dcomp0  
 mse:0.01246679574251175, mae:0.07054217904806137, mape:0.025478998199105263, rse:0.15840266644954681
 
+sp500_index_pct_spec_s_30_1_PatchTST_stock_custom_ftMS_sl30_ll2_pl1_dm128_dp64_pl5_nh4_el2_dl1_df128_fc1_ebtimeF_dtTrue_Exp_0_dcomp0_kn25_LOlinears_None_rv1_close  
+mse:0.013948253355920315, mae:0.0738167092204094, mape:0.026999399065971375, rse:0.1675502061843872
+

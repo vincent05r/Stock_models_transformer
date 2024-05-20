@@ -330,7 +330,7 @@ class Dataset_Custom_stock_pretrain(Dataset):
             df_stamp[self.date_str] = pd.to_datetime(df_stamp.date, format=self.dt_format_str)
 
         if self.timeenc == 0:
-            # df_stamp['month'] = df_stamp.date.apply(lambda row: row.month, 1)
+            # df_stamp['month'] = df_stamp.date.apply(lambda row: row.month, 1)  2019/05/05  05/05/2019
             # df_stamp['day'] = df_stamp.date.apply(lambda row: row.day, 1)
             # df_stamp['weekday'] = df_stamp.date.apply(lambda row: row.weekday(), 1)
             # df_stamp['hour'] = df_stamp.date.apply(lambda row: row.hour, 1)
