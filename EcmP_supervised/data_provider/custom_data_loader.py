@@ -25,7 +25,7 @@ class Dataset_Custom_stock(Dataset):
         type_map = {'train': 0, 'val': 1, 'test': 2}
         self.set_type = type_map[flag]
 
-        self.date_str = 'date' #'trade_date'
+        self.date_str = 'datetime' #'trade_date'
 
         self.features = features
         self.target = target
@@ -81,7 +81,7 @@ class Dataset_Custom_stock(Dataset):
         df_stamp = df_raw[[self.date_str]][border1:border2]
 
         if self.dt_format_str == 0: #be aware all date column must be named date
-            df_stamp[self.date_str] = pd.to_datetime(df_stamp.date) #pandas will convert the column name directly into a self.column name for accessing (similar)
+            df_stamp[self.date_str] = pd.to_datetime(df_stamp.datetime) #pandas will convert the column name directly into a self.column name for accessing (similar)
         else:
             df_stamp[self.date_str] = pd.to_datetime(df_stamp.date, format=self.dt_format_str)
 
