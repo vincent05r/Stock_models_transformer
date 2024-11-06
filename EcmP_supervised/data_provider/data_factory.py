@@ -81,10 +81,17 @@ def data_provider(args, flag):
         )
     
     elif args.data == 'stock_custom_pretrain_v2':
-        pass
-        # data_set = Data(
-
-        # )
+        data_set = Data(
+            root_path=args.root_path,
+            data_folder=args.root_path,
+            flag=flag,
+            size=[args.seq_len, args.label_len, args.pred_len],
+            features=args.features,
+            target=args.target,
+            timeenc=timeenc,
+            freq=freq,
+            scale=args.scale     
+        )
     
     else: #default
 
