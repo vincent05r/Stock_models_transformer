@@ -77,6 +77,9 @@ class Dataset_Custom_stock_pretrain_v2(Dataset):
             else:
                 df_raw[self.date_str] = pd.to_datetime(df_raw[self.date_str], format=self.dt_format_str)
             df_raw = df_raw.sort_values(by=self.date_str).reset_index(drop=True)
+            
+            # Set the date column as the index
+            df_raw.set_index(self.date_str, inplace=True)
 
             if self.features == 'M' or self.features == 'MS':
                 cols_data = df_raw.columns[1:]
