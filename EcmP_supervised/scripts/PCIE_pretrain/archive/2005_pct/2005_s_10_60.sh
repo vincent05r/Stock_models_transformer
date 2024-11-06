@@ -24,7 +24,7 @@ kernel_size=9
 
 
 root_path_name=./data/EcmP_stock_L_2005_24/
-data_name=stock_custom_pretrain_v2
+data_name=stock_custom_pretrain
 
 random_seed=2023
 
@@ -38,8 +38,7 @@ result_log_path=./result_log/PCIE/pretrain/2005_pct.txt
 for pred_len in 10 20 40 60
 do
     seq_len=$pred_len
-    python -u EcmP_supervised/run_pretrain_v2.py \
-    --model_load_path None \
+    python -u EcmP_supervised/run_pretrain.py \
     --result_log_path $result_log_path \
     --is_pretrain 1\
     --pe zeros\

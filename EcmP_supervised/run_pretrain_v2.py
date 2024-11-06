@@ -135,7 +135,7 @@ if __name__ == '__main__':
     print('pretraining Args in experiment:')
     print(args)
 
-    Exp = Exp_Pretrain
+    Exp = Exp_Pretrain_v2
 
     if args.is_pretrain:
 
