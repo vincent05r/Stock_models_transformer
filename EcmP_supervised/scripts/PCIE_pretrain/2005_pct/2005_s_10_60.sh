@@ -37,7 +37,7 @@ result_log_path=./result_log/PCIE/pretrain/2005_pct.txt
 
 for pred_len in 10 20 40 60
 do
-    seq_len=$pred_len
+    seq_len=60
     python -u EcmP_supervised/run_pretrain_v2.py \
     --model_load_path None \
     --result_log_path $result_log_path \
@@ -64,15 +64,15 @@ do
     --e_layers 3 \
     --n_heads 3 \
     --d_patch 0 \
-    --d_model 18 \
-    --d_ff 128 \
+    --d_model 54 \
+    --d_ff 256 \
     --dropout 0\
     --fc_dropout 0\
     --head_dropout 0\
     --patch_len 1\
     --stride 1\
     --des 'Exp' \
-    --train_epochs 10\
+    --train_epochs 1\
     --lradj 'TST'\
     --pct_start 0.1\
     --itr 1 --batch_size 16 --learning_rate 0.0001 >logs/PCIE/pretrain/$model_name'_'$model_id_name'_'$seq_len'_'$pred_len.log 

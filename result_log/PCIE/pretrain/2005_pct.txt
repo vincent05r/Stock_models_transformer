@@ -1,0 +1,3 @@
+PT2005V2PCIE_60_10_EcmP_mk3_stock_custom_pretrain_v2_ftMS_sl60_ll0_pl10_dm54_dp0_pl1_nh3_el3_dl1_df256_fc1_ebtimeF_Exp_dcomp0_kn9_LOlinears_None_rv1_close_pct_change
+Pretrain loss : 1.0448809460184898
+

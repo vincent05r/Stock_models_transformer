@@ -55,7 +55,7 @@ class Dataset_Custom_stock_pretrain_v2(Dataset):
 
         # Get all CSV files in the data_folder
         all_files = glob.glob(os.path.join(self.data_folder, "*.csv"))
-        
+
         self.data_x = []
         self.data_y = []
         self.data_stamp = []
@@ -77,9 +77,6 @@ class Dataset_Custom_stock_pretrain_v2(Dataset):
             else:
                 df_raw[self.date_str] = pd.to_datetime(df_raw[self.date_str], format=self.dt_format_str)
             df_raw = df_raw.sort_values(by=self.date_str).reset_index(drop=True)
-            
-            # Set the date column as the index
-            df_raw.set_index(self.date_str, inplace=True)
 
             if self.features == 'M' or self.features == 'MS':
                 cols_data = df_raw.columns[1:]
@@ -96,7 +93,11 @@ class Dataset_Custom_stock_pretrain_v2(Dataset):
 
             # Process time features
             df_stamp = df_raw[[self.date_str]]
-            data_stamp = time_features(df_stamp[self.date_str], freq=self.freq)
+            # Convert df_stamp to pandas DatetimeIndex
+            date_index = pd.DatetimeIndex(df_stamp[self.date_str])
+
+            # Now pass date_index to time_features
+            data_stamp = time_features(date_index, freq=self.freq)
             data_stamp = data_stamp.transpose(1, 0)
 
             # Generate sequences within this file
@@ -109,12 +110,13 @@ class Dataset_Custom_stock_pretrain_v2(Dataset):
 
                 seq_x = data[s_begin:s_end]
                 seq_y = data[r_begin:r_end]
-                seq_x_mark = data_stamp[:, s_begin:s_end].transpose(1, 0)
-                seq_y_mark = data_stamp[:, r_begin:r_end].transpose(1, 0)
+                seq_x_mark = data_stamp[s_begin:s_end]
+                seq_y_mark = data_stamp[r_begin:r_end]
 
                 self.data_x.append(seq_x)
                 self.data_y.append(seq_y)
                 self.data_stamp.append((seq_x_mark, seq_y_mark))
+
 
     def __getitem__(self, index):
         seq_x = self.data_x[index]
