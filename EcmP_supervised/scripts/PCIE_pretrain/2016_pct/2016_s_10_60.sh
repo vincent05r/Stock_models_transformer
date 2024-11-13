@@ -23,7 +23,7 @@ decomposition=0
 kernel_size=9
 
 
-root_path_name=./data/EcmP_stock_L_2005_24/
+root_path_name=./data/EcmP_stock_L_2016_24_mix/
 data_name=stock_custom_pretrain_v2
 
 random_seed=2023
@@ -50,7 +50,7 @@ do
     --second_stage_patching $second_stage_patching\
     --random_seed $random_seed \
     --root_path $root_path_name \
-    --model_id 'PT2005V2PCIE_'$seq_len'_'$pred_len \
+    --model_id 'PT2016V2PCIE_'$seq_len'_'$pred_len \
     --model $model_name \
     --data $data_name \
     --features MS \
