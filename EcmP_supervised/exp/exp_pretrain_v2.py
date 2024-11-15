@@ -87,7 +87,6 @@ class Exp_Pretrain_v2(Exp_Basic):
         wandb.init(
             # set the wandb project where this run will be logged
             project=path,
-
             # track hyperparameters and run metadata
             config={
             "learning_rate": self.args.learning_rate,
@@ -102,8 +101,14 @@ class Exp_Pretrain_v2(Exp_Basic):
             "patch_len": self.args.patch_len,
             "stride": self.args.stride,
             "batch_size": self.args.batch_size,
+            "first_stage_patching": self.args.first_stage_patching,
+            "second_stage_patching": self.args.second_stage_patching,
+            "seq_len": self.args.seq_len,
+            "pred_len": self.args.pred_len,
+            "label_len": self.args.label_len,
+            "scale": self.args.scale,
+            "random_seed": self.args.random_seed,
             }
-            self.args.
         )
 
         for epoch in range(self.args.train_epochs):
@@ -176,5 +181,9 @@ class Exp_Pretrain_v2(Exp_Basic):
             torch.save(self.model.state_dict(), model_path)
             print("Saving pretrain model on Epoch {}".format(epoch))
 
+            wandb.log({"loss": train_loss})
+
+
+        wandb.finish()
 
         return train_loss
