@@ -26,6 +26,14 @@ kernel_size=9
 root_path_name=./data/EcmP_stock_L_2016_24_mix/
 data_name=stock_custom_pretrain_v2
 
+
+# Remove trailing slash if present
+last_folder_name="${root_path_name%/}"
+# Extract the last folder name
+last_folder_name="${last_folder_name##*/}"
+
+
+
 random_seed=2023
 
 dt_format_str=0
@@ -33,7 +41,7 @@ dt_format_str=0
 target=close_pct_change
 
 scale=1
-result_log_path=./result_log/PCIE/pretrain/2005_pct.txt
+result_log_path=./result_log/PCIE/pretrain/2016_pct.txt
 
 for pred_len in 10 20 40 60
 do
@@ -72,8 +80,8 @@ do
     --patch_len 5\
     --stride 1\
     --des 'Exp' \
-    --train_epochs 50\
+    --train_epochs 25\
     --lradj 'TST'\
     --pct_start 0.1\
-    --itr 1 --batch_size 16 --learning_rate 0.0001 >logs/PCIE/pretrain/$model_name'_'$model_id_name'_'$seq_len'_'$pred_len.log 
+    --itr 1 --batch_size 16 --learning_rate 0.0001 >logs/PCIE/pretrain/$model_name'_'$last_folder_name'_'$model_id_name'_'$seq_len'_'$pred_len.log 
 done
