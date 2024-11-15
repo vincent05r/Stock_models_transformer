@@ -17,6 +17,8 @@ import warnings
 import matplotlib.pyplot as plt
 import numpy as np
 
+import wandb
+
 warnings.filterwarnings('ignore')
 
 class Exp_Pretrain_v2(Exp_Basic):
@@ -79,6 +81,30 @@ class Exp_Pretrain_v2(Exp_Basic):
                                             pct_start = self.args.pct_start,
                                             epochs = self.args.train_epochs,
                                             max_lr = self.args.learning_rate)
+        
+
+        #wandb
+        wandb.init(
+            # set the wandb project where this run will be logged
+            project=path,
+
+            # track hyperparameters and run metadata
+            config={
+            "learning_rate": self.args.learning_rate,
+            "architecture": self.args.model,
+            "dataset": self.args.root_path,
+            "epochs": self.args.train_epochs,
+            "d_model": self.args.d_model,
+            "d_ff": self.args.d_ff,
+            "enc_in": self.args.enc_in,
+            "e_layers": self.args.e_layers,
+            "n_heads": self.args.n_heads,
+            "patch_len": self.args.patch_len,
+            "stride": self.args.stride,
+            "batch_size": self.args.batch_size,
+            }
+            self.args.
+        )
 
         for epoch in range(self.args.train_epochs):
             iter_count = 0
