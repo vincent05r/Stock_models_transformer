@@ -1,0 +1,65 @@
+_wandb:
+    value:
+        cli_version: 0.18.7
+        m: []
+        python_version: 3.11.5
+        t:
+            "1":
+                - 1
+                - 5
+                - 53
+                - 55
+            "2":
+                - 1
+                - 5
+                - 53
+                - 55
+            "3":
+                - 2
+                - 16
+                - 23
+                - 55
+            "4": 3.11.5
+            "5": 0.18.7
+            "8":
+                - 5
+            "12": 0.18.7
+            "13": linux-x86_64
+architecture:
+    value: EcmP_mk3
+batch_size:
+    value: 16
+d_ff:
+    value: 256
+d_model:
+    value: 108
+dataset:
+    value: ./data/EcmP_stock_L_2016_24_mix/
+e_layers:
+    value: 3
+enc_in:
+    value: 9
+epochs:
+    value: 25
+first_stage_patching:
+    value: LOlinears
+label_len:
+    value: 0
+learning_rate:
+    value: 0.0001
+n_heads:
+    value: 3
+patch_len:
+    value: 5
+pred_len:
+    value: 60
+random_seed:
+    value: 2023
+scale:
+    value: 1
+second_stage_patching:
+    value: None
+seq_len:
+    value: 60
+stride:
+    value: 1

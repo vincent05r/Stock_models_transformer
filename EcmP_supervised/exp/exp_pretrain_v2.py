@@ -86,7 +86,7 @@ class Exp_Pretrain_v2(Exp_Basic):
         #wandb
         wandb.init(
             # set the wandb project where this run will be logged
-            project=path,
+            project="PCIE-pretrain",
             # track hyperparameters and run metadata
             config={
             "learning_rate": self.args.learning_rate,
