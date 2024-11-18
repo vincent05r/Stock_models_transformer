@@ -80,7 +80,7 @@ do
     --patch_len 5\
     --stride 1\
     --des 'Exp' \
-    --train_epochs 25\
+    --train_epochs 50\
     --lradj 'TST'\
     --pct_start 0.1\
     --itr 1 --batch_size 16 --learning_rate 0.0001 >logs/PCIE/pretrain/$model_name'_'$last_folder_name'_'$model_id_name'_'$seq_len'_'$pred_len.log 
