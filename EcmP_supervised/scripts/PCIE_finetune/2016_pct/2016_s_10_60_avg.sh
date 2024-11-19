@@ -54,7 +54,7 @@ do
         seq_len=60
 
         #utils
-        result_log_path="./result_log/PCIE/finetune/2016_pct_${pred_len}.txt"
+        result_log_path="./result_log/PCIE/finetune/2016_pct.txt"
         pretrained_model_path="./pretrain_cp/PT2016V2PCIE_${seq_len}_${pred_len}_EcmP_mk3_stock_custom_pretrain_v2_ftMS_sl${seq_len}_ll0_pl${pred_len}_dm108_dp0_pl5_nh3_el3_dl1_df256_fc1_ebtimeF_Exp_dcomp0_kn9_LOlinears_None_rv1_close_pct_change/checkpoint.pth"
 
         python -u EcmP_supervised/run_finetune.py \
