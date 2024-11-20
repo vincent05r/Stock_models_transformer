@@ -185,7 +185,7 @@ class Dataset_Custom_stock_pred(Dataset):
             cols.remove(self.target)
             cols.remove('date')
         df_raw = df_raw[['date'] + cols + [self.target]]
-        border1 = len(df_raw) - self.seq_len
+        border1 = 0
         border2 = len(df_raw)
 
         if self.features == 'M' or self.features == 'MS':

@@ -368,7 +368,10 @@ class Exp_Main(Exp_Basic):
                 pred = outputs.detach().cpu().numpy()  # .squeeze()
                 preds.append(pred)
 
+                print(i)
+
         preds = np.array(preds)
+        print(preds.shape)
         preds = preds.reshape(-1, preds.shape[-2], preds.shape[-1])
 
         # result save
