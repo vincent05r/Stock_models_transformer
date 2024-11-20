@@ -11,8 +11,10 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='pretraining for PCIE encoder')
 
 
-    #finetune
-    parser.add_argument('--pretrained_model_path', type=str, required=True, help="The path to the pretrained model")
+    #prediction  
+    parser.add_argument('--pred_model_load_path', type=str, required=True, help="The path to the pretrained model")
+    parser.add_argument('--prev_scaler', type=str, default='None', help='scaler path for prev_scaler')
+
 
     #utility
     parser.add_argument('--result_log_path', type=str, default='./result_log/result_spec1.txt')
@@ -39,9 +41,7 @@ if __name__ == '__main__':
     parser.add_argument('--scale', type=int, default=1, help='if use z-score scaler for dataset using std and mean of training set, 1 is true, 0 is false')
     parser.add_argument('--dt_format_str', type=int, default=0, help='the format string for pandas datetime, 0 means use default')
 
-    #prediction  
-    parser.add_argument('--prev_scaler', type=str, default='None', help='scaler path for prev_scaler')
-    parser.add_argument('--pred_model_load_path', type=str, default='None', help='Path for the model used for prediction')
+
 
     # forecasting task
     parser.add_argument('--seq_len', type=int, default=96, help='input sequence length')
@@ -91,7 +91,6 @@ if __name__ == '__main__':
                         help='time features encoding, options:[timeF, fixed, learned]')
     parser.add_argument('--activation', type=str, default='gelu', help='activation')
     parser.add_argument('--output_attention', action='store_true', help='whether to output attention in ecoder')
-    parser.add_argument('--do_predict', type=bool, default=False, help='whether to predict unseen future data')
 
     # optimization
     parser.add_argument('--num_workers', type=int, default=10, help='data loader num workers')

@@ -372,7 +372,7 @@ class Exp_Main(Exp_Basic):
         preds = preds.reshape(-1, preds.shape[-2], preds.shape[-1])
 
         # result save
-        folder_path = './results/' + setting + '/'
+        folder_path = './inference_results/' + setting + '/'
         if not os.path.exists(folder_path):
             os.makedirs(folder_path)
 

@@ -8,7 +8,7 @@ model_id_name="${data_path_name%.*}"
 
 #loading path
 prev_scaler=./scaler/AAPL_pct/AAPL_pct_60_10.pkl
-pred_model_load_path=
+pred_model_load_path=./finetune_cp/PT2005V2PCIE_AAPL_pct_60_10_EcmP_mk3_stock_custom_ftMS_sl60_ll0_pl10_dm45_dp0_pl4_nh3_el3_dl1_df128_fc1_ebtimeF_Exp_dcomp0_kn9_MLP_None_rv1_close/checkpoint.pth
 
 
 #consistent with model
@@ -31,18 +31,18 @@ target=close_pct_change
 scale=1
 
 
-seq_len=50 #match the .pth hyperparameters
-label_len=3 #reminder the label length is different to the predicted length, lead time(overlap) time between x(input) and y(label)
-pred_len=1
+seq_len=60 #match the .pth hyperparameters
+label_len=0 #reminder the label length is different to the predicted length, lead time(overlap) time between x(input) and y(label)
+pred_len=10
 
 
 python -u EcmP_supervised/run_inference.py \
 --prev_scaler $prev_scaler \
 --pred_model_load_path $pred_model_load_path \
---decomposition $decomposition\
---kernel_size $kernel_size\
---first_stage_patching $first_stage_patching\
---second_stage_patching $second_stage_patching\
+--decomposition $decomposition \
+--kernel_size $kernel_size \
+--first_stage_patching $first_stage_patching \
+--second_stage_patching $second_stage_patching \
 --root_path $root_path_name \
 --data_path $data_path_name \
 --model_id 'PTFT2016V2PCIE_'${data_path_name%.csv}'_'$seq_len'_'$pred_len \
@@ -52,17 +52,17 @@ python -u EcmP_supervised/run_inference.py \
 --seq_len $seq_len \
 --label_len $label_len \
 --pred_len $pred_len \
---scale $scale\
---target $target\
---dt_format_str $dt_format_str\
+--scale $scale \
+--target $target \
+--dt_format_str $dt_format_str \
 --enc_in 9 \
 --e_layers 3 \
 --n_heads 3 \
 --d_patch 0 \
 --d_model 108 \
 --d_ff 256 \
---dropout 0\
---fc_dropout 0\
---head_dropout 0\
---patch_len 5\
---stride 1\
+--dropout 0 \
+--fc_dropout 0 \
+--head_dropout 0 \
+--patch_len 5 \
+--stride 1
