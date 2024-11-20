@@ -8,7 +8,7 @@ model_id_name="${data_path_name%.*}"
 
 #loading path
 prev_scaler=./scaler/AAPL_pct/AAPL_pct_60_10.pkl
-pred_model_load_path=./finetune_cp/PT2005V2PCIE_AAPL_pct_60_10_EcmP_mk3_stock_custom_ftMS_sl60_ll0_pl10_dm45_dp0_pl4_nh3_el3_dl1_df128_fc1_ebtimeF_Exp_dcomp0_kn9_MLP_None_rv1_close/checkpoint.pth
+pred_model_load_path=./finetune_cp/PTFT2016V2PCIE_AAPL_pct_60_10_EcmP_mk3_stock_custom_ftMS_sl60_ll0_pl10_dm108_dp0_pl5_nh3_el3_dl1_df256_fc1_ebtimeF_Exp_dcomp0_kn9_MLP_None_rv1_close_pct_change/checkpoint.pth
 
 
 #consistent with model
