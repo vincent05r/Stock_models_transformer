@@ -13,6 +13,7 @@ if __name__ == '__main__':
     #utility
     parser.add_argument('--result_log_path', type=str, default='./result_log/result_spec1.txt')
     parser.add_argument('--save_results', type=int, default=0, help='save prediction results')
+    parser.add_argument('--wandb_project', type=str, default="PCIE-pretrain")
 
     # random seed
     parser.add_argument('--random_seed', type=int, default=2021, help='random seed')

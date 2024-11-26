@@ -7,6 +7,8 @@ results/
 test_results/
 pretrain_cp/
 finetune_cp/
+data/hf_m_2411/
+wandb/
 
 ### Emacs ###
 # -*- mode: gitignore; -*-

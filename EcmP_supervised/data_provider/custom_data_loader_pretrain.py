@@ -73,7 +73,7 @@ class Dataset_Custom_stock_pretrain_v2(Dataset):
 
             # Convert date column to datetime and sort
             if self.dt_format_str == 0:
-                df_raw[self.date_str] = pd.to_datetime(df_raw[self.date_str])
+                df_raw[self.date_str] = pd.to_datetime(df_raw[self.date_str], utc=True)
             else:
                 df_raw[self.date_str] = pd.to_datetime(df_raw[self.date_str], format=self.dt_format_str)
             df_raw = df_raw.sort_values(by=self.date_str).reset_index(drop=True)
