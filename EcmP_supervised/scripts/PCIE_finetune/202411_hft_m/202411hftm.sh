@@ -75,18 +75,18 @@ do
     --dt_format_str $dt_format_str \
     --enc_in 9 \
     --e_layers 3 \
-    --n_heads 6 \
+    --n_heads 3 \
     --d_patch 0 \
-    --d_model 216 \
-    --d_ff 512 \
+    --d_model 108 \
+    --d_ff 256 \
     --dropout 0 \
     --fc_dropout 0 \
     --head_dropout 0 \
     --patch_len 5 \
     --stride 1 \
     --des 'Exp' \
-    --train_epochs 25 \
+    --train_epochs 50 \
     --lradj 'TST' \
     --pct_start 0.1 \
-    --itr 1 --batch_size 64 --learning_rate 0.0001 >logs/PCIE/pretrain/$model_name'_'$last_folder_name'_'$model_id_name'_'$seq_len'_'$pred_len.log 
+    --itr 1 --batch_size 16 --learning_rate 0.0001 >logs/PCIE/pretrain/$model_name'_'$last_folder_name'_'$model_id_name'_'$seq_len'_'$pred_len.log 
 done

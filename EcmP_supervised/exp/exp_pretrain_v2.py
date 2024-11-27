@@ -82,6 +82,12 @@ class Exp_Pretrain_v2(Exp_Basic):
                                             epochs = self.args.train_epochs,
                                             max_lr = self.args.learning_rate)
         
+        pytorch_total_params = sum(p.numel() for p in self.model.parameters())
+        pytorch_total_params_t = sum(p.numel() for p in self.model.parameters() if p.requires_grad)
+
+        print(f"Model total param : {pytorch_total_params}" )
+        print(f"Model total trainable param : {pytorch_total_params_t}")
+
 
         #wandb
         wandb.init(
@@ -108,6 +114,8 @@ class Exp_Pretrain_v2(Exp_Basic):
             "label_len": self.args.label_len,
             "scale": self.args.scale,
             "random_seed": self.args.random_seed,
+            "model_total_trainable_param": pytorch_total_params_t,
+            "model_total_param": pytorch_total_params
             }
         )
 

@@ -81,9 +81,9 @@ class Dataset_Custom_stock(Dataset):
         df_stamp = df_raw[[self.date_str]][border1:border2]
 
         if self.dt_format_str == 0: #be aware all date column must be named date
-            df_stamp[self.date_str] = pd.to_datetime(df_stamp.date) #pandas will convert the column name directly into a self.column name for accessing (similar)
+            df_stamp[self.date_str] = pd.to_datetime(df_stamp.date, utc=True) #pandas will convert the column name directly into a self.column name for accessing (similar)
         else:
-            df_stamp[self.date_str] = pd.to_datetime(df_stamp.date, format=self.dt_format_str)
+            df_stamp[self.date_str] = pd.to_datetime(df_stamp.date, format=self.dt_format_str, utc=True)
 
         if self.timeenc == 0:
             # df_stamp['month'] = df_stamp.date.apply(lambda row: row.month, 1)
