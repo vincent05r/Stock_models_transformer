@@ -9,6 +9,7 @@ pretrain_cp/
 finetune_cp/
 data/hf_m_2411/
 wandb/
+scaler/
 
 ### Emacs ###
 # -*- mode: gitignore; -*-

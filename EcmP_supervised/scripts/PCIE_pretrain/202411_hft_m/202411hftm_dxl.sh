@@ -74,7 +74,7 @@ do
     --target $target \
     --dt_format_str $dt_format_str \
     --enc_in 9 \
-    --e_layers 4 \
+    --e_layers 8 \
     --n_heads 6 \
     --d_patch 0 \
     --d_model 216 \
@@ -88,5 +88,5 @@ do
     --train_epochs 25 \
     --lradj 'TST' \
     --pct_start 0.1 \
-    --itr 1 --batch_size 128 --learning_rate 0.0001 >logs/PCIE/pretrain/$model_name'_HFTM_'$last_folder_name'_'$model_id_name'_'$seq_len'_'$pred_len.log 
+    --itr 1 --batch_size 128 --learning_rate 0.0001 >logs/PCIE/pretrain/$model_name'_HFTMDXL_'$last_folder_name'_'$model_id_name'_'$seq_len'_'$pred_len.log 
 done
