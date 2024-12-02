@@ -1,0 +1,3 @@
+HFTM_PCIE_360_1_EcmP_mk3_stock_custom_pretrain_v2_ftMS_sl360_ll0_pl1_dm216_dp0_pl24_nh6_el4_dl1_df512_fc1_ebtimeF_Exp_dcomp0_kn9_LOlinears_None_rv1_close_pct_change
+Pretrain loss : 1.0197863914006933
+
