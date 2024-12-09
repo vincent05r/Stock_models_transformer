@@ -48,7 +48,7 @@ result_log_path=./result_log/PCIE/pretrain/2411_hftm.txt
 
 for pred_len in 1 2 10 20
 do
-    seq_len=360
+    seq_len=180
     python -u EcmP_supervised/run_pretrain_v2.py \
     --wandb_project $wandb_project \
     --freq 1T \
