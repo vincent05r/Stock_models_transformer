@@ -8,6 +8,7 @@ test_results/
 pretrain_cp/
 finetune_cp/
 data/hf_m_2411/
+data/hft_m_2411/
 wandb/
 scaler/
 inference_results/
