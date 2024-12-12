@@ -2,6 +2,10 @@ if [ ! -d "./logs" ]; then
     mkdir ./logs
 fi
 
+if [ ! -d "./logs/EcmP_mk3" ]; then
+    mkdir ./logs/EcmP_mk3
+fi
+
 if [ ! -d "./logs/EcmP_mk3/ecmp_stock" ]; then
     mkdir ./logs/EcmP_mk3/ecmp_stock
 fi

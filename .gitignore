@@ -10,6 +10,7 @@ finetune_cp/
 data/hf_m_2411/
 wandb/
 scaler/
+inference_results/
 
 ### Emacs ###
 # -*- mode: gitignore; -*-
