@@ -14,7 +14,7 @@ fi
 model_name=EcmP_mk3
 
 #wandb
-wandb_project="PCIE_HFT_M"
+wandb_project="PCIE_HFT_M_V2"
 
 #patching setting
 first_stage_patching=LOlinears
@@ -43,14 +43,16 @@ dt_format_str=0
 
 target=close_pct_change
 
-scale=1
-result_log_path=./result_log/PCIE/pretrain/2411_hftm.txt
+revin=1
+scale=0
+result_log_path=./result_log/PCIE/pretrain/2411_hftm_xl_p.txt
 
-for pred_len in 1 2 10 20
+for pred_len in 1 2 10
 do
-    for seq_len in 120
+    for seq_len in 120 360 720
     do
         python -u EcmP_supervised/run_pretrain_v2.py \
+        --revin $revin \
         --wandb_project $wandb_project \
         --freq 1T \
         --model_load_path None \
@@ -83,12 +85,12 @@ do
         --dropout 0 \
         --fc_dropout 0 \
         --head_dropout 0 \
-        --patch_len 12 \
-        --stride 1 \
+        --patch_len 10 \
+        --stride 9 \
         --des 'Exp' \
         --train_epochs 100 \
         --lradj 'TST' \
-        --pct_start 0.1 \
-        --itr 1 --batch_size 128 --learning_rate 0.0001 >logs/PCIE/pretrain/$model_name'_HFTM_'$last_folder_name'_'$model_id_name'_'$seq_len'_'$pred_len.log 
+        --pct_start 0.3 \
+        --itr 1 --batch_size 64 --learning_rate 0.0001 >logs/PCIE/pretrain/$model_name'_HFTM_v2_'$last_folder_name'_'$model_id_name'_'$seq_len'_'$pred_len.log 
     done
 done
