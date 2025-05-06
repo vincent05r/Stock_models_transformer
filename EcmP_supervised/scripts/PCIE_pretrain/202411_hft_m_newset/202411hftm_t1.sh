@@ -17,7 +17,7 @@ model_name=EcmP_mk3
 wandb_project="PCIE_HFT_M3"
 
 #patching setting
-first_stage_patching=linear
+first_stage_patching=MLP
 second_stage_patching=None
 label_len=0 #reminder the label length is different to the predicted length, lead time(overlap) time between x(input) and y(label)
 
@@ -81,7 +81,7 @@ do
         --n_heads 6 \
         --d_patch 0 \
         --d_model 180 \
-        --d_ff 256 \
+        --d_ff 360 \
         --dropout 0 \
         --fc_dropout 0 \
         --head_dropout 0 \
